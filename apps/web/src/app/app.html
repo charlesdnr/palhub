@@ -1,0 +1,21 @@
+<header class="topbar">
+  <a routerLink="/" class="brand">Pal<span>Hub</span></a>
+  <nav>
+    @if (auth.user(); as user) {
+      <a routerLink="/me/servers" class="nav-link">Mes serveurs</a>
+      <span class="user">
+        @if (user.avatarUrl) {
+          <img [src]="user.avatarUrl" alt="" class="avatar" />
+        }
+        {{ user.username }}
+      </span>
+      <button type="button" class="btn btn--ghost" (click)="logout()">Déconnexion</button>
+    } @else if (auth.user() === null) {
+      <a routerLink="/login" class="btn">Se connecter</a>
+    }
+  </nav>
+</header>
+
+<main>
+  <router-outlet />
+</main>

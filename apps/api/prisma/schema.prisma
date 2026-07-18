@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid()) @db.Uuid
+  discordId String   @unique @map("discord_id")
+  username  String
+  avatarUrl String?  @map("avatar_url")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+  servers   Server[]
+
+  @@map("users")
+}
+
+model Server {
+  id           String     @id @default(uuid()) @db.Uuid
+  ownerId      String     @map("owner_id") @db.Uuid
+  owner        User       @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  slug         String     @unique
+  name         String
+  description  String?
+  apiKeyHash   String?    @map("api_key_hash")
+  apiKeyPrefix String?    @map("api_key_prefix")
+  /// Verrouillé au premier ingest : refuse ensuite les payloads d'un autre monde
+  worldId      String?    @map("world_id")
+  isListed     Boolean    @default(false) @map("is_listed")
+  lastIngestAt DateTime?  @map("last_ingest_at") @db.Timestamptz()
+  createdAt    DateTime   @default(now()) @map("created_at") @db.Timestamptz()
+  snapshots    Snapshot[]
+
+  @@map("servers")
+}
+
+model Snapshot {
+  id          BigInt   @id @default(autoincrement())
+  serverId    String   @map("server_id") @db.Uuid
+  server      Server   @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  /// 'palbox' (historisé, purge aux 30 derniers) ou 'live' (upsert, 1 seul enregistrement)
+  kind        String
+  sourceHash  String   @map("source_hash")
+  generatedAt DateTime @map("generated_at") @db.Timestamptz()
+  payload     Json
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz()
+
+  @@unique([serverId, kind, sourceHash])
+  @@index([serverId, kind, generatedAt(sort: Desc)])
+  @@map("snapshots")
+}

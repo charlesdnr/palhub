@@ -1,0 +1,23 @@
+# Node
+node_modules/
+dist/
+.angular/
+*.tsbuildinfo
+
+# Env & secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.pyc
+agent/.venv/
+agent/*.egg-info/
+agent/build/
+
+# Divers
+.DS_Store
+Thumbs.db
+logs/
+coverage/

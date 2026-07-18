@@ -1,0 +1,101 @@
+@if (snapshot(); as snap) {
+  <div class="toolbar">
+    <input
+      type="text"
+      placeholder="Espèce ou surnom…"
+      [ngModel]="q()"
+      (ngModelChange)="q.set($event)"
+    />
+    <select [ngModel]="owner()" (ngModelChange)="owner.set($event)">
+      <option value="all">Tous les joueurs</option>
+      <option value="base">Pals de base</option>
+      @for (o of owners(); track o.uid) {
+        <option [value]="o.uid">{{ o.name }}</option>
+      }
+    </select>
+    <select [ngModel]="passive()" (ngModelChange)="passive.set($event)">
+      <option value="all">Toutes les passives</option>
+      @for (p of passives(); track p) {
+        <option [value]="p">{{ p }}</option>
+      }
+    </select>
+    <label class="chk">
+      <input type="checkbox" [ngModel]="luckyOnly()" (ngModelChange)="luckyOnly.set($event)" />
+      ✨ Lucky
+    </label>
+    <label class="chk">
+      <input type="checkbox" [ngModel]="alphaOnly()" (ngModelChange)="alphaOnly.set($event)" />
+      👑 Alpha
+    </label>
+    <label class="chk iv">
+      IV min
+      <input type="number" min="0" max="100" [ngModel]="minIv()" (ngModelChange)="minIv.set($event ?? 0)" />
+    </label>
+    <span class="total">{{ filtered().length }} / {{ snap.pals.length }} pals</span>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th class="sortable" (click)="setSort('species')">Espèce</th>
+          <th class="sortable num" (click)="setSort('level')">Niv.</th>
+          <th class="sortable num" (click)="setSort('rank')">Rang</th>
+          <th>Propriétaire</th>
+          <th class="sortable num" (click)="setSort('ivs')">IVs (PV / Att / Déf)</th>
+          <th>Passives</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (p of filtered(); track p.id) {
+          <tr>
+            <td class="face-cell">
+              <img class="face" [src]="face(p)" alt="" loading="lazy" />
+            </td>
+            <td>
+              <span class="species">
+                @if (p.alpha) {<span title="Alpha">👑</span>}
+                @if (p.lucky) {<span title="Lucky">✨</span>}
+                {{ p.species }}
+                @if (p.gender === 'male') {<span class="g g--m">♂</span>}
+                @else if (p.gender === 'female') {<span class="g g--f">♀</span>}
+              </span>
+              @if (p.nickname) {
+                <span class="nick">« {{ p.nickname }} »</span>
+              }
+            </td>
+            <td class="num">{{ p.level }}</td>
+            <td class="num">{{ p.rank > 1 ? '★' + (p.rank - 1) : '—' }}</td>
+            <td [class.base-owner]="p.owner === null">{{ ownerName(p.owner) }}</td>
+            <td class="num mono">
+              {{ p.ivs.hp }} / {{ p.ivs.shot }} / {{ p.ivs.defense }}
+              <span class="iv-sum">Σ {{ ivSum(p) }}</span>
+            </td>
+            <td>
+              @for (pa of p.passives; track $index) {
+                <span
+                  class="pass"
+                  [class.pass--good]="passiveRank(pa) > 0"
+                  [class.pass--bad]="passiveRank(pa) < 0"
+                  >{{ pa }}</span
+                >
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <p class="meta">
+    Données du {{ snap.generated_at | date: 'dd/MM/yyyy à HH:mm' }} ·
+    {{ snap.players.length }} joueurs
+  </p>
+} @else if (snapshot() === null) {
+  <p class="empty">
+    Pas encore de données pour ce serveur — l'admin doit lancer l'agent de synchronisation.
+  </p>
+} @else {
+  <p class="empty">Chargement…</p>
+}

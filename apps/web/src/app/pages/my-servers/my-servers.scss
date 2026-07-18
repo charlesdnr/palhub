@@ -1,0 +1,79 @@
+:host {
+  display: block;
+  max-width: 760px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1.6rem 1.2rem 3rem;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-bottom: 1.6rem;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+
+  h3 {
+    margin: 0 0 0.15rem;
+  }
+}
+
+.sync {
+  color: var(--ok);
+  font-size: 0.85rem;
+}
+
+.warn {
+  color: var(--accent-2);
+  font-size: 0.85rem;
+}
+
+.empty {
+  color: var(--text-dim);
+}
+
+.create {
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    max-width: 440px;
+  }
+
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    color: var(--text-dim);
+    font-size: 0.9rem;
+  }
+
+  .slug-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+
+    input {
+      flex: 1;
+    }
+  }
+
+  .prefix {
+    color: var(--text-dim);
+  }
+
+  .btn {
+    align-self: flex-start;
+  }
+}
+
+.error {
+  color: var(--danger);
+  margin: 0;
+}

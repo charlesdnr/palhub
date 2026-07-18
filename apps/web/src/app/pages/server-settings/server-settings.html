@@ -1,0 +1,71 @@
+@if (server(); as s) {
+  <p><a routerLink="/me/servers">← Mes serveurs</a></p>
+  <h1>{{ s.name }}</h1>
+  <p>
+    Page publique : <a class="mono" [routerLink]="['/s', s.slug]">/s/{{ s.slug }}</a>
+    @if (s.worldId) {
+      · monde <span class="mono">{{ s.worldId }}</span>
+    }
+  </p>
+
+  <div class="card block">
+    <h2>Clé API de l'agent</h2>
+    @if (newKey()) {
+      <p class="key-warn">
+        Copie cette clé maintenant : elle ne sera <b>plus jamais affichée</b>.
+      </p>
+      <div class="key-row">
+        <code class="mono key">{{ newKey() }}</code>
+        <button type="button" class="btn btn--ghost" (click)="copyKey()">
+          {{ copied() ? 'Copié ✓' : 'Copier' }}
+        </button>
+      </div>
+    } @else if (s.apiKeyPrefix) {
+      <p>
+        Une clé existe (préfixe <span class="mono">{{ s.apiKeyPrefix }}</span>).
+        Tu peux la remplacer si elle a fuité ou si tu l'as perdue.
+      </p>
+    } @else {
+      <p>Aucune clé pour le moment — génère-la puis mets-la dans le <span class="mono">.env</span> de l'agent.</p>
+    }
+    <button type="button" class="btn" (click)="rotateKey()">
+      {{ s.apiKeyPrefix ? 'Régénérer la clé' : 'Générer la clé' }}
+    </button>
+  </div>
+
+  <div class="card block">
+    <h2>Installer l'agent</h2>
+    <p>
+      L'agent tourne près de ton serveur de jeu, lit le <span class="mono">Level.sav</span>
+      et pousse les données ici toutes les 5 minutes. Voir le
+      <a href="https://github.com/" target="_blank" rel="noopener">README de l'agent</a>
+      (dossier <span class="mono">agent/</span> du projet).
+    </p>
+    <pre class="mono snippet">PALHUB_API_URL={{ origin }}
+PALHUB_API_KEY=&lt;ta clé ci-dessus&gt;
+PALHUB_SOURCE=&lt;dossier du save ou sftp://&gt;</pre>
+  </div>
+
+  <div class="card block">
+    <h2>Visibilité</h2>
+    <label class="check">
+      <input type="checkbox" [checked]="s.isListed" (change)="toggleListed()" />
+      Afficher ce serveur dans l'annuaire public de la page d'accueil
+    </label>
+    <label class="desc">
+      Description
+      <textarea rows="2" maxlength="500" [(ngModel)]="description" name="description"></textarea>
+    </label>
+    <button type="button" class="btn btn--ghost" (click)="saveDescription()" [disabled]="saving()">
+      Enregistrer la description
+    </button>
+  </div>
+
+  <div class="card block danger-zone">
+    <h2>Zone dangereuse</h2>
+    <p>Supprime le serveur, sa clé et toutes les données synchronisées.</p>
+    <button type="button" class="btn btn--danger" (click)="remove()">Supprimer ce serveur</button>
+  </div>
+} @else {
+  <p class="empty">Chargement…</p>
+}

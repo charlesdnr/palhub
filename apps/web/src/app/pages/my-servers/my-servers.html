@@ -1,0 +1,50 @@
+<h1>Mes serveurs</h1>
+
+@if (mine(); as servers) {
+  @if (servers.length) {
+    <div class="list">
+      @for (s of servers; track s.id) {
+        <div class="card row">
+          <div>
+            <h3>{{ s.name }}</h3>
+            <a class="mono" [routerLink]="['/s', s.slug]">/s/{{ s.slug }}</a>
+            @if (s.lastIngestAt) {
+              <div class="sync">Dernière synchro : {{ s.lastIngestAt | date: 'dd/MM/yyyy HH:mm' }}</div>
+            } @else {
+              <div class="warn">Jamais synchronisé — installe l'agent (voir réglages)</div>
+            }
+          </div>
+          <a class="btn btn--ghost" [routerLink]="['/me/servers', s.id]">Réglages</a>
+        </div>
+      }
+    </div>
+  } @else {
+    <p class="empty">Tu n'as pas encore de serveur. Crée le premier ci-dessous :</p>
+  }
+} @else {
+  <p class="empty">Chargement…</p>
+}
+
+<div class="card create">
+  <h2>Ajouter un serveur</h2>
+  <form (ngSubmit)="create()">
+    <label>
+      Nom
+      <input type="text" name="name" [(ngModel)]="name" (input)="suggestSlug()" required minlength="2" maxlength="60" />
+    </label>
+    <label>
+      Adresse de la page
+      <span class="slug-wrap"><span class="mono prefix">/s/</span>
+        <input type="text" name="slug" [(ngModel)]="slug" required pattern="[a-z0-9-]{3,40}" />
+      </span>
+    </label>
+    <label>
+      Description (optionnelle)
+      <input type="text" name="description" [(ngModel)]="description" maxlength="500" />
+    </label>
+    @if (error()) {
+      <p class="error">{{ error() }}</p>
+    }
+    <button class="btn" type="submit" [disabled]="creating() || !name || !slug">Créer</button>
+  </form>
+</div>

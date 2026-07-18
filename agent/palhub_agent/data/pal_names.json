@@ -1,0 +1,3014 @@
+{
+ "alpaca": {
+  "asset": "Alpaca",
+  "name": "Melpaca"
+ },
+ "amaterasuwolf": {
+  "asset": "AmaterasuWolf",
+  "name": "Kitsun"
+ },
+ "amaterasuwolf_dark": {
+  "asset": "AmaterasuWolf_Dark",
+  "name": "Kitsun Noct"
+ },
+ "amaterasuwolf_dark_quest_enemy": {
+  "asset": "AmaterasuWolf_Dark_Quest_Enemy",
+  "name": "Kitsun Noct"
+ },
+ "amaterasuwolf_dark_quest_friend": {
+  "asset": "AmaterasuWolf_Dark_Quest_Friend",
+  "name": "Kitsun Noct"
+ },
+ "anubis": {
+  "asset": "Anubis",
+  "name": "Anubis"
+ },
+ "armorwoodlouse": {
+  "asset": "ArmorWoodlouse",
+  "name": "Armor Woodlouse"
+ },
+ "badcatgirl": {
+  "asset": "BadCatGirl",
+  "name": "Nyafia"
+ },
+ "baphomet": {
+  "asset": "Baphomet",
+  "name": "Incineram"
+ },
+ "baphomet_dark": {
+  "asset": "Baphomet_Dark",
+  "name": "Incineram Noct"
+ },
+ "baphomet_dark_oilrig": {
+  "asset": "Baphomet_Dark_Oilrig",
+  "name": "Incineram Noct"
+ },
+ "bastet": {
+  "asset": "Bastet",
+  "name": "Mau"
+ },
+ "bastet_ice": {
+  "asset": "Bastet_Ice",
+  "name": "Mau Cryst"
+ },
+ "beardeddragon": {
+  "asset": "BeardedDragon",
+  "name": "Bearded Dragon"
+ },
+ "berrygoat": {
+  "asset": "BerryGoat",
+  "name": "Caprity"
+ },
+ "berrygoat_dark": {
+  "asset": "BerryGoat_Dark",
+  "name": "Caprity Noct"
+ },
+ "birddragon": {
+  "asset": "BirdDragon",
+  "name": "Vanwyrm"
+ },
+ "birddragon_ice": {
+  "asset": "BirdDragon_Ice",
+  "name": "Vanwyrm Cryst"
+ },
+ "blackcentaur": {
+  "asset": "BlackCentaur",
+  "name": "Necromus"
+ },
+ "blackfurdragon": {
+  "asset": "BlackFurDragon",
+  "name": "Dragostrophe"
+ },
+ "blackgriffon": {
+  "asset": "BlackGriffon",
+  "name": "Shadowbeak"
+ },
+ "blackmetaldragon": {
+  "asset": "BlackMetalDragon",
+  "name": "Astegon"
+ },
+ "blackpuppy": {
+  "asset": "BlackPuppy",
+  "name": "Smokie"
+ },
+ "blackpuppy_ice": {
+  "asset": "BlackPuppy_Ice",
+  "name": "Smokie Cryst"
+ },
+ "blueberryfairy": {
+  "asset": "BlueberryFairy",
+  "name": "Prunelia"
+ },
+ "bluedragon": {
+  "asset": "BlueDragon",
+  "name": "Azurobe"
+ },
+ "bluedragon_ice": {
+  "asset": "BlueDragon_Ice",
+  "name": "Azurobe Cryst"
+ },
+ "blueplatypus": {
+  "asset": "Blueplatypus",
+  "name": "Fuack"
+ },
+ "blueplatypus_fire": {
+  "asset": "BluePlatypus_Fire",
+  "name": "Fuack Ignis"
+ },
+ "blueskydragon": {
+  "asset": "BlueSkyDragon",
+  "name": "Shaolong"
+ },
+ "bluethunderhorse": {
+  "asset": "BlueThunderHorse",
+  "name": "Azurmane"
+ },
+ "bluewoolrabbit": {
+  "asset": "BlueWoolRabbit",
+  "name": "Blue Wool Rabbit"
+ },
+ "boar": {
+  "asset": "Boar",
+  "name": "Rushoar"
+ },
+ "boss_alpaca": {
+  "asset": "BOSS_Alpaca",
+  "name": "Melpaca (Boss)"
+ },
+ "boss_amaterasuwolf": {
+  "asset": "BOSS_AmaterasuWolf",
+  "name": "Kitsun (Boss)"
+ },
+ "boss_amaterasuwolf_dark": {
+  "asset": "BOSS_AmaterasuWolf_Dark",
+  "name": "Kitsun Noct (Boss)"
+ },
+ "boss_anubis": {
+  "asset": "Boss_Anubis",
+  "name": "Anubis"
+ },
+ "boss_armorwoodlouse": {
+  "asset": "BOSS_ArmorWoodlouse",
+  "name": "Armor Woodlouse (Boss)"
+ },
+ "boss_badcatgirl": {
+  "asset": "BOSS_BadCatgirl",
+  "name": "Nyafia (Boss)"
+ },
+ "boss_baphomet": {
+  "asset": "BOSS_Baphomet",
+  "name": "Incineram (Boss)"
+ },
+ "boss_baphomet_dark": {
+  "asset": "BOSS_Baphomet_Dark",
+  "name": "Incineram Noct (Boss)"
+ },
+ "boss_bastet": {
+  "asset": "BOSS_Bastet",
+  "name": "Mau (Boss)"
+ },
+ "boss_bastet_ice": {
+  "asset": "BOSS_Bastet_Ice",
+  "name": "Mau Cryst (Boss)"
+ },
+ "boss_beardeddragon": {
+  "asset": "BOSS_BeardedDragon",
+  "name": "Bearded Dragon (Boss)"
+ },
+ "boss_berrygoat": {
+  "asset": "BOSS_BerryGoat",
+  "name": "Caprity (Boss)"
+ },
+ "boss_berrygoat_dark": {
+  "asset": "BOSS_BerryGoat_Dark",
+  "name": "Caprity Noct (Boss)"
+ },
+ "boss_birddragon": {
+  "asset": "BOSS_BirdDragon",
+  "name": "Vanwyrm (Boss)"
+ },
+ "boss_birddragon_ice": {
+  "asset": "BOSS_BirdDragon_Ice",
+  "name": "Vanwyrm Cryst (Boss)"
+ },
+ "boss_blackcentaur": {
+  "asset": "BOSS_BlackCentaur",
+  "name": "Necromus (Boss)"
+ },
+ "boss_blackfurdragon": {
+  "asset": "BOSS_BlackFurDragon",
+  "name": "Dragostrophe (Boss)"
+ },
+ "boss_blackgriffon": {
+  "asset": "BOSS_BlackGriffon",
+  "name": "Shadowbeak (Boss)"
+ },
+ "boss_blackgriffon_bossrush": {
+  "asset": "BOSS_BlackGriffon_BossRush",
+  "name": "Shadowbeak (Boss)"
+ },
+ "boss_blackmetaldragon": {
+  "asset": "BOSS_BlackMetalDragon",
+  "name": "Astegon (Boss)"
+ },
+ "boss_blackpuppy": {
+  "asset": "BOSS_BlackPuppy",
+  "name": "Smokie (Boss)"
+ },
+ "boss_blackpuppy_ice": {
+  "asset": "BOSS_BlackPuppy_Ice",
+  "name": "Smokie Cryst (Boss)"
+ },
+ "boss_blueberryfairy": {
+  "asset": "BOSS_BlueberryFairy",
+  "name": "Prunelia (Boss)"
+ },
+ "boss_bluedragon": {
+  "asset": "BOSS_BlueDragon",
+  "name": "Azurobe (Boss)"
+ },
+ "boss_bluedragon_ice": {
+  "asset": "BOSS_BlueDragon_Ice",
+  "name": "Azurobe Cryst (Boss)"
+ },
+ "boss_blueplatypus": {
+  "asset": "BOSS_BluePlatypus",
+  "name": "Fuack (Boss)"
+ },
+ "boss_blueplatypus_fire": {
+  "asset": "BOSS_BluePlatypus_Fire",
+  "name": "Fuack Ignis (Boss)"
+ },
+ "boss_blueskydragon": {
+  "asset": "BOSS_BlueSkyDragon",
+  "name": "Shaolong (Boss)"
+ },
+ "boss_blueskydragon_bossrush": {
+  "asset": "BOSS_BlueSkyDragon_BossRush",
+  "name": "Shaolong (Boss)"
+ },
+ "boss_bluethunderhorse": {
+  "asset": "BOSS_BlueThunderHorse",
+  "name": "Azurmane (Boss)"
+ },
+ "boss_bluewoolrabbit": {
+  "asset": "BOSS_BlueWoolRabbit",
+  "name": "Blue Wool Rabbit (Boss)"
+ },
+ "boss_boar": {
+  "asset": "BOSS_Boar",
+  "name": "Rushoar (Boss)"
+ },
+ "boss_brownrabbit": {
+  "asset": "BOSS_BrownRabbit",
+  "name": "Lapiron (Boss)"
+ },
+ "boss_cactusdoll": {
+  "asset": "BOSS_CactusDoll",
+  "name": "Needoll (Boss)"
+ },
+ "boss_cactusdoll_dark": {
+  "asset": "BOSS_CactusDoll_Dark",
+  "name": "Needoll Noct (Boss)"
+ },
+ "boss_candleghost": {
+  "asset": "BOSS_CandleGhost",
+  "name": "Sootseer (Boss)"
+ },
+ "boss_candlewitch": {
+  "asset": "BOSS_CandleWitch",
+  "name": "Candle Witch (Boss)"
+ },
+ "boss_captainpenguin": {
+  "asset": "BOSS_CaptainPenguin",
+  "name": "Penking (Boss)"
+ },
+ "boss_captainpenguin_black": {
+  "asset": "BOSS_CaptainPenguin_Black",
+  "name": "Penking Lux (Boss)"
+ },
+ "boss_carbunclo": {
+  "asset": "BOSS_Carbunclo",
+  "name": "Lifmunk (Boss)"
+ },
+ "boss_catbat": {
+  "asset": "BOSS_CatBat",
+  "name": "Tombat (Boss)"
+ },
+ "boss_catmage": {
+  "asset": "BOSS_CatMage",
+  "name": "Katress (Boss)"
+ },
+ "boss_catmage_fire": {
+  "asset": "BOSS_CatMage_Fire",
+  "name": "Katress Ignis (Boss)"
+ },
+ "boss_catvampire": {
+  "asset": "BOSS_CatVampire",
+  "name": "Felbat (Boss)"
+ },
+ "boss_chickenpal": {
+  "asset": "BOSS_ChickenPal",
+  "name": "Chikipi (Boss)"
+ },
+ "boss_clionetwins": {
+  "asset": "BOSS_ClioneTwins",
+  "name": "Amione (Boss)"
+ },
+ "boss_cloverfairy": {
+  "asset": "BOSS_CloverFairy",
+  "name": "Clovee (Boss)"
+ },
+ "boss_clownrabbit": {
+  "asset": "BOSS_ClownRabbit",
+  "name": "Dupin (Boss)"
+ },
+ "boss_colorfulbird": {
+  "asset": "BOSS_ColorfulBird",
+  "name": "Tocotoco (Boss)"
+ },
+ "boss_cowpal": {
+  "asset": "BOSS_CowPal",
+  "name": "Mozzarina (Boss)"
+ },
+ "boss_cubeturtle": {
+  "asset": "BOSS_CubeTurtle",
+  "name": "Tetroise  (Boss)"
+ },
+ "boss_cubeturtle_neutral": {
+  "asset": "BOSS_CubeTurtle_Neutral",
+  "name": "Tetroise Primo (Boss)"
+ },
+ "boss_cutebutterfly": {
+  "asset": "BOSS_CuteButterfly",
+  "name": "Cinnamoth (Boss)"
+ },
+ "boss_cutefox": {
+  "asset": "BOSS_CuteFox",
+  "name": "Vixy (Boss)"
+ },
+ "boss_cutemole": {
+  "asset": "BOSS_CuteMole",
+  "name": "Fuddler (Boss)"
+ },
+ "boss_cuteorca": {
+  "asset": "BOSS_CuteOrca",
+  "name": "Cute Orca (Boss)"
+ },
+ "boss_dandeliongirl": {
+  "asset": "BOSS_DandelionGirl",
+  "name": "Souffline (Boss)"
+ },
+ "boss_darkalien": {
+  "asset": "BOSS_DarkAlien",
+  "name": "Xenovader (Boss)"
+ },
+ "boss_darkcrow": {
+  "asset": "BOSS_DarkCrow",
+  "name": "Cawgnito (Boss)"
+ },
+ "boss_darkflamefox": {
+  "asset": "BOSS_DarkFlameFox",
+  "name": "Majex (Boss)"
+ },
+ "boss_darkmechadragon": {
+  "asset": "BOSS_DarkMechaDragon",
+  "name": "Xenolord (Boss)"
+ },
+ "boss_darkmutant": {
+  "asset": "BOSS_DarkMutant",
+  "name": "Dark Mutant (Boss)"
+ },
+ "boss_darkscorpion": {
+  "asset": "BOSS_DarkScorpion",
+  "name": "Menasting (Boss)"
+ },
+ "boss_darkscorpion_ground": {
+  "asset": "BOSS_DarkScorpion_Ground",
+  "name": "Menasting Terra (Boss)"
+ },
+ "boss_deer": {
+  "asset": "BOSS_Deer",
+  "name": "Eikthyrdeer (Boss)"
+ },
+ "boss_deer_ground": {
+  "asset": "BOSS_Deer_Ground",
+  "name": "Eikthyrdeer Terra (Boss)"
+ },
+ "boss_domearmordragon": {
+  "asset": "BOSS_DomeArmorDragon",
+  "name": "Aegidron (Boss)"
+ },
+ "boss_dreamdemon": {
+  "asset": "BOSS_DreamDemon",
+  "name": "Daedream (Boss)"
+ },
+ "boss_drillgame": {
+  "asset": "BOSS_DrillGame",
+  "name": "Digtoise (Boss)"
+ },
+ "boss_eagle": {
+  "asset": "BOSS_Eagle",
+  "name": "Galeclaw (Boss)"
+ },
+ "boss_eleccat": {
+  "asset": "BOSS_ElecCat",
+  "name": "Sparkit (Boss)"
+ },
+ "boss_eleclion": {
+  "asset": "BOSS_ElecLion",
+  "name": "Boltmane (Boss)"
+ },
+ "boss_eleclizard": {
+  "asset": "BOSS_ElecLizard",
+  "name": "Slowatt (Boss)"
+ },
+ "boss_elecpanda": {
+  "asset": "BOSS_ElecPanda",
+  "name": "Grizzbolt (Boss)"
+ },
+ "boss_elecpanda_bossrush": {
+  "asset": "BOSS_ElecPanda_BossRush",
+  "name": "Grizzbolt (Boss)"
+ },
+ "boss_elecpomeranian": {
+  "asset": "BOSS_ElecPomeranian",
+  "name": "Puffolt (Boss)"
+ },
+ "boss_elecsnail": {
+  "asset": "BOSS_ElecSnail",
+  "name": "Snock (Boss)"
+ },
+ "boss_elecsnail_fire": {
+  "asset": "BOSS_ElecSnail_Fire",
+  "name": "Elec Snail Fire (Boss)"
+ },
+ "boss_elecsnail_ground": {
+  "asset": "BOSS_ElecSnail_Ground",
+  "name": "Snock Lux (Boss)"
+ },
+ "boss_fairydragon": {
+  "asset": "BOSS_FairyDragon",
+  "name": "Elphidran (Boss)"
+ },
+ "boss_fairydragon_water": {
+  "asset": "BOSS_FairyDragon_Water",
+  "name": "Elphidran Aqua (Boss)"
+ },
+ "boss_featherostrich": {
+  "asset": "BOSS_FeatherOstrich",
+  "name": "Dazemu (Boss)"
+ },
+ "boss_fengyundeeper": {
+  "asset": "BOSS_FengyunDeeper",
+  "name": "Fenglope (Boss)"
+ },
+ "boss_fengyundeeper_electric": {
+  "asset": "BOSS_FengyunDeeper_Electric",
+  "name": "Fenglope Lux (Boss)"
+ },
+ "boss_firekirin": {
+  "asset": "BOSS_FireKirin",
+  "name": "Pyrin (Boss)"
+ },
+ "boss_firekirin_dark": {
+  "asset": "BOSS_FireKirin_Dark",
+  "name": "Pyrin Noct (Boss)"
+ },
+ "boss_flamebambi": {
+  "asset": "BOSS_FlameBambi",
+  "name": "Rooby (Boss)"
+ },
+ "boss_flamebuffalo": {
+  "asset": "BOSS_FlameBuffalo",
+  "name": "Arsox (Boss)"
+ },
+ "boss_flowerdinosaur": {
+  "asset": "BOSS_FlowerDinosaur",
+  "name": "Dinossom (Boss)"
+ },
+ "boss_flowerdinosaur_electric": {
+  "asset": "BOSS_FlowerDinosaur_Electric",
+  "name": "Dinossom Lux (Boss)"
+ },
+ "boss_flowerdoll": {
+  "asset": "BOSS_FlowerDoll",
+  "name": "Petallia (Boss)"
+ },
+ "boss_flowerdoll_fire": {
+  "asset": "BOSS_FlowerDoll_Fire",
+  "name": "Petallia Ignis (Boss)"
+ },
+ "boss_flowerprince": {
+  "asset": "BOSS_FlowerPrince",
+  "name": "Dandilord (Boss)"
+ },
+ "boss_flowerrabbit": {
+  "asset": "BOSS_FlowerRabbit",
+  "name": "Flopie (Boss)"
+ },
+ "boss_fluffybird": {
+  "asset": "BOSS_FluffyBird",
+  "name": "Muffly (Boss)"
+ },
+ "boss_flyingmanta": {
+  "asset": "BOSS_FlyingManta",
+  "name": "Celaray (Boss)"
+ },
+ "boss_flyingmanta_thunder": {
+  "asset": "BOSS_FlyingManta_Thunder",
+  "name": "Celaray Lux (Boss)"
+ },
+ "boss_foxexorcist": {
+  "asset": "BOSS_FoxExorcist",
+  "name": "Flaracle (Boss)"
+ },
+ "boss_foxmage": {
+  "asset": "BOSS_FoxMage",
+  "name": "Wixen (Boss)"
+ },
+ "boss_foxmage_dark": {
+  "asset": "BOSS_FoxMage_Dark",
+  "name": "Wixen Noct (Boss)"
+ },
+ "boss_frozenbear": {
+  "asset": "BOSS_FrozenBear",
+  "name": "Frozen Bear (Boss)"
+ },
+ "boss_ganesha": {
+  "asset": "BOSS_Ganesha",
+  "name": "Teafant (Boss)"
+ },
+ "boss_garm": {
+  "asset": "BOSS_Garm",
+  "name": "Direhowl (Boss)"
+ },
+ "boss_ghostanglerfish": {
+  "asset": "BOSS_GhostAnglerfish",
+  "name": "Ghangler (Boss)"
+ },
+ "boss_ghostanglerfish_fire": {
+  "asset": "BOSS_GhostAnglerfish_Fire",
+  "name": "Ghangler Ignis (Boss)"
+ },
+ "boss_ghostbeast": {
+  "asset": "BOSS_GhostBeast",
+  "name": "Maraith (Boss)"
+ },
+ "boss_ghostblackcat": {
+  "asset": "BOSS_GhostBlackCat",
+  "name": "Wispaw (Boss)"
+ },
+ "boss_ghostdragon": {
+  "asset": "BOSS_GhostDragon",
+  "name": "Eidrolon (Boss)"
+ },
+ "boss_ghostdragon_fire": {
+  "asset": "BOSS_GhostDragon_Fire",
+  "name": "Eidrolon Ignis (Boss)"
+ },
+ "boss_ghostrabbit": {
+  "asset": "BOSS_GhostRabbit",
+  "name": "Nitemary (Boss)"
+ },
+ "boss_ghostrabbit_grass": {
+  "asset": "BOSS_GhostRabbit_Grass",
+  "name": "Nitemary Botan (Boss)"
+ },
+ "boss_goldenhorse": {
+  "asset": "BOSS_GoldenHorse",
+  "name": "Gildane (Boss)"
+ },
+ "boss_gorilla": {
+  "asset": "BOSS_Gorilla",
+  "name": "Gorirat (Boss)"
+ },
+ "boss_gorilla_ground": {
+  "asset": "BOSS_Gorilla_Ground",
+  "name": "Gorirat Terra (Boss)"
+ },
+ "boss_grassdragon": {
+  "asset": "BOSS_GrassDragon",
+  "name": "Grass Dragon (Boss)"
+ },
+ "boss_grassgolem": {
+  "asset": "BOSS_GrassGolem",
+  "name": "Dualith (Boss)"
+ },
+ "boss_grassgolem_dark": {
+  "asset": "BOSS_GrassGolem_Dark",
+  "name": "Dualith Noct (Boss)"
+ },
+ "boss_grassmammoth": {
+  "asset": "BOSS_GrassMammoth",
+  "name": "Mammorest (Boss)"
+ },
+ "boss_grassmammoth_ice": {
+  "asset": "BOSS_GrassMammoth_Ice",
+  "name": "Mammorest Cryst (Boss)"
+ },
+ "boss_grassminotaur": {
+  "asset": "BOSS_GrassMinotaur",
+  "name": "Elgrove (Boss)"
+ },
+ "boss_grassminotaur_ice": {
+  "asset": "BOSS_GrassMinotaur_Ice",
+  "name": "Elgrove Cryst (Boss)"
+ },
+ "boss_grasspanda": {
+  "asset": "BOSS_GrassPanda",
+  "name": "Mossanda (Boss)"
+ },
+ "boss_grasspanda_electric": {
+  "asset": "BOSS_GrassPanda_Electric",
+  "name": "Mossanda Lux (Boss)"
+ },
+ "boss_grassrabbitman": {
+  "asset": "BOSS_GrassRabbitMan",
+  "name": "Verdash (Boss)"
+ },
+ "boss_grimgirl": {
+  "asset": "BOSS_GrimGirl",
+  "name": "Splatterina (Boss)"
+ },
+ "boss_guardiandog": {
+  "asset": "BOSS_GuardianDog",
+  "name": "Yakumo (Boss)"
+ },
+ "boss_hadesbird": {
+  "asset": "BOSS_HadesBird",
+  "name": "Helzephyr (Boss)"
+ },
+ "boss_hadesbird_electric": {
+  "asset": "BOSS_HadesBird_Electric",
+  "name": "Helzephyr Lux (Boss)"
+ },
+ "boss_hawkbird": {
+  "asset": "BOSS_HawkBird",
+  "name": "Nitewing (Boss)"
+ },
+ "boss_hedgehog": {
+  "asset": "BOSS_Hedgehog",
+  "name": "Jolthog (Boss)"
+ },
+ "boss_hedgehog_ice": {
+  "asset": "BOSS_Hedgehog_Ice",
+  "name": "Jolthog Cryst (Boss)"
+ },
+ "boss_herculesbeetle": {
+  "asset": "BOSS_HerculesBeetle",
+  "name": "Warsect (Boss)"
+ },
+ "boss_herculesbeetle_ground": {
+  "asset": "BOSS_HerculesBeetle_Ground",
+  "name": "Warsect Terra (Boss)"
+ },
+ "boss_hoodghost": {
+  "asset": "BOSS_HoodGhost",
+  "name": "Hoodle (Boss)"
+ },
+ "boss_horus": {
+  "asset": "BOSS_Horus",
+  "name": "Faleris (Boss)"
+ },
+ "boss_horus_bossrush": {
+  "asset": "BOSS_Horus_BossRush",
+  "name": "Faleris (Boss)"
+ },
+ "boss_horus_water": {
+  "asset": "BOSS_Horus_Water",
+  "name": "Faleris Aqua (Boss)"
+ },
+ "boss_icecrocodile": {
+  "asset": "BOSS_IceCrocodile",
+  "name": "Munchill (Boss)"
+ },
+ "boss_icedeer": {
+  "asset": "BOSS_IceDeer",
+  "name": "Reindrix (Boss)"
+ },
+ "boss_icefox": {
+  "asset": "BOSS_IceFox",
+  "name": "Foxcicle (Boss)"
+ },
+ "boss_icehorse": {
+  "asset": "BOSS_IceHorse",
+  "name": "Frostallion (Boss)"
+ },
+ "boss_icehorse_dark": {
+  "asset": "BOSS_IceHorse_Dark",
+  "name": "Frostallion Noct (Boss)"
+ },
+ "boss_icenarwhal": {
+  "asset": "BOSS_IceNarwhal",
+  "name": "Whalaska (Boss)"
+ },
+ "boss_icenarwhal_fire": {
+  "asset": "BOSS_IceNarwhal_Fire",
+  "name": "Whalaska Ignis (Boss)"
+ },
+ "boss_iceseal": {
+  "asset": "BOSS_IceSeal",
+  "name": "Polapup (Boss)"
+ },
+ "boss_iceseal_ground": {
+  "asset": "BOSS_IceSeal_Ground",
+  "name": "Polapup Terra (Boss)"
+ },
+ "boss_iceveildragon": {
+  "asset": "BOSS_IceVeilDragon",
+  "name": "Ice Veil Dragon (Boss)"
+ },
+ "boss_icewitch": {
+  "asset": "BOSS_IceWitch",
+  "name": "Icelyn (Boss)"
+ },
+ "boss_jellyfishfairy": {
+  "asset": "BOSS_JellyfishFairy",
+  "name": "Jelliette (Boss)"
+ },
+ "boss_jellyfishghost": {
+  "asset": "BOSS_JellyfishGhost",
+  "name": "Jellroy (Boss)"
+ },
+ "boss_jetdragon": {
+  "asset": "BOSS_JetDragon",
+  "name": "Jetragon (Boss)"
+ },
+ "boss_kabukiman": {
+  "asset": "BOSS_KabukiMan",
+  "name": "Renjishi (Boss)"
+ },
+ "boss_kelpie": {
+  "asset": "BOSS_Kelpie",
+  "name": "Kelpsea (Boss)"
+ },
+ "boss_kelpie_fire": {
+  "asset": "BOSS_Kelpie_Fire",
+  "name": "Kelpsea Ignis (Boss)"
+ },
+ "boss_kendofrog": {
+  "asset": "BOSS_KendoFrog",
+  "name": "Croajiro (Boss)"
+ },
+ "boss_kendofrog_dark": {
+  "asset": "BOSS_KendoFrog_Dark",
+  "name": "Croajiro Noct (Boss)"
+ },
+ "boss_kingalpaca": {
+  "asset": "BOSS_KingAlpaca",
+  "name": "Kingpaca (Boss)"
+ },
+ "boss_kingalpaca_ice": {
+  "asset": "BOSS_KingAlpaca_Ice",
+  "name": "Kingpaca Cryst (Boss)"
+ },
+ "boss_kingbahamut": {
+  "asset": "BOSS_KingBahamut",
+  "name": "Blazamut (Boss)"
+ },
+ "boss_kingbahamut_dragon": {
+  "asset": "BOSS_KingBahamut_Dragon",
+  "name": "Blazamut Ryu (Boss)"
+ },
+ "boss_kingcrab": {
+  "asset": "BOSS_KingCrab",
+  "name": "King Crab (Boss)"
+ },
+ "boss_kingsunfish": {
+  "asset": "BOSS_KingSunfish",
+  "name": "Solmora (Boss)"
+ },
+ "boss_kingsunfish_thunder": {
+  "asset": "BOSS_KingSunfish_Thunder",
+  "name": "Solmora Lux (Boss)"
+ },
+ "boss_kingwhale": {
+  "asset": "BOSS_KingWhale",
+  "name": "Panthalus (Boss)"
+ },
+ "boss_kingwhale_otomo": {
+  "asset": "BOSS_KingWhale_otomo",
+  "name": "Panthalus (Boss)"
+ },
+ "boss_kirin": {
+  "asset": "BOSS_Kirin",
+  "name": "Univolt (Boss)"
+ },
+ "boss_kirin_ice": {
+  "asset": "BOSS_Kirin_Ice",
+  "name": "Univolt Cryst (Boss)"
+ },
+ "boss_kitsunebi": {
+  "asset": "BOSS_Kitsunebi",
+  "name": "Foxparks (Boss)"
+ },
+ "boss_kitsunebi_ice": {
+  "asset": "BOSS_Kitsunebi_Ice",
+  "name": "Foxparks Cryst (Boss)"
+ },
+ "boss_lanternbutler": {
+  "asset": "BOSS_LanternButler",
+  "name": "Loomen (Boss)"
+ },
+ "boss_lavagirl": {
+  "asset": "BOSS_LavaGirl",
+  "name": "Flambelle (Boss)"
+ },
+ "boss_lazycatfish": {
+  "asset": "BOSS_LazyCatfish",
+  "name": "Dumud (Boss)"
+ },
+ "boss_lazycatfish_gold": {
+  "asset": "BOSS_LazyCatfish_Gold",
+  "name": "Dumud Gild (Boss)"
+ },
+ "boss_lazydragon": {
+  "asset": "BOSS_LazyDragon",
+  "name": "Relaxaurus (Boss)"
+ },
+ "boss_lazydragon_electric": {
+  "asset": "BOSS_LazyDragon_Electric",
+  "name": "Relaxaurus Lux (Boss)"
+ },
+ "boss_leafbird": {
+  "asset": "BOSS_LeafBird",
+  "name": "Leaf Bird (Boss)"
+ },
+ "boss_leafmomonga": {
+  "asset": "BOSS_LeafMomonga",
+  "name": "Herbil (Boss)"
+ },
+ "boss_leafprincess": {
+  "asset": "BOSS_LeafPrincess",
+  "name": "Lullu (Boss)"
+ },
+ "boss_legenddeer": {
+  "asset": "BOSS_LegendDeer",
+  "name": "Hartalis (Boss)"
+ },
+ "boss_lilyqueen": {
+  "asset": "BOSS_LilyQueen",
+  "name": "Lyleen (Boss)"
+ },
+ "boss_lilyqueen_bossrush": {
+  "asset": "BOSS_LilyQueen_BossRush",
+  "name": "Lyleen (Boss)"
+ },
+ "boss_lilyqueen_dark": {
+  "asset": "BOSS_LilyQueen_Dark",
+  "name": "Lyleen Noct (Boss)"
+ },
+ "boss_littlebriarrose": {
+  "asset": "BOSS_LittleBriarRose",
+  "name": "Bristla (Boss)"
+ },
+ "boss_lizardman": {
+  "asset": "BOSS_LizardMan",
+  "name": "Leezpunk (Boss)"
+ },
+ "boss_lizardman_fire": {
+  "asset": "BOSS_LizardMan_Fire",
+  "name": "Leezpunk Ignis (Boss)"
+ },
+ "boss_longcat": {
+  "asset": "BOSS_LongCat",
+  "name": "Valentail (Boss)"
+ },
+ "boss_lotusdragon": {
+  "asset": "BOSS_LotusDragon",
+  "name": "Ophydia (Boss)"
+ },
+ "boss_manticore": {
+  "asset": "BOSS_Manticore",
+  "name": "Blazehowl (Boss)"
+ },
+ "boss_manticore_dark": {
+  "asset": "BOSS_Manticore_Dark",
+  "name": "Blazehowl Noct (Boss)"
+ },
+ "boss_medjedbird": {
+  "asset": "BOSS_MedjedBird",
+  "name": "Medjed Bird (Boss)"
+ },
+ "boss_mexicansalamander": {
+  "asset": "BOSS_MexicanSalamander",
+  "name": "Mexican Salamander (Boss)"
+ },
+ "boss_mimicdog": {
+  "asset": "BOSS_MimicDog",
+  "name": "Mimog (Boss)"
+ },
+ "boss_monkey": {
+  "asset": "BOSS_Monkey",
+  "name": "Tanzee (Boss)"
+ },
+ "boss_monkey_fire": {
+  "asset": "BOSS_Monkey_Fire",
+  "name": "Tanzee Ignis (Boss)"
+ },
+ "boss_monkey_ice": {
+  "asset": "BOSS_Monkey_Ice",
+  "name": "Monkey Ice (Boss)"
+ },
+ "boss_monochromemushroom": {
+  "asset": "BOSS_MonochromeMushroom",
+  "name": "Monochrome Mushroom (Boss)"
+ },
+ "boss_monochromequeen": {
+  "asset": "BOSS_MonochromeQueen",
+  "name": "Solenne (Boss)"
+ },
+ "boss_moonchild": {
+  "asset": "BOSS_MoonChild",
+  "name": "Wistella (Boss)"
+ },
+ "boss_moonqueen": {
+  "asset": "BOSS_MoonQueen",
+  "name": "Selyne (Boss)"
+ },
+ "boss_moonqueen_bossrush": {
+  "asset": "BOSS_MoonQueen_BossRush",
+  "name": "Selyne (Boss)"
+ },
+ "boss_mopbaby": {
+  "asset": "BOSS_MopBaby",
+  "name": "Swee (Boss)"
+ },
+ "boss_mopking": {
+  "asset": "BOSS_MopKing",
+  "name": "Sweepa (Boss)"
+ },
+ "boss_mothman": {
+  "asset": "BOSS_Mothman",
+  "name": "Silvance (Boss)"
+ },
+ "boss_mummypal": {
+  "asset": "BOSS_MummyPal",
+  "name": "Gildra (Boss)"
+ },
+ "boss_mushroomdragon": {
+  "asset": "BOSS_MushroomDragon",
+  "name": "Shroomer (Boss)"
+ },
+ "boss_mushroomdragon_dark": {
+  "asset": "BOSS_MushroomDragon_Dark",
+  "name": "Shroomer Noct (Boss)"
+ },
+ "boss_mushroomlady": {
+  "asset": "BOSS_MushroomLady",
+  "name": "Mycora (Boss)"
+ },
+ "boss_mutant": {
+  "asset": "BOSS_Mutant",
+  "name": "Lunaris (Boss)"
+ },
+ "boss_mysterymask": {
+  "asset": "BOSS_MysteryMask",
+  "name": "Omascul (Boss)"
+ },
+ "boss_naughtycat": {
+  "asset": "BOSS_NaughtyCat",
+  "name": "Grintale (Boss)"
+ },
+ "boss_negativekoala": {
+  "asset": "BOSS_NegativeKoala",
+  "name": "Depresso (Boss)"
+ },
+ "boss_negativeoctopus": {
+  "asset": "BOSS_NegativeOctopus",
+  "name": "Killamari (Boss)"
+ },
+ "boss_negativeoctopus_neutral": {
+  "asset": "BOSS_NegativeOctopus_Neutral",
+  "name": "Killamari Primo (Boss)"
+ },
+ "boss_nightbluehorse": {
+  "asset": "BOSS_NightBlueHorse",
+  "name": "Starryon (Boss)"
+ },
+ "boss_nightbluehorse_neutral": {
+  "asset": "BOSS_NightBlueHorse_Neutral",
+  "name": "Starryon Primo (Boss)"
+ },
+ "boss_nightfox": {
+  "asset": "BOSS_NightFox",
+  "name": "Nox (Boss)"
+ },
+ "boss_nightlady": {
+  "asset": "BOSS_NightLady",
+  "name": "Bellanoir (Boss)"
+ },
+ "boss_nightlady_dark": {
+  "asset": "BOSS_NightLady_Dark",
+  "name": "Bellanoir Libero (Boss)"
+ },
+ "boss_octopusgirl": {
+  "asset": "BOSS_OctopusGirl",
+  "name": "Gloopie (Boss)"
+ },
+ "boss_octopusgirl_neutral": {
+  "asset": "BOSS_OctopusGirl_Neutral",
+  "name": "Gloopie Primo (Boss)"
+ },
+ "boss_onighostgirl": {
+  "asset": "BOSS_OniGhostGirl",
+  "name": "Bakemi (Boss)"
+ },
+ "boss_pandagirl": {
+  "asset": "BOSS_PandaGirl",
+  "name": "Leafan (Boss)"
+ },
+ "boss_penguin": {
+  "asset": "BOSS_Penguin",
+  "name": "Pengullet (Boss)"
+ },
+ "boss_penguin_electric": {
+  "asset": "BOSS_Penguin_Electric",
+  "name": "Pengullet Lux (Boss)"
+ },
+ "boss_pinkcat": {
+  "asset": "BOSS_PinkCat",
+  "name": "Cattiva (Boss)"
+ },
+ "boss_pinkkangaroo": {
+  "asset": "BOSS_PinkKangaroo",
+  "name": "Pink Kangaroo (Boss)"
+ },
+ "boss_pinklizard": {
+  "asset": "BOSS_PinkLizard",
+  "name": "Lovander (Boss)"
+ },
+ "boss_pinkrabbit": {
+  "asset": "BOSS_PinkRabbit",
+  "name": "Ribbuny (Boss)"
+ },
+ "boss_pinkrabbit_grass": {
+  "asset": "BOSS_PinkRabbit_Grass",
+  "name": "Ribbuny Botan (Boss)"
+ },
+ "boss_plantslime": {
+  "asset": "BOSS_PlantSlime",
+  "name": "Gumoss (Boss)"
+ },
+ "boss_plantslime_flower": {
+  "asset": "BOSS_PlantSlime_Flower",
+  "name": "Gumoss (Boss)"
+ },
+ "boss_plesiosaur": {
+  "asset": "BOSS_Plesiosaur",
+  "name": "Braloha (Boss)"
+ },
+ "boss_poseidonorca": {
+  "asset": "BOSS_PoseidonOrca",
+  "name": "Neptilius (Boss)"
+ },
+ "boss_purplespider": {
+  "asset": "BOSS_PurpleSpider",
+  "name": "Tarantriss (Boss)"
+ },
+ "boss_queenbee": {
+  "asset": "BOSS_QueenBee",
+  "name": "Elizabee (Boss)"
+ },
+ "boss_raijindaughter": {
+  "asset": "BOSS_RaijinDaughter",
+  "name": "Dazzi (Boss)"
+ },
+ "boss_raijindaughter_water": {
+  "asset": "BOSS_RaijinDaughter_Water",
+  "name": "Dazzi Noct (Boss)"
+ },
+ "boss_redarmorbird": {
+  "asset": "BOSS_RedArmorBird",
+  "name": "Ragnahawk (Boss)"
+ },
+ "boss_redflowerbird": {
+  "asset": "BOSS_RedFlowerBird",
+  "name": "Tropicaw (Boss)"
+ },
+ "boss_robinhood": {
+  "asset": "BOSS_RobinHood",
+  "name": "Robinquill (Boss)"
+ },
+ "boss_robinhood_ground": {
+  "asset": "BOSS_RobinHood_Ground",
+  "name": "Robinquill Terra (Boss)"
+ },
+ "boss_rockbeast": {
+  "asset": "BOSS_RockBeast",
+  "name": "Pierdon (Boss)"
+ },
+ "boss_rockbeast_ice": {
+  "asset": "BOSS_RockBeast_Ice",
+  "name": "Pierdon Cryst (Boss)"
+ },
+ "boss_rockcheetah": {
+  "asset": "BOSS_RockCheetah",
+  "name": "Rock Cheetah (Boss)"
+ },
+ "boss_ronin": {
+  "asset": "BOSS_Ronin",
+  "name": "Bushi (Boss)"
+ },
+ "boss_ronin_dark": {
+  "asset": "BOSS_Ronin_Dark",
+  "name": "Bushi Noct (Boss)"
+ },
+ "boss_saintcentaur": {
+  "asset": "BOSS_SaintCentaur",
+  "name": "Paladius (Boss)"
+ },
+ "boss_sakurasaurus": {
+  "asset": "BOSS_SakuraSaurus",
+  "name": "Broncherry (Boss)"
+ },
+ "boss_sakurasaurus_water": {
+  "asset": "BOSS_SakuraSaurus_Water",
+  "name": "Broncherry Aqua (Boss)"
+ },
+ "boss_samuraidog": {
+  "asset": "BOSS_SamuraiDog",
+  "name": "Pupperai (Boss)"
+ },
+ "boss_scorpionman": {
+  "asset": "BOSS_ScorpionMan",
+  "name": "Prixter (Boss)"
+ },
+ "boss_scorpionman_electric": {
+  "asset": "BOSS_ScorpionMan_Electric",
+  "name": "Prixter Lux (Boss)"
+ },
+ "boss_sekhmet": {
+  "asset": "BOSS_Sekhmet",
+  "name": "Sekhmet (Boss)"
+ },
+ "boss_serpent": {
+  "asset": "BOSS_Serpent",
+  "name": "Surfent (Boss)"
+ },
+ "boss_serpent_ground": {
+  "asset": "BOSS_Serpent_Ground",
+  "name": "Surfent Terra (Boss)"
+ },
+ "boss_sharkkid": {
+  "asset": "BOSS_SharkKid",
+  "name": "Gobfin (Boss)"
+ },
+ "boss_sharkkid_fire": {
+  "asset": "BOSS_SharkKid_Fire",
+  "name": "Gobfin Ignis (Boss)"
+ },
+ "boss_sheepball": {
+  "asset": "BOSS_SheepBall",
+  "name": "Lamball (Boss)"
+ },
+ "boss_sifudog": {
+  "asset": "BOSS_SifuDog",
+  "name": "Dogen (Boss)"
+ },
+ "boss_skydragon": {
+  "asset": "BOSS_SkyDragon",
+  "name": "Quivern (Boss)"
+ },
+ "boss_skydragon_grass": {
+  "asset": "BOSS_SkyDragon_Grass",
+  "name": "Quivern Botan (Boss)"
+ },
+ "boss_sleeverabbit": {
+  "asset": "BOSS_SleeveRabbit",
+  "name": "Lapure (Boss)"
+ },
+ "boss_smallarmadillo": {
+  "asset": "BOSS_SmallArmadillo",
+  "name": "Kikit (Boss)"
+ },
+ "boss_smallyeti": {
+  "asset": "BOSS_SmallYeti",
+  "name": "Snugloo (Boss)"
+ },
+ "boss_snakegirl": {
+  "asset": "BOSS_SnakeGirl",
+  "name": "Venusa (Boss)"
+ },
+ "boss_snakequeen": {
+  "asset": "BOSS_SnakeQueen",
+  "name": "Snake Queen (Boss)"
+ },
+ "boss_snowpeafowl": {
+  "asset": "BOSS_SnowPeafowl",
+  "name": "Frostplume (Boss)"
+ },
+ "boss_snowtigerbeastman": {
+  "asset": "BOSS_SnowTigerBeastman",
+  "name": "Bastigor (Boss)"
+ },
+ "boss_snowtigerbeastman_bossrush": {
+  "asset": "BOSS_SnowTigerBeastman_BossRush",
+  "name": "Bastigor (Boss)"
+ },
+ "boss_soldierbee": {
+  "asset": "BOSS_SoldierBee",
+  "name": "Beegarde (Boss)"
+ },
+ "boss_strawhatcat": {
+  "asset": "BOSS_StrawHatCat",
+  "name": "Straw Hat Cat (Boss)"
+ },
+ "boss_stuffedshark": {
+  "asset": "BOSS_StuffedShark",
+  "name": "Finsider (Boss)"
+ },
+ "boss_stuffedshark_fire": {
+  "asset": "BOSS_StuffedShark_Fire",
+  "name": "Finsider Ignis (Boss)"
+ },
+ "boss_sumodog": {
+  "asset": "BOSS_SumoDog",
+  "name": "Bulldosu (Boss)"
+ },
+ "boss_suzaku": {
+  "asset": "BOSS_Suzaku",
+  "name": "Suzaku (Boss)"
+ },
+ "boss_suzaku_water": {
+  "asset": "BOSS_Suzaku_Water",
+  "name": "Suzaku Aqua (Boss)"
+ },
+ "boss_sweetssheep": {
+  "asset": "BOSS_SweetsSheep",
+  "name": "Woolipop (Boss)"
+ },
+ "boss_sweetssheep_ground": {
+  "asset": "BOSS_SweetsSheep_Ground",
+  "name": "Woolipop Terra (Boss)"
+ },
+ "boss_swordcutlassfish": {
+  "asset": "BOSS_SwordCutlassfish",
+  "name": "Skutlass (Boss)"
+ },
+ "boss_swordcutlassfish_fire": {
+  "asset": "BOSS_SwordCutlassfish_Fire",
+  "name": "Skutlass Ignis (Boss)"
+ },
+ "boss_tentacleturtle": {
+  "asset": "BOSS_TentacleTurtle",
+  "name": "Turtacle (Boss)"
+ },
+ "boss_tentacleturtle_ground": {
+  "asset": "BOSS_TentacleTurtle_Ground",
+  "name": "Turtacle Terra (Boss)"
+ },
+ "boss_thiefbird": {
+  "asset": "BOSS_ThiefBird",
+  "name": "Roujay (Boss)"
+ },
+ "boss_thunderbird": {
+  "asset": "BOSS_ThunderBird",
+  "name": "Beakon (Boss)"
+ },
+ "boss_thunderbird_ice": {
+  "asset": "BOSS_ThunderBird_Ice",
+  "name": "Beakon Cryst (Boss)"
+ },
+ "boss_thunderdog": {
+  "asset": "BOSS_ThunderDog",
+  "name": "Rayhound (Boss)"
+ },
+ "boss_thunderdog_ice": {
+  "asset": "BOSS_ThunderDog_Ice",
+  "name": "Rayhound Cryst (Boss)"
+ },
+ "boss_thunderdragonman": {
+  "asset": "BOSS_ThunderDragonMan",
+  "name": "Orserk (Boss)"
+ },
+ "boss_thunderdragonman_bossrush": {
+  "asset": "BOSS_ThunderDragonMan_BossRush",
+  "name": "Orserk (Boss)"
+ },
+ "boss_thunderfluffybird": {
+  "asset": "BOSS_ThunderFluffyBird",
+  "name": "Dynamoff (Boss)"
+ },
+ "boss_tropicalostrich": {
+  "asset": "BOSS_TropicalOstrich",
+  "name": "Palumba (Boss)"
+ },
+ "boss_umihebi": {
+  "asset": "BOSS_Umihebi",
+  "name": "Jormuntide (Boss)"
+ },
+ "boss_umihebi_fire": {
+  "asset": "BOSS_Umihebi_Fire",
+  "name": "Jormuntide Ignis (Boss)"
+ },
+ "boss_venusflytrap": {
+  "asset": "BOSS_VenusFlytrap",
+  "name": "Carnibora (Boss)"
+ },
+ "boss_violetfairy": {
+  "asset": "BOSS_VioletFairy",
+  "name": "Vaelet (Boss)"
+ },
+ "boss_volcanicmonster": {
+  "asset": "BOSS_VolcanicMonster",
+  "name": "Reptyro (Boss)"
+ },
+ "boss_volcanicmonster_ice": {
+  "asset": "BOSS_VolcanicMonster_Ice",
+  "name": "Reptyro Cryst (Boss)"
+ },
+ "boss_volcanicturtle": {
+  "asset": "BOSS_VolcanicTurtle",
+  "name": "Volcanic Turtle (Boss)"
+ },
+ "boss_volcanodragon": {
+  "asset": "BOSS_VolcanoDragon",
+  "name": "Moldron (Boss)"
+ },
+ "boss_volcanodragon_ice": {
+  "asset": "BOSS_VolcanoDragon_Ice",
+  "name": "Moldron Cryst (Boss)"
+ },
+ "boss_waterlizard": {
+  "asset": "BOSS_WaterLizard",
+  "name": "Water Lizard (Boss)"
+ },
+ "boss_weaseldragon": {
+  "asset": "BOSS_WeaselDragon",
+  "name": "Chillet (Boss)"
+ },
+ "boss_weaseldragon_fire": {
+  "asset": "BOSS_WeaselDragon_Fire",
+  "name": "Chillet Ignis (Boss)"
+ },
+ "boss_werewolf": {
+  "asset": "BOSS_Werewolf",
+  "name": "Loupmoon (Boss)"
+ },
+ "boss_werewolf_ice": {
+  "asset": "BOSS_Werewolf_Ice",
+  "name": "Loupmoon Cryst (Boss)"
+ },
+ "boss_whitealiendragon": {
+  "asset": "BOSS_WhiteAlienDragon",
+  "name": "Xenogard (Boss)"
+ },
+ "boss_whitedeer": {
+  "asset": "BOSS_WhiteDeer",
+  "name": "Celesdir (Boss)"
+ },
+ "boss_whitedeer_dark": {
+  "asset": "BOSS_WhiteDeer_Dark",
+  "name": "Celesdir Noct (Boss)"
+ },
+ "boss_whitemoth": {
+  "asset": "BOSS_WhiteMoth",
+  "name": "Sibelyx (Boss)"
+ },
+ "boss_whitemoth_neutral": {
+  "asset": "BOSS_WhiteMoth_Neutral",
+  "name": "Sibelyx Primo (Boss)"
+ },
+ "boss_whiteshielddragon": {
+  "asset": "BOSS_WhiteShieldDragon",
+  "name": "Silvegis (Boss)"
+ },
+ "boss_whitetiger": {
+  "asset": "BOSS_WhiteTiger",
+  "name": "Cryolinx (Boss)"
+ },
+ "boss_whitetiger_ground": {
+  "asset": "BOSS_WhiteTiger_Ground",
+  "name": "Cryolinx Terra (Boss)"
+ },
+ "boss_windchimes": {
+  "asset": "BOSS_WindChimes",
+  "name": "Hangyu (Boss)"
+ },
+ "boss_windchimes_ice": {
+  "asset": "BOSS_WindChimes_Ice",
+  "name": "Hangyu Cryst (Boss)"
+ },
+ "boss_winggolem": {
+  "asset": "BOSS_WingGolem",
+  "name": "Knocklem (Boss)"
+ },
+ "boss_winggolem_fire": {
+  "asset": "BOSS_WingGolem_Fire",
+  "name": "Knocklem Ignis (Boss)"
+ },
+ "boss_wizardowl": {
+  "asset": "BOSS_WizardOwl",
+  "name": "Hoocrates (Boss)"
+ },
+ "boss_woolfox": {
+  "asset": "BOSS_WoolFox",
+  "name": "Cremis (Boss)"
+ },
+ "boss_worldtreedragon": {
+  "asset": "BOSS_WorldTreeDragon",
+  "name": "Astralym (Boss)"
+ },
+ "boss_yakushimaboss001": {
+  "asset": "BOSS_YakushimaBoss001",
+  "name": "Eye of Cthulhu (Boss)"
+ },
+ "boss_yeti": {
+  "asset": "BOSS_Yeti",
+  "name": "Wumpo (Boss)"
+ },
+ "boss_yeti_grass": {
+  "asset": "BOSS_Yeti_Grass",
+  "name": "Wumpo Botan (Boss)"
+ },
+ "brownrabbit": {
+  "asset": "BrownRabbit",
+  "name": "Lapiron"
+ },
+ "cactusdoll": {
+  "asset": "CactusDoll",
+  "name": "Needoll"
+ },
+ "cactusdoll_dark": {
+  "asset": "CactusDoll_Dark",
+  "name": "Needoll Noct"
+ },
+ "candleghost": {
+  "asset": "CandleGhost",
+  "name": "Sootseer"
+ },
+ "candlewitch": {
+  "asset": "CandleWitch",
+  "name": "Candle Witch"
+ },
+ "captainpenguin": {
+  "asset": "CaptainPenguin",
+  "name": "Penking"
+ },
+ "captainpenguin_black": {
+  "asset": "CaptainPenguin_Black",
+  "name": "Penking Lux"
+ },
+ "carbunclo": {
+  "asset": "Carbunclo",
+  "name": "Lifmunk"
+ },
+ "catbat": {
+  "asset": "CatBat",
+  "name": "Tombat"
+ },
+ "catmage": {
+  "asset": "CatMage",
+  "name": "Katress"
+ },
+ "catmage_fire": {
+  "asset": "CatMage_Fire",
+  "name": "Katress Ignis"
+ },
+ "catvampire": {
+  "asset": "CatVampire",
+  "name": "Felbat"
+ },
+ "chickenpal": {
+  "asset": "ChickenPal",
+  "name": "Chikipi"
+ },
+ "clionetwins": {
+  "asset": "ClioneTwins",
+  "name": "Amione"
+ },
+ "cloverfairy": {
+  "asset": "CloverFairy",
+  "name": "Clovee"
+ },
+ "clownrabbit": {
+  "asset": "ClownRabbit",
+  "name": "Dupin"
+ },
+ "colorfulbird": {
+  "asset": "ColorfulBird",
+  "name": "Tocotoco"
+ },
+ "cowpal": {
+  "asset": "Cowpal",
+  "name": "Mozzarina"
+ },
+ "cubeturtle": {
+  "asset": "CubeTurtle",
+  "name": "Tetroise "
+ },
+ "cubeturtle_neutral": {
+  "asset": "CubeTurtle_Neutral",
+  "name": "Tetroise Primo"
+ },
+ "cutebutterfly": {
+  "asset": "CuteButterfly",
+  "name": "Cinnamoth"
+ },
+ "cutefox": {
+  "asset": "CuteFox",
+  "name": "Vixy"
+ },
+ "cutemole": {
+  "asset": "CuteMole",
+  "name": "Fuddler"
+ },
+ "cuteorca": {
+  "asset": "CuteOrca",
+  "name": "Cute Orca"
+ },
+ "dandeliongirl": {
+  "asset": "DandelionGirl",
+  "name": "Souffline"
+ },
+ "darkalien": {
+  "asset": "DarkAlien",
+  "name": "Xenovader"
+ },
+ "darkalien_oilrig": {
+  "asset": "DarkAlien_Oilrig",
+  "name": "Xenovader"
+ },
+ "darkcrow": {
+  "asset": "DarkCrow",
+  "name": "Cawgnito"
+ },
+ "darkflamefox": {
+  "asset": "DarkFlameFox",
+  "name": "Majex"
+ },
+ "darkmechadragon": {
+  "asset": "DarkMechaDragon",
+  "name": "Xenolord"
+ },
+ "darkmutant": {
+  "asset": "DarkMutant",
+  "name": "Dark Mutant"
+ },
+ "darkscorpion": {
+  "asset": "DarkScorpion",
+  "name": "Menasting"
+ },
+ "darkscorpion_ground": {
+  "asset": "DarkScorpion_Ground",
+  "name": "Menasting Terra"
+ },
+ "deer": {
+  "asset": "Deer",
+  "name": "Eikthyrdeer"
+ },
+ "deer_ground": {
+  "asset": "Deer_Ground",
+  "name": "Eikthyrdeer Terra"
+ },
+ "domearmordragon": {
+  "asset": "DomeArmorDragon",
+  "name": "Aegidron"
+ },
+ "dreamdemon": {
+  "asset": "DreamDemon",
+  "name": "Daedream"
+ },
+ "drillgame": {
+  "asset": "DrillGame",
+  "name": "Digtoise"
+ },
+ "eagle": {
+  "asset": "Eagle",
+  "name": "Galeclaw"
+ },
+ "eleccat": {
+  "asset": "ElecCat",
+  "name": "Sparkit"
+ },
+ "eleclion": {
+  "asset": "ElecLion",
+  "name": "Boltmane"
+ },
+ "eleclizard": {
+  "asset": "ElecLizard",
+  "name": "Slowatt"
+ },
+ "elecpanda": {
+  "asset": "ElecPanda",
+  "name": "Grizzbolt"
+ },
+ "elecpomeranian": {
+  "asset": "ElecPomeranian",
+  "name": "Puffolt"
+ },
+ "elecsnail": {
+  "asset": "ElecSnail",
+  "name": "Snock"
+ },
+ "elecsnail_fire": {
+  "asset": "ElecSnail_Fire",
+  "name": "Elec Snail Fire"
+ },
+ "elecsnail_ground": {
+  "asset": "ElecSnail_Ground",
+  "name": "Snock Lux"
+ },
+ "fairydragon": {
+  "asset": "FairyDragon",
+  "name": "Elphidran"
+ },
+ "fairydragon_water": {
+  "asset": "FairyDragon_Water",
+  "name": "Elphidran Aqua"
+ },
+ "featherostrich": {
+  "asset": "FeatherOstrich",
+  "name": "Dazemu"
+ },
+ "fengyundeeper": {
+  "asset": "FengyunDeeper",
+  "name": "Fenglope"
+ },
+ "fengyundeeper_electric": {
+  "asset": "FengyunDeeper_Electric",
+  "name": "Fenglope Lux"
+ },
+ "firekirin": {
+  "asset": "FireKirin",
+  "name": "Pyrin"
+ },
+ "firekirin_dark": {
+  "asset": "FireKirin_Dark",
+  "name": "Pyrin Noct"
+ },
+ "flamebambi": {
+  "asset": "FlameBambi",
+  "name": "Rooby"
+ },
+ "flamebuffalo": {
+  "asset": "FlameBuffalo",
+  "name": "Arsox"
+ },
+ "flowerdinosaur": {
+  "asset": "FlowerDinosaur",
+  "name": "Dinossom"
+ },
+ "flowerdinosaur_electric": {
+  "asset": "FlowerDinosaur_Electric",
+  "name": "Dinossom Lux"
+ },
+ "flowerdoll": {
+  "asset": "FlowerDoll",
+  "name": "Petallia"
+ },
+ "flowerdoll_fire": {
+  "asset": "FlowerDoll_Fire",
+  "name": "Petallia Ignis"
+ },
+ "flowerprince": {
+  "asset": "FlowerPrince",
+  "name": "Dandilord"
+ },
+ "flowerrabbit": {
+  "asset": "FlowerRabbit",
+  "name": "Flopie"
+ },
+ "fluffybird": {
+  "asset": "FluffyBird",
+  "name": "Muffly"
+ },
+ "flyingmanta": {
+  "asset": "FlyingManta",
+  "name": "Celaray"
+ },
+ "flyingmanta_thunder": {
+  "asset": "FlyingManta_Thunder",
+  "name": "Celaray Lux"
+ },
+ "foxexorcist": {
+  "asset": "FoxExorcist",
+  "name": "Flaracle"
+ },
+ "foxmage": {
+  "asset": "FoxMage",
+  "name": "Wixen"
+ },
+ "foxmage_dark": {
+  "asset": "FoxMage_Dark",
+  "name": "Wixen Noct"
+ },
+ "frozenbear": {
+  "asset": "FrozenBear",
+  "name": "Frozen Bear"
+ },
+ "ganesha": {
+  "asset": "Ganesha",
+  "name": "Teafant"
+ },
+ "garm": {
+  "asset": "Garm",
+  "name": "Direhowl"
+ },
+ "ghostanglerfish": {
+  "asset": "GhostAnglerfish",
+  "name": "Ghangler"
+ },
+ "ghostanglerfish_fire": {
+  "asset": "GhostAnglerfish_Fire",
+  "name": "Ghangler Ignis"
+ },
+ "ghostbeast": {
+  "asset": "GhostBeast",
+  "name": "Maraith"
+ },
+ "ghostblackcat": {
+  "asset": "GhostBlackCat",
+  "name": "Wispaw"
+ },
+ "ghostdragon": {
+  "asset": "GhostDragon",
+  "name": "Eidrolon"
+ },
+ "ghostdragon_fire": {
+  "asset": "GhostDragon_Fire",
+  "name": "Eidrolon Ignis"
+ },
+ "ghostrabbit": {
+  "asset": "GhostRabbit",
+  "name": "Nitemary"
+ },
+ "ghostrabbit_grass": {
+  "asset": "GhostRabbit_Grass",
+  "name": "Nitemary Botan"
+ },
+ "goldenhorse": {
+  "asset": "GoldenHorse",
+  "name": "Gildane"
+ },
+ "gorilla": {
+  "asset": "Gorilla",
+  "name": "Gorirat"
+ },
+ "gorilla_ground": {
+  "asset": "Gorilla_Ground",
+  "name": "Gorirat Terra"
+ },
+ "grassdragon": {
+  "asset": "GrassDragon",
+  "name": "Grass Dragon"
+ },
+ "grassgolem": {
+  "asset": "GrassGolem",
+  "name": "Dualith"
+ },
+ "grassgolem_dark": {
+  "asset": "GrassGolem_Dark",
+  "name": "Dualith Noct"
+ },
+ "grassmammoth": {
+  "asset": "GrassMammoth",
+  "name": "Mammorest"
+ },
+ "grassmammoth_ice": {
+  "asset": "GrassMammoth_Ice",
+  "name": "Mammorest Cryst"
+ },
+ "grassminotaur": {
+  "asset": "GrassMinotaur",
+  "name": "Elgrove"
+ },
+ "grassminotaur_ice": {
+  "asset": "GrassMinotaur_Ice",
+  "name": "Elgrove Cryst"
+ },
+ "grasspanda": {
+  "asset": "GrassPanda",
+  "name": "Mossanda"
+ },
+ "grasspanda_electric": {
+  "asset": "GrassPanda_Electric",
+  "name": "Mossanda Lux"
+ },
+ "grasspanda_electric_tower": {
+  "asset": "GrassPanda_Electric_Tower",
+  "name": "Mossanda Lux"
+ },
+ "grassrabbitman": {
+  "asset": "GrassRabbitMan",
+  "name": "Verdash"
+ },
+ "grimgirl": {
+  "asset": "GrimGirl",
+  "name": "Splatterina"
+ },
+ "guardiandog": {
+  "asset": "GuardianDog",
+  "name": "Yakumo"
+ },
+ "gym_blackgriffon": {
+  "asset": "GYM_BlackGriffon",
+  "name": "Victor & Shadowbeak (Gym)"
+ },
+ "gym_blackgriffon_2": {
+  "asset": "GYM_BlackGriffon_2",
+  "name": "Victor & Shadowbeak (Gym)"
+ },
+ "gym_blackgriffon_2_avatar": {
+  "asset": "GYM_BlackGriffon_2_Avatar",
+  "name": "Victor & Shadowbeak (Gym)"
+ },
+ "gym_blueskydragon": {
+  "asset": "GYM_BlueSkyDragon",
+  "name": "Auri & Shaolong (Gym)"
+ },
+ "gym_blueskydragon_2": {
+  "asset": "GYM_BlueSkyDragon_2",
+  "name": "Auri & Shaolong (Gym)"
+ },
+ "gym_elecpanda": {
+  "asset": "GYM_ElecPanda",
+  "name": "Zoe & Grizzbolt (Gym)"
+ },
+ "gym_elecpanda_2": {
+  "asset": "GYM_ElecPanda_2",
+  "name": "Zoe & Grizzbolt (Gym)"
+ },
+ "gym_elecpanda_otomo": {
+  "asset": "GYM_ElecPanda_Otomo",
+  "name": "Zoe & Grizzbolt (Gym)"
+ },
+ "gym_horus": {
+  "asset": "GYM_Horus",
+  "name": "Marcus & Faleris (Gym)"
+ },
+ "gym_horus_2": {
+  "asset": "GYM_Horus_2",
+  "name": "Marcus & Faleris (Gym)"
+ },
+ "gym_lilyqueen": {
+  "asset": "GYM_LilyQueen",
+  "name": "Lily & Lyleen (Gym)"
+ },
+ "gym_lilyqueen_2": {
+  "asset": "GYM_LilyQueen_2",
+  "name": "Lily & Lyleen (Gym)"
+ },
+ "gym_moonqueen": {
+  "asset": "GYM_MoonQueen",
+  "name": "Saya & Selyne (Gym)"
+ },
+ "gym_moonqueen_2": {
+  "asset": "GYM_MoonQueen_2",
+  "name": "Saya & Selyne (Gym)"
+ },
+ "gym_moonqueen_2_servant": {
+  "asset": "GYM_MoonQueen_2_Servant",
+  "name": "Selyne (Gym)"
+ },
+ "gym_snowtigerbeastman": {
+  "asset": "GYM_SnowTigerBeastman",
+  "name": "Bjorn & Bastigor (Gym)"
+ },
+ "gym_snowtigerbeastman_2": {
+  "asset": "GYM_SnowTigerBeastman_2",
+  "name": "Bjorn & Bastigor (Gym)"
+ },
+ "gym_thunderdragonman": {
+  "asset": "GYM_ThunderDragonMan",
+  "name": "Axel & Orserk (Gym)"
+ },
+ "gym_thunderdragonman_2": {
+  "asset": "GYM_ThunderDragonMan_2",
+  "name": "Axel & Orserk (Gym)"
+ },
+ "gym_worldtreedragon": {
+  "asset": "GYM_WorldTreeDragon",
+  "name": "Zenara & Astralym (Gym)"
+ },
+ "gym_worldtreedragon_2": {
+  "asset": "GYM_WorldTreeDragon_2",
+  "name": "Zenara & Astralym (Gym)"
+ },
+ "hadesbird": {
+  "asset": "HadesBird",
+  "name": "Helzephyr"
+ },
+ "hadesbird_electric": {
+  "asset": "HadesBird_Electric",
+  "name": "Helzephyr Lux"
+ },
+ "hadesbird_oilrig": {
+  "asset": "HadesBird_Oilrig",
+  "name": "Helzephyr"
+ },
+ "hawkbird": {
+  "asset": "HawkBird",
+  "name": "Nitewing"
+ },
+ "hedgehog": {
+  "asset": "Hedgehog",
+  "name": "Jolthog"
+ },
+ "hedgehog_ice": {
+  "asset": "Hedgehog_Ice",
+  "name": "Jolthog Cryst"
+ },
+ "herculesbeetle": {
+  "asset": "HerculesBeetle",
+  "name": "Warsect"
+ },
+ "herculesbeetle_ground": {
+  "asset": "HerculesBeetle_Ground",
+  "name": "Warsect Terra"
+ },
+ "hoodghost": {
+  "asset": "HoodGhost",
+  "name": "Hoodle"
+ },
+ "horus": {
+  "asset": "Horus",
+  "name": "Faleris"
+ },
+ "horus_oilrig": {
+  "asset": "Horus_Oilrig",
+  "name": "Faleris"
+ },
+ "horus_water": {
+  "asset": "Horus_Water",
+  "name": "Faleris Aqua"
+ },
+ "icecrocodile": {
+  "asset": "IceCrocodile",
+  "name": "Munchill"
+ },
+ "icedeer": {
+  "asset": "IceDeer",
+  "name": "Reindrix"
+ },
+ "icefox": {
+  "asset": "IceFox",
+  "name": "Foxcicle"
+ },
+ "icehorse": {
+  "asset": "IceHorse",
+  "name": "Frostallion"
+ },
+ "icehorse_dark": {
+  "asset": "IceHorse_Dark",
+  "name": "Frostallion Noct"
+ },
+ "icenarwhal": {
+  "asset": "IceNarwhal",
+  "name": "Whalaska"
+ },
+ "icenarwhal_fire": {
+  "asset": "IceNarwhal_Fire",
+  "name": "Whalaska Ignis"
+ },
+ "iceseal": {
+  "asset": "IceSeal",
+  "name": "Polapup"
+ },
+ "iceseal_ground": {
+  "asset": "IceSeal_Ground",
+  "name": "Polapup Terra"
+ },
+ "iceveildragon": {
+  "asset": "IceVeilDragon",
+  "name": "Ice Veil Dragon"
+ },
+ "icewitch": {
+  "asset": "IceWitch",
+  "name": "Icelyn"
+ },
+ "jellyfishfairy": {
+  "asset": "JellyfishFairy",
+  "name": "Jelliette"
+ },
+ "jellyfishghost": {
+  "asset": "JellyfishGhost",
+  "name": "Jellroy"
+ },
+ "jetdragon": {
+  "asset": "JetDragon",
+  "name": "Jetragon"
+ },
+ "kabukiman": {
+  "asset": "KabukiMan",
+  "name": "Renjishi"
+ },
+ "kelpie": {
+  "asset": "Kelpie",
+  "name": "Kelpsea"
+ },
+ "kelpie_fire": {
+  "asset": "Kelpie_Fire",
+  "name": "Kelpsea Ignis"
+ },
+ "kendofrog": {
+  "asset": "KendoFrog",
+  "name": "Croajiro"
+ },
+ "kendofrog_dark": {
+  "asset": "KendoFrog_Dark",
+  "name": "Croajiro Noct"
+ },
+ "kingalpaca": {
+  "asset": "KingAlpaca",
+  "name": "Kingpaca"
+ },
+ "kingalpaca_ice": {
+  "asset": "KingAlpaca_ice",
+  "name": "Kingpaca Cryst"
+ },
+ "kingbahamut": {
+  "asset": "KingBahamut",
+  "name": "Blazamut"
+ },
+ "kingbahamut_dragon": {
+  "asset": "KingBahamut_Dragon",
+  "name": "Blazamut Ryu"
+ },
+ "kingcrab": {
+  "asset": "KingCrab",
+  "name": "King Crab"
+ },
+ "kingsunfish": {
+  "asset": "KingSunfish",
+  "name": "Solmora"
+ },
+ "kingsunfish_thunder": {
+  "asset": "KingSunfish_Thunder",
+  "name": "Solmora Lux"
+ },
+ "kingwhale": {
+  "asset": "KingWhale",
+  "name": "Panthalus"
+ },
+ "kirin": {
+  "asset": "Kirin",
+  "name": "Univolt"
+ },
+ "kirin_ice": {
+  "asset": "Kirin_ice",
+  "name": "Univolt Cryst"
+ },
+ "kitsunebi": {
+  "asset": "Kitsunebi",
+  "name": "Foxparks"
+ },
+ "kitsunebi_ice": {
+  "asset": "Kitsunebi_Ice",
+  "name": "Foxparks Cryst"
+ },
+ "lanternbutler": {
+  "asset": "LanternButler",
+  "name": "Loomen"
+ },
+ "lavagirl": {
+  "asset": "LavaGirl",
+  "name": "Flambelle"
+ },
+ "lazycatfish": {
+  "asset": "LazyCatfish",
+  "name": "Dumud"
+ },
+ "lazycatfish_gold": {
+  "asset": "LazyCatfish_Gold",
+  "name": "Dumud Gild"
+ },
+ "lazydragon": {
+  "asset": "LazyDragon",
+  "name": "Relaxaurus"
+ },
+ "lazydragon_electric": {
+  "asset": "LazyDragon_Electric",
+  "name": "Relaxaurus Lux"
+ },
+ "lazydragon_electric_tower": {
+  "asset": "LazyDragon_Electric_Tower",
+  "name": "Relaxaurus Lux"
+ },
+ "leafbird": {
+  "asset": "LeafBird",
+  "name": "Leaf Bird"
+ },
+ "leafmomonga": {
+  "asset": "LeafMomonga",
+  "name": "Herbil"
+ },
+ "leafprincess": {
+  "asset": "LeafPrincess",
+  "name": "Lullu"
+ },
+ "legenddeer": {
+  "asset": "LegendDeer",
+  "name": "Hartalis"
+ },
+ "lilyqueen": {
+  "asset": "LilyQueen",
+  "name": "Lyleen"
+ },
+ "lilyqueen_dark": {
+  "asset": "LilyQueen_Dark",
+  "name": "Lyleen Noct"
+ },
+ "littlebriarrose": {
+  "asset": "LittleBriarRose",
+  "name": "Bristla"
+ },
+ "lizardman": {
+  "asset": "LizardMan",
+  "name": "Leezpunk"
+ },
+ "lizardman_fire": {
+  "asset": "LizardMan_Fire",
+  "name": "Leezpunk Ignis"
+ },
+ "lizardman_oilrig": {
+  "asset": "LizardMan_Oilrig",
+  "name": "Leezpunk"
+ },
+ "longcat": {
+  "asset": "LongCat",
+  "name": "Valentail"
+ },
+ "lotusdragon": {
+  "asset": "LotusDragon",
+  "name": "Ophydia"
+ },
+ "manticore": {
+  "asset": "Manticore",
+  "name": "Blazehowl"
+ },
+ "manticore_dark": {
+  "asset": "Manticore_Dark",
+  "name": "Blazehowl Noct"
+ },
+ "medjedbird": {
+  "asset": "MedjedBird",
+  "name": "Medjed Bird"
+ },
+ "mexicansalamander": {
+  "asset": "MexicanSalamander",
+  "name": "Mexican Salamander"
+ },
+ "mimicdog": {
+  "asset": "MimicDog",
+  "name": "Mimog"
+ },
+ "monkey": {
+  "asset": "Monkey",
+  "name": "Tanzee"
+ },
+ "monkey_fire": {
+  "asset": "Monkey_Fire",
+  "name": "Tanzee Ignis"
+ },
+ "monkey_ice": {
+  "asset": "Monkey_Ice",
+  "name": "Monkey Ice"
+ },
+ "monochromemushroom": {
+  "asset": "MonochromeMushroom",
+  "name": "Monochrome Mushroom"
+ },
+ "monochromequeen": {
+  "asset": "MonochromeQueen",
+  "name": "Solenne"
+ },
+ "moonchild": {
+  "asset": "MoonChild",
+  "name": "Wistella"
+ },
+ "moonqueen": {
+  "asset": "MoonQueen",
+  "name": "Selyne"
+ },
+ "mopbaby": {
+  "asset": "MopBaby",
+  "name": "Swee"
+ },
+ "mopking": {
+  "asset": "MopKing",
+  "name": "Sweepa"
+ },
+ "mothman": {
+  "asset": "Mothman",
+  "name": "Silvance"
+ },
+ "mummypal": {
+  "asset": "MummyPal",
+  "name": "Gildra"
+ },
+ "mushroomdragon": {
+  "asset": "MushroomDragon",
+  "name": "Shroomer"
+ },
+ "mushroomdragon_dark": {
+  "asset": "MushroomDragon_Dark",
+  "name": "Shroomer Noct"
+ },
+ "mushroomlady": {
+  "asset": "MushroomLady",
+  "name": "Mycora"
+ },
+ "mutant": {
+  "asset": "Mutant",
+  "name": "Lunaris"
+ },
+ "mysterymask": {
+  "asset": "MysteryMask",
+  "name": "Omascul"
+ },
+ "naughtycat": {
+  "asset": "NaughtyCat",
+  "name": "Grintale"
+ },
+ "negativekoala": {
+  "asset": "NegativeKoala",
+  "name": "Depresso"
+ },
+ "negativeoctopus": {
+  "asset": "NegativeOctopus",
+  "name": "Killamari"
+ },
+ "negativeoctopus_neutral": {
+  "asset": "NegativeOctopus_Neutral",
+  "name": "Killamari Primo"
+ },
+ "nightbluehorse": {
+  "asset": "NightBlueHorse",
+  "name": "Starryon"
+ },
+ "nightbluehorse_neutral": {
+  "asset": "NightBlueHorse_Neutral",
+  "name": "Starryon Primo"
+ },
+ "nightfox": {
+  "asset": "NightFox",
+  "name": "Nox"
+ },
+ "nightlady": {
+  "asset": "NightLady",
+  "name": "Bellanoir"
+ },
+ "nightlady_dark": {
+  "asset": "NightLady_Dark",
+  "name": "Bellanoir Libero"
+ },
+ "octopusgirl": {
+  "asset": "OctopusGIrl",
+  "name": "Gloopie"
+ },
+ "octopusgirl_neutral": {
+  "asset": "OctopusGirl_Neutral",
+  "name": "Gloopie Primo"
+ },
+ "onighostgirl": {
+  "asset": "OniGhostGirl",
+  "name": "Bakemi"
+ },
+ "pandagirl": {
+  "asset": "PandaGirl",
+  "name": "Leafan"
+ },
+ "penguin": {
+  "asset": "Penguin",
+  "name": "Pengullet"
+ },
+ "penguin_electric": {
+  "asset": "Penguin_Electric",
+  "name": "Pengullet Lux"
+ },
+ "pinkcat": {
+  "asset": "PinkCat",
+  "name": "Cattiva"
+ },
+ "pinkkangaroo": {
+  "asset": "PinkKangaroo",
+  "name": "Pink Kangaroo"
+ },
+ "pinklizard": {
+  "asset": "PinkLizard",
+  "name": "Lovander"
+ },
+ "pinkrabbit": {
+  "asset": "PinkRabbit",
+  "name": "Ribbuny"
+ },
+ "pinkrabbit_grass": {
+  "asset": "PinkRabbit_Grass",
+  "name": "Ribbuny Botan"
+ },
+ "plantslime": {
+  "asset": "PlantSlime",
+  "name": "Gumoss"
+ },
+ "plantslime_flower": {
+  "asset": "PlantSlime_Flower",
+  "name": "Gumoss"
+ },
+ "plesiosaur": {
+  "asset": "Plesiosaur",
+  "name": "Braloha"
+ },
+ "police_hawkbird": {
+  "asset": "POLICE_HawkBird",
+  "name": "PIDF Rider (Police)"
+ },
+ "police_thunderdog": {
+  "asset": "POLICE_ThunderDog",
+  "name": "PIDF Rider (Police)"
+ },
+ "poseidonorca": {
+  "asset": "PoseidonOrca",
+  "name": "Neptilius"
+ },
+ "predator_amaterasuwolf": {
+  "asset": "PREDATOR_AmaterasuWolf",
+  "name": "Kitsun (Predator)"
+ },
+ "predator_baphomet_dark": {
+  "asset": "PREDATOR_Baphomet_Dark",
+  "name": "Incineram Noct (Predator)"
+ },
+ "predator_birddragon": {
+  "asset": "PREDATOR_BirdDragon",
+  "name": "Vanwyrm (Predator)"
+ },
+ "predator_candleghost": {
+  "asset": "PREDATOR_CandleGhost",
+  "name": "Sootseer (Predator)"
+ },
+ "predator_darkscorpion": {
+  "asset": "PREDATOR_DarkScorpion",
+  "name": "Menasting (Predator)"
+ },
+ "predator_drillgame": {
+  "asset": "PREDATOR_DrillGame",
+  "name": "Digtoise (Predator)"
+ },
+ "predator_fairydragon": {
+  "asset": "PREDATOR_FairyDragon",
+  "name": "Elphidran (Predator)"
+ },
+ "predator_featherostrich": {
+  "asset": "PREDATOR_FeatherOstrich",
+  "name": "Dazemu (Predator)"
+ },
+ "predator_flowerdinosaur": {
+  "asset": "PREDATOR_FlowerDinosaur",
+  "name": "Dinossom (Predator)"
+ },
+ "predator_flowerrabbit_quest": {
+  "asset": "PREDATOR_FlowerRabbit_Quest",
+  "name": "Flopie (Predator)"
+ },
+ "predator_garm": {
+  "asset": "PREDATOR_Garm",
+  "name": "Direhowl (Predator)"
+ },
+ "predator_garm_quest": {
+  "asset": "PREDATOR_Garm_Quest",
+  "name": "Direhowl (Predator)"
+ },
+ "predator_ghostbeast": {
+  "asset": "PREDATOR_GhostBeast",
+  "name": "Maraith (Predator)"
+ },
+ "predator_goldenhorse": {
+  "asset": "PREDATOR_GoldenHorse",
+  "name": "Gildane (Predator)"
+ },
+ "predator_gorilla": {
+  "asset": "PREDATOR_Gorilla",
+  "name": "Gorirat (Predator)"
+ },
+ "predator_grassmammoth_ice": {
+  "asset": "PREDATOR_GrassMammoth_Ice",
+  "name": "Mammorest Cryst (Predator)"
+ },
+ "predator_grassminotaur_ice": {
+  "asset": "PREDATOR_GrassMinotaur_Ice",
+  "name": "Elgrove Cryst (Predator)"
+ },
+ "predator_grasspanda": {
+  "asset": "PREDATOR_GrassPanda",
+  "name": "Mossanda (Predator)"
+ },
+ "predator_grimgirl": {
+  "asset": "PREDATOR_GrimGirl",
+  "name": "Splatterina (Predator)"
+ },
+ "predator_hadesbird_electric": {
+  "asset": "PREDATOR_HadesBird_Electric",
+  "name": "Helzephyr Lux (Predator)"
+ },
+ "predator_horus_water": {
+  "asset": "PREDATOR_Horus_Water",
+  "name": "Faleris Aqua (Predator)"
+ },
+ "predator_lazydragon": {
+  "asset": "PREDATOR_LazyDragon",
+  "name": "Relaxaurus (Predator)"
+ },
+ "predator_manticore_dark": {
+  "asset": "PREDATOR_Manticore_Dark",
+  "name": "Blazehowl Noct (Predator)"
+ },
+ "predator_monochromequeen": {
+  "asset": "PREDATOR_MonochromeQueen",
+  "name": "Solenne (Predator)"
+ },
+ "predator_mummypal": {
+  "asset": "PREDATOR_MummyPal",
+  "name": "Gildra (Predator)"
+ },
+ "predator_mushroomdragon": {
+  "asset": "PREDATOR_MushroomDragon",
+  "name": "Shroomer (Predator)"
+ },
+ "predator_mysterymask": {
+  "asset": "PREDATOR_MysteryMask",
+  "name": "Omascul (Predator)"
+ },
+ "predator_nightbluehorse": {
+  "asset": "PREDATOR_NightBlueHorse",
+  "name": "Starryon (Predator)"
+ },
+ "predator_pandagirl": {
+  "asset": "PREDATOR_PandaGirl",
+  "name": "Leafan (Predator)"
+ },
+ "predator_pinklizard": {
+  "asset": "PREDATOR_PinkLizard",
+  "name": "Lovander (Predator)"
+ },
+ "predator_pinklizard_quest": {
+  "asset": "PREDATOR_PinkLizard_Quest",
+  "name": "Lovander (Predator)"
+ },
+ "predator_purplespider": {
+  "asset": "PREDATOR_PurpleSpider",
+  "name": "Tarantriss (Predator)"
+ },
+ "predator_redarmorbird": {
+  "asset": "PREDATOR_RedArmorBird",
+  "name": "Ragnahawk (Predator)"
+ },
+ "predator_redflowerbird": {
+  "asset": "PREDATOR_RedFlowerBird",
+  "name": "Tropicaw (Predator)"
+ },
+ "predator_ronin_dark": {
+  "asset": "PREDATOR_Ronin_Dark",
+  "name": "Bushi Noct (Predator)"
+ },
+ "predator_scorpionman": {
+  "asset": "PREDATOR_ScorpionMan",
+  "name": "Prixter (Predator)"
+ },
+ "predator_sifudog": {
+  "asset": "PREDATOR_SifuDog",
+  "name": "Dogen (Predator)"
+ },
+ "predator_snakegirl": {
+  "asset": "PREDATOR_SnakeGirl",
+  "name": "Venusa (Predator)"
+ },
+ "predator_suzaku": {
+  "asset": "PREDATOR_Suzaku",
+  "name": "Suzaku (Predator)"
+ },
+ "predator_thunderdog": {
+  "asset": "PREDATOR_ThunderDog",
+  "name": "Rayhound (Predator)"
+ },
+ "predator_umihebi_fire": {
+  "asset": "PREDATOR_Umihebi_Fire",
+  "name": "Jormuntide Ignis (Predator)"
+ },
+ "predator_umihebi_fire_quest": {
+  "asset": "PREDATOR_Umihebi_Fire_Quest",
+  "name": "Jormuntide Ignis (Predator)"
+ },
+ "predator_volcanicmonster_ice": {
+  "asset": "PREDATOR_VolcanicMonster_Ice",
+  "name": "Reptyro Cryst (Predator)"
+ },
+ "predator_volcanodragon": {
+  "asset": "PREDATOR_VolcanoDragon",
+  "name": "Moldron (Predator)"
+ },
+ "predator_werewolf_ice": {
+  "asset": "PREDATOR_Werewolf_Ice",
+  "name": "Loupmoon Cryst (Predator)"
+ },
+ "predator_whiteshielddragon_quest": {
+  "asset": "PREDATOR_WhiteShieldDragon_Quest",
+  "name": "Silvegis (Predator)"
+ },
+ "predator_whitetiger_ground": {
+  "asset": "PREDATOR_WhiteTiger_Ground",
+  "name": "Cryolinx Terra (Predator)"
+ },
+ "predator_yeti": {
+  "asset": "PREDATOR_Yeti",
+  "name": "Wumpo (Predator)"
+ },
+ "purplespider": {
+  "asset": "PurpleSpider",
+  "name": "Tarantriss"
+ },
+ "queenbee": {
+  "asset": "QueenBee",
+  "name": "Elizabee"
+ },
+ "quest_farmer03_pinkcat": {
+  "asset": "Quest_Farmer03_PinkCat",
+  "name": "Cattiva"
+ },
+ "quest_farmer03_sheepball": {
+  "asset": "Quest_Farmer03_SheepBall",
+  "name": "Lamball"
+ },
+ "raid_darkmechadragon": {
+  "asset": "RAID_DarkMechaDragon",
+  "name": "Xenolord (Raid)"
+ },
+ "raid_darkmechadragon_2": {
+  "asset": "RAID_DarkMechaDragon_2",
+  "name": "Xenolord (Raid)"
+ },
+ "raid_kingbahamut_dragon": {
+  "asset": "RAID_KingBahamut_Dragon",
+  "name": "Blazamut Ryu (Raid)"
+ },
+ "raid_kingbahamut_dragon_2": {
+  "asset": "RAID_KingBahamut_Dragon_2",
+  "name": "Blazamut Ryu (Raid)"
+ },
+ "raid_legenddeer": {
+  "asset": "RAID_LegendDeer",
+  "name": "Hartalis (Raid)"
+ },
+ "raid_legenddeer_2": {
+  "asset": "RAID_LegendDeer_2",
+  "name": "Hartalis (Raid)"
+ },
+ "raid_nightlady": {
+  "asset": "RAID_NightLady",
+  "name": "Bellanoir (Raid)"
+ },
+ "raid_nightlady_dark": {
+  "asset": "RAID_NightLady_Dark",
+  "name": "Bellanoir Libero (Raid)"
+ },
+ "raid_nightlady_dark_2": {
+  "asset": "RAID_NightLady_Dark_2",
+  "name": "Bellanoir Libero (Raid)"
+ },
+ "raid_yakushimaboss001_green": {
+  "asset": "RAID_YakushimaBoss001_Green",
+  "name": "True Eye of Cthulhu (Raid)"
+ },
+ "raid_yakushimaboss001_green_2": {
+  "asset": "RAID_YakushimaBoss001_Green_2",
+  "name": "True Eye of Cthulhu (Raid)"
+ },
+ "raid_yakushimaboss002": {
+  "asset": "RAID_YakushimaBoss002",
+  "name": "Moon Lord (Raid)"
+ },
+ "raid_yakushimaboss002_2": {
+  "asset": "RAID_YakushimaBoss002_2",
+  "name": "Moon Lord (Raid)"
+ },
+ "raid_yakushimaboss002_hand_left": {
+  "asset": "RAID_YakushimaBoss002_Hand_Left",
+  "name": "Moon Lord (Raid)"
+ },
+ "raid_yakushimaboss002_hand_left_2": {
+  "asset": "RAID_YakushimaBoss002_Hand_Left_2",
+  "name": "Moon Lord (Raid)"
+ },
+ "raid_yakushimaboss002_hand_right": {
+  "asset": "RAID_YakushimaBoss002_Hand_Right",
+  "name": "Moon Lord (Raid)"
+ },
+ "raid_yakushimaboss002_hand_right_2": {
+  "asset": "RAID_YakushimaBoss002_Hand_Right_2",
+  "name": "Moon Lord (Raid)"
+ },
+ "raid_yakushimaboss002_head": {
+  "asset": "RAID_YakushimaBoss002_Head",
+  "name": "Moon Lord (Raid)"
+ },
+ "raid_yakushimaboss002_head_2": {
+  "asset": "RAID_YakushimaBoss002_Head_2",
+  "name": "Moon Lord (Raid)"
+ },
+ "raijindaughter": {
+  "asset": "RaijinDaughter",
+  "name": "Dazzi"
+ },
+ "raijindaughter_water": {
+  "asset": "RaijinDaughter_Water",
+  "name": "Dazzi Noct"
+ },
+ "redarmorbird": {
+  "asset": "RedArmorBird",
+  "name": "Ragnahawk"
+ },
+ "redflowerbird": {
+  "asset": "RedFlowerBird",
+  "name": "Tropicaw"
+ },
+ "robinhood": {
+  "asset": "RobinHood",
+  "name": "Robinquill"
+ },
+ "robinhood_ground": {
+  "asset": "RobinHood_Ground",
+  "name": "Robinquill Terra"
+ },
+ "rockbeast": {
+  "asset": "RockBeast",
+  "name": "Pierdon"
+ },
+ "rockbeast_ice": {
+  "asset": "RockBeast_Ice",
+  "name": "Pierdon Cryst"
+ },
+ "rockcheetah": {
+  "asset": "RockCheetah",
+  "name": "Rock Cheetah"
+ },
+ "ronin": {
+  "asset": "Ronin",
+  "name": "Bushi"
+ },
+ "ronin_dark": {
+  "asset": "Ronin_Dark",
+  "name": "Bushi Noct"
+ },
+ "saintcentaur": {
+  "asset": "SaintCentaur",
+  "name": "Paladius"
+ },
+ "sakurasaurus": {
+  "asset": "SakuraSaurus",
+  "name": "Broncherry"
+ },
+ "sakurasaurus_water": {
+  "asset": "SakuraSaurus_Water",
+  "name": "Broncherry Aqua"
+ },
+ "samuraidog": {
+  "asset": "SamuraiDog",
+  "name": "Pupperai"
+ },
+ "scorpionman": {
+  "asset": "ScorpionMan",
+  "name": "Prixter"
+ },
+ "scorpionman_electric": {
+  "asset": "ScorpionMan_Electric",
+  "name": "Prixter Lux"
+ },
+ "sekhmet": {
+  "asset": "Sekhmet",
+  "name": "Sekhmet"
+ },
+ "serpent": {
+  "asset": "Serpent",
+  "name": "Surfent"
+ },
+ "serpent_ground": {
+  "asset": "Serpent_Ground",
+  "name": "Surfent Terra"
+ },
+ "sharkkid": {
+  "asset": "SharkKid",
+  "name": "Gobfin"
+ },
+ "sharkkid_fire": {
+  "asset": "SharkKid_Fire",
+  "name": "Gobfin Ignis"
+ },
+ "sheepball": {
+  "asset": "SheepBall",
+  "name": "Lamball"
+ },
+ "sifudog": {
+  "asset": "SifuDog",
+  "name": "Dogen"
+ },
+ "skydragon": {
+  "asset": "SkyDragon",
+  "name": "Quivern"
+ },
+ "skydragon_grass": {
+  "asset": "SkyDragon_Grass",
+  "name": "Quivern Botan"
+ },
+ "sleeverabbit": {
+  "asset": "SleeveRabbit",
+  "name": "Lapure"
+ },
+ "smallarmadillo": {
+  "asset": "SmallArmadillo",
+  "name": "Kikit"
+ },
+ "smallyeti": {
+  "asset": "SmallYeti",
+  "name": "Snugloo"
+ },
+ "snakegirl": {
+  "asset": "SnakeGirl",
+  "name": "Venusa"
+ },
+ "snakequeen": {
+  "asset": "SnakeQueen",
+  "name": "Snake Queen"
+ },
+ "snowpeafowl": {
+  "asset": "SnowPeafowl",
+  "name": "Frostplume"
+ },
+ "snowtigerbeastman": {
+  "asset": "SnowTigerBeastMan",
+  "name": "Bastigor"
+ },
+ "soldierbee": {
+  "asset": "SoldierBee",
+  "name": "Beegarde"
+ },
+ "strawhatcat": {
+  "asset": "StrawHatCat",
+  "name": "Straw Hat Cat"
+ },
+ "stuffedshark": {
+  "asset": "StuffedShark",
+  "name": "Finsider"
+ },
+ "stuffedshark_fire": {
+  "asset": "StuffedShark_Fire",
+  "name": "Finsider Ignis"
+ },
+ "summon_darkalien": {
+  "asset": "SUMMON_DarkAlien",
+  "name": "Xenovader (Summon)"
+ },
+ "summon_darkalien_max": {
+  "asset": "SUMMON_DarkAlien_MAX",
+  "name": "Xenovader (Summon)"
+ },
+ "summon_whitealiendragon": {
+  "asset": "SUMMON_WhiteAlienDragon",
+  "name": "Xenogard (Summon)"
+ },
+ "summon_whitealiendragon_max": {
+  "asset": "SUMMON_WhiteAlienDragon_MAX",
+  "name": "Xenogard (Summon)"
+ },
+ "sumodog": {
+  "asset": "SumoDog",
+  "name": "Bulldosu"
+ },
+ "suzaku": {
+  "asset": "Suzaku",
+  "name": "Suzaku"
+ },
+ "suzaku_water": {
+  "asset": "Suzaku_Water",
+  "name": "Suzaku Aqua"
+ },
+ "sweetssheep": {
+  "asset": "SweetsSheep",
+  "name": "Woolipop"
+ },
+ "sweetssheep_ground": {
+  "asset": "SweetsSheep_Ground",
+  "name": "Woolipop Terra"
+ },
+ "swordcutlassfish": {
+  "asset": "SwordCutlassFish",
+  "name": "Skutlass"
+ },
+ "swordcutlassfish_fire": {
+  "asset": "SwordCutlassFish_Fire",
+  "name": "Skutlass Ignis"
+ },
+ "tentacleturtle": {
+  "asset": "TentacleTurtle",
+  "name": "Turtacle"
+ },
+ "tentacleturtle_ground": {
+  "asset": "TentacleTurtle_Ground",
+  "name": "Turtacle Terra"
+ },
+ "thiefbird": {
+  "asset": "ThiefBird",
+  "name": "Roujay"
+ },
+ "thunderbird": {
+  "asset": "ThunderBird",
+  "name": "Beakon"
+ },
+ "thunderbird_ice": {
+  "asset": "ThunderBird_Ice",
+  "name": "Beakon Cryst"
+ },
+ "thunderdog": {
+  "asset": "ThunderDog",
+  "name": "Rayhound"
+ },
+ "thunderdog_ice": {
+  "asset": "ThunderDog_Ice",
+  "name": "Rayhound Cryst"
+ },
+ "thunderdragonman": {
+  "asset": "ThunderDragonMan",
+  "name": "Orserk"
+ },
+ "thunderfluffybird": {
+  "asset": "ThunderFluffyBird",
+  "name": "Dynamoff"
+ },
+ "tropicalostrich": {
+  "asset": "TropicalOstrich",
+  "name": "Palumba"
+ },
+ "umihebi": {
+  "asset": "Umihebi",
+  "name": "Jormuntide"
+ },
+ "umihebi_fire": {
+  "asset": "Umihebi_Fire",
+  "name": "Jormuntide Ignis"
+ },
+ "venusflytrap": {
+  "asset": "VenusFlytrap",
+  "name": "Carnibora"
+ },
+ "violetfairy": {
+  "asset": "VioletFairy",
+  "name": "Vaelet"
+ },
+ "volcanicmonster": {
+  "asset": "Volcanicmonster",
+  "name": "Reptyro"
+ },
+ "volcanicmonster_ice": {
+  "asset": "VolcanicMonster_Ice",
+  "name": "Reptyro Cryst"
+ },
+ "volcanicturtle": {
+  "asset": "VolcanicTurtle",
+  "name": "Volcanic Turtle"
+ },
+ "volcanodragon": {
+  "asset": "VolcanoDragon",
+  "name": "Moldron"
+ },
+ "volcanodragon_ice": {
+  "asset": "VolcanoDragon_Ice",
+  "name": "Moldron Cryst"
+ },
+ "waterlizard": {
+  "asset": "WaterLizard",
+  "name": "Water Lizard"
+ },
+ "weaseldragon": {
+  "asset": "WeaselDragon",
+  "name": "Chillet"
+ },
+ "weaseldragon_fire": {
+  "asset": "WeaselDragon_Fire",
+  "name": "Chillet Ignis"
+ },
+ "werewolf": {
+  "asset": "Werewolf",
+  "name": "Loupmoon"
+ },
+ "werewolf_ice": {
+  "asset": "Werewolf_Ice",
+  "name": "Loupmoon Cryst"
+ },
+ "whitealiendragon": {
+  "asset": "WhiteAlienDragon",
+  "name": "Xenogard"
+ },
+ "whitedeer": {
+  "asset": "WhiteDeer",
+  "name": "Celesdir"
+ },
+ "whitedeer_dark": {
+  "asset": "WhiteDeer_Dark",
+  "name": "Celesdir Noct"
+ },
+ "whitemoth": {
+  "asset": "WhiteMoth",
+  "name": "Sibelyx"
+ },
+ "whitemoth_neutral": {
+  "asset": "WhiteMoth_Neutral",
+  "name": "Sibelyx Primo"
+ },
+ "whiteshielddragon": {
+  "asset": "WhiteShieldDragon",
+  "name": "Silvegis"
+ },
+ "whitetiger": {
+  "asset": "WhiteTiger",
+  "name": "Cryolinx"
+ },
+ "whitetiger_ground": {
+  "asset": "WhiteTiger_Ground",
+  "name": "Cryolinx Terra"
+ },
+ "windchimes": {
+  "asset": "WindChimes",
+  "name": "Hangyu"
+ },
+ "windchimes_ice": {
+  "asset": "WindChimes_Ice",
+  "name": "Hangyu Cryst"
+ },
+ "winggolem": {
+  "asset": "WingGolem",
+  "name": "Knocklem"
+ },
+ "winggolem_fire": {
+  "asset": "WingGolem_Fire",
+  "name": "Knocklem Ignis"
+ },
+ "winggolem_oilrig": {
+  "asset": "WingGolem_Oilrig",
+  "name": "Knocklem"
+ },
+ "wizardowl": {
+  "asset": "WizardOwl",
+  "name": "Hoocrates"
+ },
+ "woolfox": {
+  "asset": "WoolFox",
+  "name": "Cremis"
+ },
+ "worldtreedragon": {
+  "asset": "WorldTreeDragon",
+  "name": "Astralym"
+ },
+ "yakushimaboss001": {
+  "asset": "YakushimaBoss001",
+  "name": "Eye of Cthulhu"
+ },
+ "yakushimaboss001_small": {
+  "asset": "YakushimaBoss001_Small",
+  "name": "Demon Eye"
+ },
+ "yakushimamonster001": {
+  "asset": "YakushimaMonster001",
+  "name": "Green Slime"
+ },
+ "yakushimamonster001_blue": {
+  "asset": "YakushimaMonster001_Blue",
+  "name": "Blue Slime"
+ },
+ "yakushimamonster001_pink": {
+  "asset": "YakushimaMonster001_Pink",
+  "name": "Illuminant Slime"
+ },
+ "yakushimamonster001_purple": {
+  "asset": "YakushimaMonster001_Purple",
+  "name": "Purple Slime"
+ },
+ "yakushimamonster001_rainbow": {
+  "asset": "YakushimaMonster001_Rainbow",
+  "name": "Rainbow Slime"
+ },
+ "yakushimamonster001_red": {
+  "asset": "YakushimaMonster001_Red",
+  "name": "Red Slime"
+ },
+ "yakushimamonster002": {
+  "asset": "YakushimaMonster002",
+  "name": "Enchanted Sword"
+ },
+ "yakushimamonster003": {
+  "asset": "YakushimaMonster003",
+  "name": "Cave Bat"
+ },
+ "yakushimamonster003_purple": {
+  "asset": "YakushimaMonster003_Purple",
+  "name": "Illuminant Bat"
+ },
+ "yeti": {
+  "asset": "Yeti",
+  "name": "Wumpo"
+ },
+ "yeti_grass": {
+  "asset": "Yeti_Grass",
+  "name": "Wumpo Botan"
+ }
+}

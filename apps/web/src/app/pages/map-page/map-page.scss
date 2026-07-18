@@ -1,0 +1,155 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.layout {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  height: calc(100vh - 100px);
+}
+
+.sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 0.7rem;
+  background: var(--panel);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+}
+
+.mapsel {
+  display: flex;
+  gap: 0.4rem;
+
+  button {
+    flex: 1;
+    padding: 0.35rem 0.4rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--panel-2);
+    color: var(--text-dim);
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.85rem;
+
+    &[aria-pressed='true'] {
+      border-color: var(--accent);
+      color: var(--text);
+    }
+  }
+}
+
+.search {
+  width: 100%;
+}
+
+.groups {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.group {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+
+  &--srv {
+    border-color: color-mix(in srgb, var(--ok) 50%, var(--border));
+  }
+}
+
+.group-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0.45rem 0.7rem;
+  background: var(--panel-2);
+  border: 0;
+  color: var(--text);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+
+  .count {
+    color: var(--text-dim);
+    font-size: 0.8rem;
+    font-weight: 400;
+  }
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0.3rem 0.4rem;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+li label {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.18rem 0.3rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+
+  &:hover {
+    background: var(--panel-2);
+  }
+}
+
+.licon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+
+  &--pal {
+    border-radius: 50%;
+    background: var(--panel-2);
+  }
+}
+
+.llabel {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ln {
+  color: var(--text-dim);
+  font-size: 0.75rem;
+}
+
+#palhub-map {
+  flex: 1;
+  min-width: 0;
+}
+
+@media (max-width: 720px) {
+  .layout {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .sidebar {
+    width: auto;
+    max-height: 40vh;
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  #palhub-map {
+    height: 60vh;
+  }
+}

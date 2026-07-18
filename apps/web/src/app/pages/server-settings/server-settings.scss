@@ -1,0 +1,71 @@
+:host {
+  display: block;
+  max-width: 760px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1.6rem 1.2rem 3rem;
+}
+
+.block {
+  margin-bottom: 1rem;
+
+  h2 {
+    margin-top: 0;
+    font-size: 1.1rem;
+  }
+}
+
+.key-warn {
+  color: var(--accent-2);
+}
+
+.key-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.8rem;
+
+  .key {
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.4rem 0.6rem;
+    overflow-x: auto;
+  }
+}
+
+.snippet {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.7rem 0.9rem;
+  overflow-x: auto;
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.desc {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  margin-bottom: 0.8rem;
+}
+
+.danger-zone {
+  border-color: color-mix(in srgb, var(--danger) 45%, var(--border));
+
+  p {
+    color: var(--text-dim);
+  }
+}
+
+.empty {
+  color: var(--text-dim);
+}

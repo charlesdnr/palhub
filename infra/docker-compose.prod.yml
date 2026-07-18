@@ -1,0 +1,43 @@
+# Prod (VPS) : docker compose -f infra/docker-compose.prod.yml up -d --build
+# Secrets dans infra/.env (non commité) : POSTGRES_PASSWORD, JWT_SECRET,
+# DISCORD_CLIENT_ID, DISCORD_CLIENT_SECRET, PUBLIC_ORIGIN (ex: https://palhub.example.com)
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: palhub
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: palhub
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    # pas de port exposé : accessible uniquement depuis le réseau compose
+
+  api:
+    build:
+      context: ..
+      dockerfile: apps/api/Dockerfile
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://palhub:${POSTGRES_PASSWORD}@db:5432/palhub
+      JWT_SECRET: ${JWT_SECRET}
+      DISCORD_CLIENT_ID: ${DISCORD_CLIENT_ID}
+      DISCORD_CLIENT_SECRET: ${DISCORD_CLIENT_SECRET}
+      DISCORD_CALLBACK_URL: ${PUBLIC_ORIGIN}/api/auth/discord/callback
+      WEB_ORIGIN: ${PUBLIC_ORIGIN}
+      NODE_ENV: production
+    depends_on:
+      - db
+
+  web:
+    build:
+      context: ..
+      dockerfile: apps/web/Dockerfile
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+
+volumes:
+  pgdata:

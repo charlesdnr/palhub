@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "palhub-agent"
+version = "0.1.0"
+description = "Agent PalHub : décode le Level.sav d'un serveur Palworld et pousse les données vers l'API"
+requires-python = ">=3.11"
+dependencies = [
+    # palsav (et son extension C++ palooz) : vendored dans ./vendor/palsav.
+    # Installer d'abord la wheel palooz (voir README), puis : pip install ./vendor/palsav
+]
+
+[project.optional-dependencies]
+sftp = ["paramiko>=3.4"]
+
+[project.scripts]
+palhub-agent = "palhub_agent.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["palhub_agent*"]
+
+[tool.setuptools.package-data]
+palhub_agent = ["data/*.json"]

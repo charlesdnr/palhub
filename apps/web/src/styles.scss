@@ -1,0 +1,153 @@
+/* Thème global PalHub — sombre, sobre. */
+:root {
+  --bg: #0b141d;
+  --panel: #101c28;
+  --panel-2: #162534;
+  --border: #223447;
+  --text: #e8eff5;
+  --text-dim: #9db2c4;
+  --accent: #3fd0e0;
+  --accent-2: #f2a03d;
+  --danger: #c4505e;
+  --ok: #6fcf6f;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+a {
+  color: var(--accent);
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.25;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.95rem;
+  border-radius: 8px;
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #06222a;
+  font-weight: 600;
+  font-size: 0.92rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: filter 0.12s;
+
+  &:hover {
+    filter: brightness(1.1);
+  }
+
+  &--ghost {
+    background: transparent;
+    color: var(--text-dim);
+    border-color: var(--border);
+
+    &:hover {
+      color: var(--text);
+    }
+  }
+
+  &--danger {
+    background: transparent;
+    color: var(--danger);
+    border-color: var(--danger);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.1rem 1.3rem;
+}
+
+.mono {
+  font-family: Consolas, 'Cascadia Mono', monospace;
+  font-size: 0.88em;
+}
+
+input[type='text'],
+input[type='number'],
+select,
+textarea {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  padding: 0.45rem 0.65rem;
+  font: inherit;
+
+  &:focus {
+    outline: 2px solid color-mix(in srgb, var(--accent) 45%, transparent);
+    outline-offset: 1px;
+  }
+}
+
+/* Marqueurs Leaflet (transposé de l'ancien site) */
+.mk {
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.7));
+}
+
+.mk--pal {
+  border-radius: 50%;
+  border: 2px solid #e8eff5;
+  background: #0b141d;
+}
+
+.mk--player {
+  border-radius: 50%;
+  border: 2px solid var(--accent-2);
+  background: #0b141d;
+}
+
+.leaflet-container {
+  background: #06101a;
+  font: inherit;
+}
+
+.leaflet-popup-content-wrapper,
+.leaflet-tooltip {
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.leaflet-tooltip-top:before {
+  border-top-color: var(--border);
+}
+
+.leaflet-popup-tip {
+  background: var(--panel);
+}
+
+.lvl {
+  color: var(--accent-2);
+  font-size: 0.85em;
+}

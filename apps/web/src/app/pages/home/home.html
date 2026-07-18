@@ -1,0 +1,35 @@
+<section class="hero">
+  <h1>La carte interactive de <em>ton</em> serveur Palworld</h1>
+  <p>
+    Bases, guildes, joueurs et tous les pals de ton serveur sur la carte des
+    Îles Palpagos — mis à jour automatiquement depuis la sauvegarde du serveur.
+  </p>
+  <div class="hero-actions">
+    <a routerLink="/login" class="btn">Ajouter mon serveur</a>
+  </div>
+</section>
+
+<section class="directory">
+  <h2>Serveurs publics</h2>
+  @if (listed(); as servers) {
+    @if (servers.length === 0) {
+      <p class="empty">Aucun serveur public pour le moment. Le tien sera peut-être le premier !</p>
+    } @else {
+      <div class="grid">
+        @for (s of servers; track s.slug) {
+          <a class="card server-card" [routerLink]="['/s', s.slug]">
+            <h3>{{ s.name }}</h3>
+            @if (s.description) {
+              <p>{{ s.description }}</p>
+            }
+            @if (s.lastIngestAt) {
+              <span class="sync">Synchronisé le {{ s.lastIngestAt | date: 'dd/MM à HH:mm' }}</span>
+            }
+          </a>
+        }
+      </div>
+    }
+  } @else {
+    <p class="empty">Chargement…</p>
+  }
+</section>

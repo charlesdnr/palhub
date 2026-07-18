@@ -1,0 +1,16 @@
+# Dev : base de données seule (l'API et le front tournent en local via npm).
+# Alternative si Docker n'est pas dispo : PostgreSQL 17 natif (voir README racine).
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: palhub
+      POSTGRES_PASSWORD: palhub
+      POSTGRES_DB: palhub
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

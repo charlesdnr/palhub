@@ -1,0 +1,69 @@
+<div class="layout">
+  <aside class="sidebar">
+    <div class="mapsel">
+      @for (a of areaLabels; track a.key) {
+        <button
+          type="button"
+          [attr.aria-pressed]="area() === a.key"
+          (click)="setArea(a.key)"
+        >
+          {{ a.label }}
+        </button>
+      }
+    </div>
+
+    <input
+      type="text"
+      class="search"
+      placeholder="Rechercher une couche ou un pal…"
+      [ngModel]="search()"
+      (ngModelChange)="search.set($event)"
+    />
+
+    <div class="groups">
+      @for (g of visibleGroups(); track g.key) {
+        <section class="group" [class.group--srv]="g.key === 'serveur'">
+          <button type="button" class="group-head" (click)="toggleGroup(g.key)">
+            <span>{{ g.label }}</span>
+            <span class="count">
+              @if (enabledCount(g); as n) {
+                {{ n }} ·
+              }
+              {{ g.layers.length }}
+            </span>
+          </button>
+          @if (isOpen(g.key)) {
+            <ul>
+              @for (l of g.layers; track l.key) {
+                <li>
+                  <label>
+                    <input
+                      type="checkbox"
+                      [checked]="enabledSig().has(l.key)"
+                      (change)="toggleLayer(l.key)"
+                    />
+                    @if (l.icon) {
+                      <img
+                        class="licon"
+                        [class.licon--pal]="l.pal"
+                        [src]="l.pal ? l.icon : '/game-assets/map-icons/' + l.icon"
+                        alt=""
+                        loading="lazy"
+                      />
+                    }
+                    <span class="llabel">{{ l.label }}</span>
+                    @if (l.n) {
+                      <span class="ln">{{ l.n }}</span>
+                    }
+                  </label>
+                </li>
+              }
+            </ul>
+          }
+        </section>
+      }
+    </div>
+  </aside>
+
+  <div id="palhub-map"></div>
+</div>
