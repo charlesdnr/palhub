@@ -16,6 +16,8 @@ FROM node:24-alpine
 WORKDIR /app
 ENV NODE_ENV=production
 COPY --from=build /app /app
+# Exécution non-root (l'utilisateur `node` existe dans l'image officielle).
+USER node
 EXPOSE 3000
 # migrations au démarrage, puis l'API
 CMD ["sh", "-c", "npx prisma migrate deploy --schema apps/api/prisma/schema.prisma && node apps/api/dist/main.js"]

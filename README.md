@@ -60,7 +60,23 @@ ensuite ; en cas de changement légitime, réinitialiser l'empreinte depuis la p
 de réglages du serveur.
 
 TLS : mettre un Caddy/Traefik devant, ou certbot + un `server 443` dans
-`infra/nginx/nginx.conf`.
+`infra/nginx/nginx.conf` (y décommenter l'en-tête HSTS).
+
+## Exploitation
+
+- **Sauvegardes** : la base porte toutes les données. En Docker, sauvegarder le
+  volume `pgdata` (`pg_dump -U palhub palhub`) ; chez Neon, activer les sauvegardes
+  managées.
+- **Rétention** : l'historique palbox est purgé aux 30 derniers snapshots et à
+  90 jours max ; l'état live est un enregistrement unique. Surveiller la table
+  `snapshots` : `SELECT pg_size_pretty(pg_total_relation_size('snapshots'));`.
+- **Secrets** : faire tourner périodiquement `WORKER_SECRET` et `JWT_SECRET`
+  (invalide les sessions). `SYNC_ENC_KEY` ne doit PAS changer sans re-chiffrer les
+  secrets SFTP existants.
+- **Logs / erreurs** : l'API journalise chaque requête et les 5xx (avec stack).
+  Pour un suivi d'erreurs centralisé, brancher Sentry sur le filtre global
+  `AllExceptionsFilter` (API) et sur `provideBrowserGlobalErrorListeners` (front).
+- **Santé** : `GET /api/health` renvoie l'état de la base (utilisé par Render).
 
 ## Données statiques du jeu
 
