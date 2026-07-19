@@ -45,15 +45,29 @@ export class ServerSettingsPage {
   protected readonly members = signal<MemberDto[]>([]);
   protected readonly inviteCopied = signal(false);
 
+  // --- RGPD : exclusions de joueurs ---
+  protected readonly players = signal<{ uid: string; name: string }[]>([]);
+  protected readonly excluded = signal<Set<string>>(new Set());
+
   constructor() {
     effect(() => {
       const id = this.id();
+      void this.loadExclusions(id);
       void this.servers.getMine(id).then((s) => {
         this.server.set(s);
         this.description = s.description ?? '';
         if (s.role === 'owner') {
           void this.servers.getInvite(id).then((i) => this.invite.set(i));
         }
+        void this.servers.getPalbox(s.slug).then((box) => {
+          const seen = new Map<string, string>();
+          for (const p of box?.players ?? []) seen.set(p.uid, p.name);
+          this.players.set(
+            [...seen].map(([uid, name]) => ({ uid, name })).sort((a, b) =>
+              a.name.localeCompare(b.name),
+            ),
+          );
+        });
       });
       void this.servers.listMembers(id).then((m) => this.members.set(m));
       void this.servers.getSyncConfig(id).then((c) => {
@@ -213,5 +227,49 @@ export class ServerSettingsPage {
     if (!confirm(`Supprimer « ${s.name} » et toutes ses données ?`)) return;
     await this.servers.remove(s.id);
     await this.router.navigateByUrl('/me/servers');
+  }
+
+  /* ---------- RGPD : exclusions ---------- */
+
+  private async loadExclusions(id: string): Promise<void> {
+    this.excluded.set(new Set(await this.servers.listExclusions(id)));
+  }
+
+  protected isExcluded(uid: string): boolean {
+    return this.excluded().has(uid);
+  }
+
+  protected async toggleExclusion(uid: string): Promise<void> {
+    const s = this.server();
+    if (!s) return;
+    const next = new Set(this.excluded());
+    if (next.has(uid)) {
+      await this.servers.removeExclusion(s.id, uid);
+      next.delete(uid);
+    } else {
+      if (
+        !confirm(
+          "Exclure ce joueur retire ses données des publications et purge l'historique du serveur. Continuer ?",
+        )
+      ) {
+        return;
+      }
+      await this.servers.addExclusion(s.id, uid);
+      next.add(uid);
+    }
+    this.excluded.set(next);
+  }
+
+  protected async purgeSnapshots(): Promise<void> {
+    const s = this.server();
+    if (!s) return;
+    if (
+      !confirm(
+        "Purger tout l'historique de données de ce serveur ? Il sera reconstitué à la prochaine synchro.",
+      )
+    ) {
+      return;
+    }
+    await this.servers.purgeSnapshots(s.id);
   }
 }

@@ -1,8 +1,9 @@
 import { Component, inject, signal } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import type { ServerDto } from '@palhub/shared';
+import { AuthService } from '../../core/auth.service';
 import { ServersService } from '../../core/servers.service';
 
 @Component({
@@ -13,6 +14,8 @@ import { ServersService } from '../../core/servers.service';
 })
 export class MyServersPage {
   private readonly servers = inject(ServersService);
+  protected readonly auth = inject(AuthService);
+  private readonly router = inject(Router);
 
   protected readonly mine = signal<ServerDto[] | undefined>(undefined);
   protected readonly error = signal('');
@@ -21,6 +24,7 @@ export class MyServersPage {
   protected name = '';
   protected slug = '';
   protected description = '';
+  protected playersInformed = false;
 
   constructor() {
     void this.reload();
@@ -43,14 +47,20 @@ export class MyServersPage {
 
   protected async create(): Promise<void> {
     this.error.set('');
+    if (!this.playersInformed) {
+      this.error.set('Merci d’attester que tu informes les joueurs de ton serveur.');
+      return;
+    }
     this.creating.set(true);
     try {
       await this.servers.create({
         name: this.name.trim(),
         slug: this.slug.trim(),
         description: this.description.trim() || undefined,
+        playersInformed: true,
       });
       this.name = this.slug = this.description = '';
+      this.playersInformed = false;
       await this.reload();
     } catch (e: unknown) {
       const err = e as { error?: { message?: string } };
@@ -58,5 +68,17 @@ export class MyServersPage {
     } finally {
       this.creating.set(false);
     }
+  }
+
+  protected async deleteAccount(): Promise<void> {
+    if (
+      !confirm(
+        'Supprimer définitivement ton compte, tes serveurs et toutes leurs données ? Action irréversible.',
+      )
+    ) {
+      return;
+    }
+    await this.auth.deleteAccount();
+    await this.router.navigateByUrl('/');
   }
 }

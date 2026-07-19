@@ -47,9 +47,29 @@
       Description (optionnelle)
       <input type="text" name="description" [(ngModel)]="description" maxlength="500" />
     </label>
+    <label class="check">
+      <input type="checkbox" name="playersInformed" [(ngModel)]="playersInformed" />
+      <span>
+        J'atteste informer les joueurs de mon serveur que leurs données de jeu
+        (pseudo, niveau, position, pals) sont publiées sur PalHub, via les règles
+        du serveur ou son Discord. Voir la
+        <a routerLink="/confidentialite">politique de confidentialité</a>.
+      </span>
+    </label>
     @if (error()) {
       <p class="error">{{ error() }}</p>
     }
-    <button class="btn" type="submit" [disabled]="creating() || !name || !slug">Créer</button>
+    <button class="btn" type="submit" [disabled]="creating() || !name || !slug || !playersInformed">Créer</button>
   </form>
+</div>
+
+<div class="card create">
+  <h2>Mon compte</h2>
+  <p class="empty">
+    Tu peux supprimer ton compte PalHub à tout moment. Cela efface tes serveurs
+    et toutes leurs données de façon irréversible.
+  </p>
+  <button class="btn btn--ghost" type="button" (click)="deleteAccount()">
+    Supprimer mon compte
+  </button>
 </div>

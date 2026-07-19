@@ -16,6 +16,9 @@ import { PrismaService } from '../prisma/prisma.service';
 
 /** Nombre de snapshots palbox conservés par serveur (les plus récents). */
 const PALBOX_HISTORY = 30;
+/** Rétention maximale (RGPD) : au-delà, un snapshot est purgé même s'il fait
+ *  partie des 30 derniers. */
+const PALBOX_MAX_AGE_MS = 90 * 24 * 3600_000;
 
 export type SnapshotKind = 'palbox' | 'live';
 
@@ -45,6 +48,9 @@ export class IngestService {
         `world_id inattendu (${payload.world_id}) : cette clé est liée au monde ${server.worldId}`,
       );
     }
+
+    // RGPD : retire les joueurs exclus avant tout stockage.
+    await this.applyExclusions(server.id, kind, payload);
 
     const sourceHash =
       payload.source_hash ??
@@ -117,6 +123,41 @@ export class IngestService {
     return { stored: true, kind, sourceHash };
   }
 
+  /** Retire du payload les joueurs exclus (RGPD) — modifie l'objet en place. */
+  private async applyExclusions(
+    serverId: string,
+    kind: SnapshotKind,
+    payload: Record<string, unknown>,
+  ): Promise<void> {
+    const rows = await this.prisma.playerExclusion.findMany({
+      where: { serverId },
+      select: { uid: true },
+    });
+    if (!rows.length) return;
+    const excluded = new Set(rows.map((r) => r.uid));
+
+    const players = payload.players as { uid: string }[] | undefined;
+    if (Array.isArray(players)) {
+      payload.players = players.filter((p) => !excluded.has(p.uid));
+    }
+    if (kind === 'palbox') {
+      const pals = payload.pals as { owner: string | null }[] | undefined;
+      if (Array.isArray(pals)) {
+        // les pals de base (owner null) restent ; ceux d'un joueur exclu partent
+        payload.pals = pals.filter(
+          (p) => p.owner === null || !excluded.has(p.owner),
+        );
+      }
+    } else {
+      const guilds = payload.guilds as { members: string[] }[] | undefined;
+      if (Array.isArray(guilds)) {
+        for (const g of guilds) {
+          g.members = g.members.filter((uid) => !excluded.has(uid));
+        }
+      }
+    }
+  }
+
   private async purgeOldPalbox(serverId: string): Promise<void> {
     const keep = await this.prisma.snapshot.findMany({
       where: { serverId, kind: 'palbox' },
@@ -124,11 +165,16 @@ export class IngestService {
       take: PALBOX_HISTORY,
       select: { id: true },
     });
+    const cutoff = new Date(Date.now() - PALBOX_MAX_AGE_MS);
     await this.prisma.snapshot.deleteMany({
       where: {
         serverId,
         kind: 'palbox',
-        id: { notIn: keep.map((s) => s.id) },
+        // purge si hors des 30 derniers OU plus vieux que la rétention max
+        OR: [
+          { id: { notIn: keep.map((s) => s.id) } },
+          { generatedAt: { lt: cutoff } },
+        ],
       },
     });
   }

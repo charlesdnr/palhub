@@ -11,6 +11,16 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/login/login').then((m) => m.LoginPage),
   },
   {
+    path: 'confidentialite',
+    loadComponent: () =>
+      import('./pages/legal/privacy').then((m) => m.PrivacyPage),
+  },
+  {
+    path: 'mentions-legales',
+    loadComponent: () =>
+      import('./pages/legal/legal-notice').then((m) => m.LegalNoticePage),
+  },
+  {
     path: 'invite/:token',
     loadComponent: () =>
       import('./pages/invite-page/invite-page').then((m) => m.InvitePage),

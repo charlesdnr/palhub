@@ -27,7 +27,17 @@ export const createServerSchema = z.object({
   name: z.string().trim().min(2).max(60),
   slug: slugSchema,
   description: z.string().trim().max(500).optional(),
+  // RGPD : attestation obligatoire que l'admin informe ses joueurs.
+  playersInformed: z.literal(true, {
+    message: 'Tu dois attester informer les joueurs de ton serveur',
+  }),
 });
+
+/** UID court d'un joueur (comme dans les payloads). */
+export const exclusionSchema = z.object({
+  uid: z.string().trim().min(1).max(64),
+});
+export type ExclusionInput = z.infer<typeof exclusionSchema>;
 
 export const updateServerSchema = z.object({
   name: z.string().trim().min(2).max(60).optional(),

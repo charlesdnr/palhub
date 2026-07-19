@@ -1,5 +1,6 @@
 import {
   Controller,
+  Delete,
   Get,
   Post,
   Query,
@@ -110,6 +111,15 @@ export class AuthController {
       where: { id: req.userId },
       data: { tokenVersion: { increment: 1 } },
     });
+    res.clearCookie(AUTH_COOKIE, { path: '/' });
+    res.json({ ok: true });
+  }
+
+  /** RGPD : supprime le compte et, en cascade, ses serveurs et leurs données. */
+  @Delete('me')
+  @UseGuards(JwtAuthGuard)
+  async deleteMe(@Req() req: AuthenticatedRequest, @Res() res: Response) {
+    await this.prisma.user.delete({ where: { id: req.userId } });
     res.clearCookie(AUTH_COOKIE, { path: '/' });
     res.json({ ok: true });
   }

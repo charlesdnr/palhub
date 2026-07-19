@@ -205,6 +205,31 @@ PALHUB_SOURCE=&lt;dossier du save ou sftp://&gt;</pre>
     </button>
   </div>
 
+  <div class="card block">
+    <h2>Confidentialité des joueurs (RGPD)</h2>
+    <p class="dim">
+      Un joueur peut demander à ne plus apparaître. L'exclure retire ses données
+      des publications et purge l'historique existant du serveur.
+    </p>
+    @if (players().length) {
+      <ul class="players">
+        @for (p of players(); track p.uid) {
+          <li>
+            <span>{{ p.name }}</span>
+            <button type="button" class="btn btn--ghost btn--sm" (click)="toggleExclusion(p.uid)">
+              {{ isExcluded(p.uid) ? 'Réintégrer' : 'Exclure' }}
+            </button>
+          </li>
+        }
+      </ul>
+    } @else {
+      <p class="dim">Aucune donnée de joueur pour l'instant (pas encore synchronisé).</p>
+    }
+    <button type="button" class="btn btn--ghost" (click)="purgeSnapshots()">
+      Purger tout l'historique de données
+    </button>
+  </div>
+
   @if (s.role === 'owner') {
   <div class="card block danger-zone">
     <h2>Zone dangereuse</h2>

@@ -16,8 +16,10 @@ import type { AuthenticatedRequest } from '../auth/jwt-auth.guard';
 import { ZodValidationPipe } from '../common/zod-validation.pipe';
 import {
   createServerSchema,
+  exclusionSchema,
   updateServerSchema,
   type CreateServerInput,
+  type ExclusionInput,
   type UpdateServerInput,
 } from './servers.dto';
 import { ServersService } from './servers.service';
@@ -80,5 +82,44 @@ export class ServersController {
     @Param('id') id: string,
   ): Promise<ApiKeyDto> {
     return this.servers.rotateApiKey(req.userId, id);
+  }
+
+  /* ---------- RGPD : exclusions de joueurs & purge ---------- */
+
+  @Get(':id/exclusions')
+  exclusions(
+    @Req() req: AuthenticatedRequest,
+    @Param('id') id: string,
+  ): Promise<string[]> {
+    return this.servers.listExclusions(req.userId, id);
+  }
+
+  @Post(':id/exclusions')
+  async addExclusion(
+    @Req() req: AuthenticatedRequest,
+    @Param('id') id: string,
+    @Body(new ZodValidationPipe(exclusionSchema)) body: ExclusionInput,
+  ): Promise<{ ok: boolean }> {
+    await this.servers.addExclusion(req.userId, id, body.uid);
+    return { ok: true };
+  }
+
+  @Delete(':id/exclusions/:uid')
+  @HttpCode(204)
+  async removeExclusion(
+    @Req() req: AuthenticatedRequest,
+    @Param('id') id: string,
+    @Param('uid') uid: string,
+  ): Promise<void> {
+    await this.servers.removeExclusion(req.userId, id, uid);
+  }
+
+  @Post(':id/purge-snapshots')
+  @HttpCode(204)
+  async purge(
+    @Req() req: AuthenticatedRequest,
+    @Param('id') id: string,
+  ): Promise<void> {
+    await this.servers.purgeSnapshots(req.userId, id);
   }
 }

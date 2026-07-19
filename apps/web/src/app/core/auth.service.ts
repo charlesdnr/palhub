@@ -40,4 +40,10 @@ export class AuthService {
     await firstValueFrom(this.http.post('/api/auth/logout', {}));
     this.user.set(null);
   }
+
+  /** RGPD : supprime le compte et toutes ses données (irréversible). */
+  async deleteAccount(): Promise<void> {
+    await firstValueFrom(this.http.delete('/api/auth/me'));
+    this.user.set(null);
+  }
 }

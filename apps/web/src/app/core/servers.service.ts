@@ -31,8 +31,35 @@ export class ServersService {
     name: string;
     slug: string;
     description?: string;
+    playersInformed: true;
   }): Promise<ServerDto> {
     return firstValueFrom(this.http.post<ServerDto>('/api/servers', input));
+  }
+
+  // --- RGPD ---
+
+  listExclusions(id: string): Promise<string[]> {
+    return firstValueFrom(
+      this.http.get<string[]>(`/api/servers/${id}/exclusions`),
+    );
+  }
+
+  addExclusion(id: string, uid: string): Promise<{ ok: boolean }> {
+    return firstValueFrom(
+      this.http.post<{ ok: boolean }>(`/api/servers/${id}/exclusions`, { uid }),
+    );
+  }
+
+  removeExclusion(id: string, uid: string): Promise<void> {
+    return firstValueFrom(
+      this.http.delete<void>(`/api/servers/${id}/exclusions/${uid}`),
+    );
+  }
+
+  purgeSnapshots(id: string): Promise<void> {
+    return firstValueFrom(
+      this.http.post<void>(`/api/servers/${id}/purge-snapshots`, {}),
+    );
   }
 
   update(id: string, input: Partial<ServerDto>): Promise<ServerDto> {

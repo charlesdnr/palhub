@@ -114,8 +114,9 @@ describe('Ingestion (e2e)', () => {
 
   it('purge : ne conserve que les 30 derniers snapshots palbox', async () => {
     // Le throttle d'ingest (12/min) empêche 30+ POST rapides : on seed
-    // directement 31 snapshots, puis un ingest réel déclenche la purge.
-    const base = Date.UTC(2026, 0, 1);
+    // directement 31 snapshots RÉCENTS (la rétention 90 j purgerait des dates
+    // trop anciennes), puis un ingest réel déclenche la purge par nombre.
+    const base = Date.now() - 32 * 60_000;
     for (let i = 0; i < 31; i++) {
       await prisma.snapshot.create({
         data: {

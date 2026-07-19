@@ -35,14 +35,29 @@ model Server {
   /// 'public' (annuaire + accessible), 'unlisted' (accessible par lien seul),
   /// 'private' (carte/palbox refusés à qui n'est pas membre)
   visibility   String     @default("unlisted")
+  /// Horodatage de l'attestation « j'informe mes joueurs » (RGPD).
+  playersInformedAt DateTime? @map("players_informed_at") @db.Timestamptz()
   lastIngestAt DateTime?  @map("last_ingest_at") @db.Timestamptz()
   createdAt    DateTime       @default(now()) @map("created_at") @db.Timestamptz()
   snapshots    Snapshot[]
   syncConfig   SyncConfig?
   members      ServerMember[]
   invite       ServerInvite?
+  exclusions   PlayerExclusion[]
 
   @@map("servers")
+}
+
+/// RGPD : joueurs exclus des données publiées d'un serveur (filtrés à l'ingest).
+model PlayerExclusion {
+  serverId  String   @map("server_id") @db.Uuid
+  server    Server   @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  /// UID court du joueur (comme dans les payloads).
+  uid       String
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+
+  @@id([serverId, uid])
+  @@map("player_exclusions")
 }
 
 /// Co-admins invités par le propriétaire : gèrent synchro et description,

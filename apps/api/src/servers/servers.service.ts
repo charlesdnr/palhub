@@ -81,6 +81,8 @@ export class ServersService {
           name: input.name,
           slug: input.slug,
           description: input.description ?? null,
+          // RGPD : l'admin atteste informer ses joueurs (schéma exige true).
+          playersInformedAt: new Date(),
         },
       });
     } catch (e) {
@@ -116,6 +118,47 @@ export class ServersService {
   async remove(userId: string, id: string): Promise<void> {
     await this.getOwned(userId, id);
     await this.prisma.server.delete({ where: { id } });
+  }
+
+  /* ---------- RGPD : exclusions de joueurs & purge d'historique ---------- */
+
+  async listExclusions(userId: string, id: string): Promise<string[]> {
+    await this.getMine(userId, id);
+    const rows = await this.prisma.playerExclusion.findMany({
+      where: { serverId: id },
+      orderBy: { createdAt: 'asc' },
+      select: { uid: true },
+    });
+    return rows.map((r) => r.uid);
+  }
+
+  /** Exclut un joueur des futures données ; purge aussi les snapshots existants. */
+  async addExclusion(userId: string, id: string, uid: string): Promise<void> {
+    await this.getMine(userId, id);
+    await this.prisma.playerExclusion.upsert({
+      where: { serverId_uid: { serverId: id, uid } },
+      create: { serverId: id, uid },
+      update: {},
+    });
+    // Efface l'historique : l'exclusion doit valoir pour le passé aussi.
+    await this.purgeSnapshots(userId, id);
+  }
+
+  async removeExclusion(
+    userId: string,
+    id: string,
+    uid: string,
+  ): Promise<void> {
+    await this.getMine(userId, id);
+    await this.prisma.playerExclusion.deleteMany({
+      where: { serverId: id, uid },
+    });
+  }
+
+  /** Supprime tous les snapshots du serveur (données rechargées au prochain ingest). */
+  async purgeSnapshots(userId: string, id: string): Promise<void> {
+    await this.getMine(userId, id);
+    await this.prisma.snapshot.deleteMany({ where: { serverId: id } });
   }
 
   /** Génère (ou remplace) la clé API. La clé complète n'est renvoyée qu'ici. */
