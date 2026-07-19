@@ -122,6 +122,12 @@ export class ServersService {
     return firstValueFrom(this.http.delete<void>(`/api/servers/${id}/sync`));
   }
 
+  resetSyncHostKey(id: string): Promise<void> {
+    return firstValueFrom(
+      this.http.delete<void>(`/api/servers/${id}/sync/host-key`),
+    );
+  }
+
   // --- lecture publique ---
 
   listPublic(): Promise<PublicServerDto[]> {

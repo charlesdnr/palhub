@@ -52,6 +52,13 @@ caractères, partagé avec le runner GitHub Actions) et `SYNC_ENC_KEY` (64 hex,
 chiffrement des identifiants SFTP). Sans eux, la configuration SFTP côté site
 est refusée.
 
+Le runner réclame les jobs un par un (`POST /api/internal/sync-jobs/claim`) : une
+requête ne rend qu'un secret à la fois. Faire tourner `WORKER_SECRET` de temps en
+temps (variable d'env de l'API + secret GitHub `PALHUB_WORKER_SECRET`). La clé
+d'hôte SSH de chaque serveur est mémorisée à la 1re connexion (TOFU) et vérifiée
+ensuite ; en cas de changement légitime, réinitialiser l'empreinte depuis la page
+de réglages du serveur.
+
 TLS : mettre un Caddy/Traefik devant, ou certbot + un `server 443` dans
 `infra/nginx/nginx.conf`.
 

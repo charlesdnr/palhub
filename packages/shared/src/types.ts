@@ -69,6 +69,8 @@ export interface SyncConfigDto {
   remotePath: string;
   enabled: boolean;
   hasSecret: boolean;
+  /** Empreinte SHA256 de la clé d'hôte apprise (TOFU), null tant qu'aucune sync. */
+  hostKeyFp: string | null;
   lastRunAt: string | null;
   lastStatus: 'ok' | 'unchanged' | 'error' | null;
   lastError: string | null;

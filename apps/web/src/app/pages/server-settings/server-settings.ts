@@ -98,6 +98,20 @@ export class ServerSettingsPage {
     }
   }
 
+  protected async resetHostKey(): Promise<void> {
+    const s = this.server();
+    if (!s) return;
+    if (
+      !confirm(
+        "Oublier l'empreinte de la clé d'hôte ? Elle sera ré-apprise à la prochaine synchro.",
+      )
+    ) {
+      return;
+    }
+    await this.servers.resetSyncHostKey(s.id);
+    this.syncConfig.set(await this.servers.getSyncConfig(s.id));
+  }
+
   protected async removeSync(): Promise<void> {
     const s = this.server();
     if (!s) return;

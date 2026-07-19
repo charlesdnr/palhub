@@ -83,6 +83,13 @@ model SyncConfig {
   /// dossier du monde : /Pal/Saved/SaveGames/0/<WorldID>
   remotePath    String    @map("remote_path")
   enabled       Boolean   @default(true)
+  /// Empreinte SHA256 de la clé d'hôte SSH, mémorisée à la 1re connexion (TOFU) :
+  /// le runner refuse ensuite de se connecter si elle change. Réinitialisée
+  /// quand host/port change.
+  hostKeyFp     String?   @map("host_key_fp")
+  /// Verrou de distribution : posé quand un runner réclame ce job, expire après
+  /// 10 min. Limite l'exposition — un appel ne rend qu'un secret à la fois.
+  claimedAt     DateTime? @map("claimed_at") @db.Timestamptz()
   lastRunAt     DateTime? @map("last_run_at") @db.Timestamptz()
   /// 'ok' | 'unchanged' | 'error'
   lastStatus    String?   @map("last_status")

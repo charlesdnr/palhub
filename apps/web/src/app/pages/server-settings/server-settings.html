@@ -156,6 +156,15 @@
           <span class="dim"> — {{ c.lastRunAt | date: 'dd/MM HH:mm' }}</span>
         }
       </p>
+      @if (c.hostKeyFp) {
+        <p class="sync-status">
+          <span class="dim">Clé d'hôte mémorisée :</span>
+          <span class="mono">{{ c.hostKeyFp }}</span>
+          <button class="btn btn--ghost btn--sm" type="button" (click)="resetHostKey()">
+            Réinitialiser
+          </button>
+        </p>
+      }
     }
   </div>
 

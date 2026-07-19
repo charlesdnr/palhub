@@ -47,4 +47,14 @@ export class SyncController {
   ): Promise<void> {
     await this.sync.remove(req.userId, id);
   }
+
+  /** Réinitialise l'empreinte de la clé d'hôte (changement de serveur légitime). */
+  @Delete('host-key')
+  @HttpCode(204)
+  async resetHostKey(
+    @Req() req: AuthenticatedRequest,
+    @Param('id') id: string,
+  ): Promise<void> {
+    await this.sync.resetHostKey(req.userId, id);
+  }
 }

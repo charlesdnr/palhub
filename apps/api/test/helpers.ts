@@ -11,6 +11,12 @@ import { configureApp } from './../src/setup';
 /** Origine du site utilisée par les tests (contrôle CSRF). */
 export const TEST_WEB_ORIGIN = 'http://localhost:4200';
 
+/** Secret du runner de sync (InternalGuard exige ≥ 32 caractères). */
+export const TEST_WORKER_SECRET = 'test-worker-secret-0123456789abcdef';
+
+/** Clé de chiffrement des secrets SFTP (64 hex) pour les tests de sync. */
+export const TEST_SYNC_ENC_KEY = 'a'.repeat(64);
+
 /** Monte l'app Nest exactement comme main.ts (helmet, CSRF, préfixe, cookies). */
 export async function bootstrapTestApp(): Promise<{
   app: INestApplication;
@@ -18,6 +24,8 @@ export async function bootstrapTestApp(): Promise<{
   jwt: JwtService;
 }> {
   process.env.WEB_ORIGIN = TEST_WEB_ORIGIN;
+  process.env.WORKER_SECRET = TEST_WORKER_SECRET;
+  process.env.SYNC_ENC_KEY = TEST_SYNC_ENC_KEY;
   const moduleFixture = await Test.createTestingModule({
     imports: [AppModule],
   }).compile();

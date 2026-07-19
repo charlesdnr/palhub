@@ -37,10 +37,12 @@ def api_request(api: str, secret: str, path: str, payload: dict | None = None):
         return json.loads(res.read().decode("utf-8"))
 
 
-def report(api, secret, server_id, status, error=None, stat=None):
+def report(api, secret, server_id, status, error=None, stat=None, host_key_fp=None):
     payload = {"status": status, "error": error}
     if stat:
         payload["statSize"], payload["statMtime"] = stat
+    if host_key_fp:
+        payload["hostKeyFp"] = host_key_fp
     try:
         api_request(api, secret, f"/internal/sync-jobs/{server_id}/report", payload)
     except (urllib.error.URLError, OSError) as e:
@@ -56,11 +58,13 @@ def run_job(api: str, secret: str, job: dict, names: dict, passives: dict) -> st
         world_path=job["remotePath"],
         password=job["secret"] if job["authType"] == "password" else None,
         key_data=job["secret"] if job["authType"] == "key" else None,
+        host_key_fp=job.get("hostKeyFp"),
     )
 
     stat = source.stat()
+    fp = source.observed_host_key_fp
     if (job.get("lastStatSize"), job.get("lastStatMtime")) == tuple(stat):
-        report(api, secret, job["serverId"], "unchanged", stat=stat)
+        report(api, secret, job["serverId"], "unchanged", stat=stat, host_key_fp=fp)
         return "unchanged"
 
     raw = source.fetch()
@@ -72,8 +76,13 @@ def run_job(api: str, secret: str, job: dict, names: dict, passives: dict) -> st
             f"{api}/api/internal/ingest/{job['serverId']}/{kind}", secret, kind, body
         )
 
-    report(api, secret, job["serverId"], "ok", stat=stat)
+    report(api, secret, job["serverId"], "ok", stat=stat, host_key_fp=fp)
     return "ok"
+
+
+# Filet de sécurité : borne le nombre de jobs réclamés par run (évite une
+# boucle infinie si un report échoue et que le verrou expire pendant le run).
+MAX_JOBS_PER_RUN = 200
 
 
 def main() -> int:
@@ -83,16 +92,17 @@ def main() -> int:
     api = env("PALHUB_API_URL", required=True).rstrip("/")
     secret = env("PALHUB_WORKER_SECRET", required=True)
 
-    jobs = api_request(api, secret, "/internal/sync-jobs")
-    if not jobs:
-        log.info("aucun serveur en sync hébergée")
-        return 0
-
     names = load_table("pal_names.json")
     passives = load_table("passive_names.json")
 
-    failures = 0
-    for job in jobs:
+    # Boucle de « claim » : on réclame un job à la fois (l'API n'expose ainsi
+    # qu'un secret par requête) jusqu'à épuisement.
+    total = failures = 0
+    for _ in range(MAX_JOBS_PER_RUN):
+        job = api_request(api, secret, "/internal/sync-jobs/claim", payload={})
+        if not job:
+            break
+        total += 1
         sid = job["serverId"]
         try:
             outcome = run_job(api, secret, job, names, passives)
@@ -106,10 +116,14 @@ def main() -> int:
             log.error("%s -> %s", sid, e)
             report(api, secret, sid, "error", error=str(e)[:1000])
 
-    log.info("terminé : %d serveur(s), %d en échec", len(jobs), failures)
+    if total == 0:
+        log.info("aucun serveur en sync hébergée")
+        return 0
+
+    log.info("terminé : %d serveur(s), %d en échec", total, failures)
     # le run est « vert » si au moins un serveur passe : les échecs sont visibles
     # dans le statut par-serveur côté site, pas besoin d'alerter tout GitHub
-    return 0 if failures < len(jobs) else 1
+    return 0 if failures < total else 1
 
 
 if __name__ == "__main__":
