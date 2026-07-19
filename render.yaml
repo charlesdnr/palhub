@@ -1,0 +1,27 @@
+# Blueprint Render : un seul service gratuit qui sert l'API ET le front.
+# La base PostgreSQL est chez Neon (DATABASE_URL à renseigner dans le dashboard).
+services:
+  - type: web
+    name: palhub
+    runtime: node
+    plan: free
+    buildCommand: npm ci --include=dev && npm run build:shared && npm run build -w web && npx prisma generate --schema apps/api/prisma/schema.prisma && npm run build -w api
+    startCommand: npx prisma migrate deploy --schema apps/api/prisma/schema.prisma && node apps/api/dist/main.js
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: 24.18.0
+      - key: SERVE_STATIC
+        value: "1"
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        sync: false # coller l'URL Neon dans le dashboard
+      - key: DISCORD_CLIENT_ID
+        sync: false
+      - key: DISCORD_CLIENT_SECRET
+        sync: false
+      - key: WEB_ORIGIN
+        sync: false # https://<nom>.onrender.com
+      - key: DISCORD_CALLBACK_URL
+        sync: false # https://<nom>.onrender.com/api/auth/discord/callback
