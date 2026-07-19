@@ -5,7 +5,9 @@ import { createCipheriv, createDecipheriv, randomBytes } from 'node:crypto';
 function key(): Buffer {
   const hex = process.env.SYNC_ENC_KEY ?? '';
   if (hex.length !== 64) {
-    throw new Error('SYNC_ENC_KEY manquante ou invalide (attendu : 64 caractères hex)');
+    throw new Error(
+      'SYNC_ENC_KEY manquante ou invalide (attendu : 64 caractères hex)',
+    );
   }
   return Buffer.from(hex, 'hex');
 }
@@ -21,5 +23,7 @@ export function decryptSecret(enc: string): string {
   const [iv, tag, data] = enc.split(':').map((p) => Buffer.from(p, 'base64'));
   const decipher = createDecipheriv('aes-256-gcm', key(), iv);
   decipher.setAuthTag(tag);
-  return Buffer.concat([decipher.update(data), decipher.final()]).toString('utf8');
+  return Buffer.concat([decipher.update(data), decipher.final()]).toString(
+    'utf8',
+  );
 }

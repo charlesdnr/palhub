@@ -27,7 +27,8 @@ export class IngestService {
     kind: SnapshotKind,
     body: unknown,
   ): Promise<IngestResultDto> {
-    const schema = kind === 'palbox' ? palboxSnapshotSchema : liveSnapshotSchema;
+    const schema =
+      kind === 'palbox' ? palboxSnapshotSchema : liveSnapshotSchema;
     const parsed = schema.safeParse(body);
     if (!parsed.success) {
       throw new BadRequestException({
@@ -83,7 +84,9 @@ export class IngestService {
           e instanceof Prisma.PrismaClientKnownRequestError &&
           e.code === 'P2002'
         ) {
-          throw new ConflictException('Snapshot déjà ingéré (source_hash identique)');
+          throw new ConflictException(
+            'Snapshot déjà ingéré (source_hash identique)',
+          );
         }
         throw e;
       }

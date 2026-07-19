@@ -50,7 +50,9 @@ export class SyncService {
         'Le mot de passe ou la clé privée est requis à la création',
       );
     }
-    const secretEnc = input.secret ? encryptSecret(input.secret) : existing!.secretEnc;
+    const secretEnc = input.secret
+      ? encryptSecret(input.secret)
+      : existing!.secretEnc;
     const data = {
       host: input.host,
       port: input.port,

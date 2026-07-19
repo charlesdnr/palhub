@@ -1,0 +1,70 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npm run build:shared
+      - run: npx prisma generate --schema apps/api/prisma/schema.prisma
+      - run: npm run build -w api
+      - run: npm run build -w web
+      - run: npm run lint -w api
+      - run: npm run lint -w web
+
+  test-api:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: palhub
+          POSTGRES_PASSWORD: palhub
+          POSTGRES_DB: palhub
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U palhub"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql://palhub:palhub@localhost:5432/palhub
+      JWT_SECRET: ci-test-secret-ci-test-secret-32b
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npm run build:shared
+      - run: npx prisma migrate deploy --schema apps/api/prisma/schema.prisma
+      - run: npx prisma generate --schema apps/api/prisma/schema.prisma
+      - run: npm run test:e2e -w api
+
+  test-web:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npm run build:shared
+      - run: npm run test -w web

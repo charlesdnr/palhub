@@ -4,7 +4,12 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import type { InviteDto, InviteInfoDto, MemberDto, ServerDto } from '@palhub/shared';
+import type {
+  InviteDto,
+  InviteInfoDto,
+  MemberDto,
+  ServerDto,
+} from '@palhub/shared';
 import { randomBytes } from 'node:crypto';
 import { PrismaService } from '../prisma/prisma.service';
 import { ServersService } from './servers.service';
@@ -126,7 +131,9 @@ export class InvitesService {
       throw new ForbiddenException('Le propriétaire ne peut pas être retiré');
     }
     if (userId !== server.ownerId && userId !== targetId) {
-      throw new ForbiddenException('Seul le propriétaire retire les autres membres');
+      throw new ForbiddenException(
+        'Seul le propriétaire retire les autres membres',
+      );
     }
     await this.prisma.serverMember.deleteMany({
       where: { serverId, userId: targetId },

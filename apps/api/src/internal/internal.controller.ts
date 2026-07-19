@@ -10,7 +10,6 @@ import {
 import type { IngestResultDto } from '@palhub/shared';
 import { decryptSecret } from '../common/crypto';
 import { IngestService } from '../ingest/ingest.service';
-import type { SnapshotKind } from '../ingest/ingest.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { ZodValidationPipe } from '../common/zod-validation.pipe';
 import { InternalGuard } from './internal.guard';
@@ -77,6 +76,6 @@ export class InternalController {
     if (!server) {
       throw new NotFoundException('Serveur inconnu');
     }
-    return this.ingest.ingest(server, kind as SnapshotKind, body);
+    return this.ingest.ingest(server, kind, body);
   }
 }
