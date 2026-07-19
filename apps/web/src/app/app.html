@@ -1,19 +1,22 @@
-<header class="topbar">
-  <a routerLink="/" class="brand">Pal<span>Hub</span></a>
-  <nav>
-    @if (auth.user(); as user) {
-      <a routerLink="/me/servers" class="nav-link">Mes serveurs</a>
-      <span class="user">
-        @if (user.avatarUrl) {
-          <img [src]="user.avatarUrl" alt="" class="avatar" />
-        }
-        {{ user.username }}
-      </span>
-      <button type="button" class="btn btn--ghost" (click)="logout()">Déconnexion</button>
-    } @else if (auth.user() === null) {
-      <a routerLink="/login" class="btn">Se connecter</a>
+<header class="topnav">
+  <a routerLink="/" class="brand">Pal<em>Hub</em></a>
+  <nav class="topnav__links">
+    <a routerLink="/" class="navlink" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Accueil</a>
+    @if (auth.user()) {
+      <a routerLink="/me/servers" class="navlink" routerLinkActive="active">Mes serveurs</a>
     }
   </nav>
+  @if (auth.user(); as user) {
+    <span class="user">
+      @if (user.avatarUrl) {
+        <img [src]="user.avatarUrl" alt="" class="avatar" />
+      }
+      {{ user.username }}
+    </span>
+    <button type="button" class="topnav__ext topnav__ext--tight" (click)="logout()">Déconnexion</button>
+  } @else if (auth.user() === null) {
+    <a routerLink="/login" class="topnav__ext">Se connecter</a>
+  }
 </header>
 
 <main>

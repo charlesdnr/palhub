@@ -1,0 +1,168 @@
+@if (data(); as d) {
+  <div class="wrap">
+    <div class="boxhead">
+      <a class="back" [routerLink]="['/s', slug(), 'palbox']">← Tous les joueurs</a>
+      <h2>
+        {{ scopeName() }}
+        @if (key() !== ALL) {
+          <span>· {{ fr(scopePals().length) }} pals</span>
+        }
+      </h2>
+    </div>
+
+    <div class="bar">
+      <label class="bar__search">
+        <input type="search" placeholder="Chercher une espèce ou un surnom…"
+          [ngModel]="q()" (ngModelChange)="q.set($event)" name="q" aria-label="Chercher" />
+      </label>
+      <button type="button" class="pill pill--alpha" [attr.aria-pressed]="alpha()" (click)="alpha.set(!alpha())">Alpha</button>
+      <button type="button" class="pill pill--lucky" [attr.aria-pressed]="lucky()" (click)="lucky.set(!lucky())">Lucky</button>
+      <label class="bar__sort">
+        <span>Trier</span>
+        <select [ngModel]="sort()" (ngModelChange)="sort.set($event)" name="sort">
+          <option value="level">Niveau</option>
+          <option value="ivs">Total IVs</option>
+          <option value="rank">Rank</option>
+          <option value="species">Espèce</option>
+        </select>
+      </label>
+      <button type="button" class="more" [attr.aria-expanded]="panelOpen()" (click)="panelOpen.set(!panelOpen())">
+        Plus de filtres
+        @if (hiddenFilters(); as n) {
+          <span class="more__n">{{ n }}</span>
+        }
+      </button>
+    </div>
+
+    @if (panelOpen()) {
+      <div class="panel">
+        <div class="panel__f">
+          <label>Niveau</label>
+          <div class="range2">
+            <input type="number" min="1" [max]="maxLevel()" [ngModel]="lvlMin()" (ngModelChange)="lvlMin.set($event || 1)" name="lvlMin" aria-label="Niveau minimum" />
+            <span>à</span>
+            <input type="number" min="1" [max]="maxLevel()" [ngModel]="lvlMax()" (ngModelChange)="lvlMax.set($event || maxLevel())" name="lvlMax" aria-label="Niveau maximum" />
+          </div>
+        </div>
+        <div class="panel__f">
+          <label>Total IVs mini — <output>{{ ivMin() }}</output> <span class="dim">/ 300</span></label>
+          <input type="range" min="0" max="300" step="10" [ngModel]="ivMin()" (ngModelChange)="ivMin.set(+$event)" name="ivMin" aria-label="Total IVs minimum" />
+        </div>
+        <div class="panel__f panel__f--wide">
+          <label>Passives (le pal doit toutes les avoir)</label>
+          <input type="search" placeholder="filtrer…" [ngModel]="passq()" (ngModelChange)="passq.set($event)" name="passq" aria-label="Filtrer les passives" />
+          <div class="pass">
+            @for (entry of passList(); track entry[0]) {
+              <button type="button" class="ptag" [attr.aria-pressed]="picked().has(entry[0])" (click)="togglePassive(entry[0])">
+                {{ entry[0] }} · {{ entry[1] }}
+              </button>
+            }
+          </div>
+        </div>
+      </div>
+    }
+
+    @if (chips().length) {
+      <div class="chips">
+        @for (c of chips(); track c.label) {
+          <button type="button" class="chip" (click)="c.undo()"><b>{{ c.label }}</b></button>
+        }
+      </div>
+    }
+
+    <p class="count" aria-live="polite">
+      @if (shown().length === scopePals().length) {
+        <b>{{ fr(shown().length) }}</b> pals
+      } @else {
+        <b>{{ fr(shown().length) }}</b> pals affichés sur {{ fr(scopePals().length) }}
+      }
+    </p>
+
+    @if (!shown().length) {
+      <p class="empty">
+        Aucun pal ne correspond.
+        <button type="button" class="linkish" (click)="resetFilters()">Tout réafficher</button>
+      </p>
+    }
+
+    <div class="slots">
+      @for (p of visible(); track p.id) {
+        <button
+          type="button"
+          class="slot"
+          [class.slot--alpha]="p.alpha"
+          [class.slot--lucky]="p.lucky"
+          [class.slot--mine]="key() === ALL && meUid() && p.owner === meUid()"
+          (pointerenter)="enter($event, p)"
+          (pointerleave)="leave($event)"
+          (focus)="focusSlot($event, p)"
+          (blur)="blurSlot()"
+          (click)="clickSlot($event, p)"
+        >
+          <pal-portrait [speciesId]="p.species_id" [species]="p.species" imgCls="slot__img" fbCls="slot__fb" />
+          <div class="slot__tags">
+            @if (p.alpha) {<span class="tag tag--alpha">alpha</span>}
+            @if (p.lucky) {<span class="tag tag--lucky">lucky</span>}
+          </div>
+          @if (p.gender) {
+            <span class="slot__sex" [class.sex--m]="p.gender === 'male'" [class.sex--f]="p.gender === 'female'">
+              {{ p.gender === 'male' ? '♂' : '♀' }}
+            </span>
+          }
+          <div class="slot__foot">
+            <p class="slot__name">{{ p.species }}</p>
+            <p class="slot__lvl">Nv {{ p.level }}{{ stars(p.rank) }}</p>
+          </div>
+        </button>
+      }
+    </div>
+    <div #sentinel></div>
+  </div>
+
+  @if (peek(); as p) {
+    <aside #peekEl class="peek" role="status">
+      <div class="peek__top">
+        <pal-portrait [speciesId]="p.species_id" [species]="p.species" imgCls="peek__img" fbCls="peek__img pcard__av--fb" />
+        <div class="peek__id">
+          <h3 class="peek__name">{{ p.species }}</h3>
+          @if (p.nickname) {
+            <p class="peek__nick">« {{ p.nickname }} »</p>
+          }
+          <p class="peek__meta">
+            Nv {{ p.level }}{{ p.rank > 1 ? ' · rank ' + p.rank : '' }} ·
+            @if (p.gender) {
+              <span [class.sex--m]="p.gender === 'male'" [class.sex--f]="p.gender === 'female'">{{ p.gender === 'male' ? '♂' : '♀' }}</span> ·
+            }
+            {{ ownerLabel(p) }}
+          </p>
+        </div>
+      </div>
+      @if (p.alpha || p.lucky) {
+        <div class="peek__badges">
+          @if (p.alpha) {<span class="tag tag--alpha">alpha</span>}
+          @if (p.lucky) {<span class="tag tag--lucky">lucky</span>}
+        </div>
+      }
+      <div class="ivs">
+        <div class="iv" [class]="ivClass(p.ivs.hp)"><span class="iv__k">PV</span><span class="iv__v">{{ p.ivs.hp }}</span></div>
+        <div class="iv" [class]="ivClass(p.ivs.shot)"><span class="iv__k">Tir</span><span class="iv__v">{{ p.ivs.shot }}</span></div>
+        <div class="iv" [class]="ivClass(p.ivs.defense)"><span class="iv__k">Déf</span><span class="iv__v">{{ p.ivs.defense }}</span></div>
+        <div class="iv iv--tot" [class]="ivClass(ivTotal(p) / 3)"><span class="iv__k">total</span><span class="iv__v">{{ ivTotal(p) }}</span></div>
+      </div>
+      <div class="plist">
+        @for (name of p.passives; track name) {
+          <p class="p" [class.p--neg]="passRank(name) < 0" [class.p--on]="picked().has(name)">
+            <span class="p__n">{{ name }}</span>
+            <span class="p__r" [style.--ic]="rankIcon(passRank(name))"></span>
+          </p>
+        } @empty {
+          <p class="p p--none">aucune passive</p>
+        }
+      </div>
+    </aside>
+  }
+} @else if (data() === null) {
+  <p class="empty">Pas encore de données pour ce serveur.</p>
+} @else {
+  <p class="empty">Chargement…</p>
+}

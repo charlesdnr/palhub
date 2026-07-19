@@ -17,6 +17,7 @@ import { ServersService } from '../../core/servers.service';
       <nav class="tabs">
         <a [routerLink]="['/s', slug()]" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Carte</a>
         <a [routerLink]="['/s', slug(), 'palbox']" routerLinkActive="active">Palbox</a>
+        <a [routerLink]="['/s', slug(), 'breeding']" routerLinkActive="active">Breeding</a>
       </nav>
     </div>
     @if (notFound()) {

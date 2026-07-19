@@ -1,101 +1,113 @@
-@if (snapshot(); as snap) {
-  <div class="toolbar">
-    <input
-      type="text"
-      placeholder="Espèce ou surnom…"
-      [ngModel]="q()"
-      (ngModelChange)="q.set($event)"
-    />
-    <select [ngModel]="owner()" (ngModelChange)="owner.set($event)">
-      <option value="all">Tous les joueurs</option>
-      <option value="base">Pals de base</option>
-      @for (o of owners(); track o.uid) {
-        <option [value]="o.uid">{{ o.name }}</option>
+@if (data(); as d) {
+  @if (stamp(); as st) {
+    @if (st.staleDays > 0) {
+      <p class="stale">Données vieilles de {{ st.staleDays }} j — le sync n'a pas tourné depuis un moment.</p>
+    }
+  }
+  <div class="wrap">
+    <section class="hero">
+      <p class="hero__eyebrow">La boîte commune du serveur</p>
+      @if (stats(); as s) {
+        <p class="ticker">
+          <span class="stat t--pal"><b>{{ fr(s.pals) }}</b>pals</span>
+          <span class="stat t--sp"><b>{{ fr(s.species) }}</b>espèces</span>
+          <span class="stat t--alpha"><b>{{ fr(s.alphas) }}</b>alphas</span>
+          <span class="stat t--lucky"><b>{{ fr(s.lucky) }}</b>lucky</span>
+        </p>
       }
-    </select>
-    <select [ngModel]="passive()" (ngModelChange)="passive.set($event)">
-      <option value="all">Toutes les passives</option>
-      @for (p of passives(); track p) {
-        <option [value]="p">{{ p }}</option>
-      }
-    </select>
-    <label class="chk">
-      <input type="checkbox" [ngModel]="luckyOnly()" (ngModelChange)="luckyOnly.set($event)" />
-      ✨ Lucky
-    </label>
-    <label class="chk">
-      <input type="checkbox" [ngModel]="alphaOnly()" (ngModelChange)="alphaOnly.set($event)" />
-      👑 Alpha
-    </label>
-    <label class="chk iv">
-      IV min
-      <input type="number" min="0" max="100" [ngModel]="minIv()" (ngModelChange)="minIv.set($event ?? 0)" />
-    </label>
-    <span class="total">{{ filtered().length }} / {{ snap.pals.length }} pals</span>
-  </div>
+      <label class="hunt">
+        <input
+          type="search"
+          placeholder="Chercher une espèce dans toutes les boîtes…"
+          [(ngModel)]="hunt"
+          name="hunt"
+          (keydown.enter)="jump()"
+          aria-label="Chercher une espèce"
+        />
+      </label>
+    </section>
 
-  <div class="table-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th></th>
-          <th class="sortable" (click)="setSort('species')">Espèce</th>
-          <th class="sortable num" (click)="setSort('level')">Niv.</th>
-          <th class="sortable num" (click)="setSort('rank')">Rang</th>
-          <th>Propriétaire</th>
-          <th class="sortable num" (click)="setSort('ivs')">IVs (PV / Att / Déf)</th>
-          <th>Passives</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (p of filtered(); track p.id) {
-          <tr>
-            <td class="face-cell">
-              <img class="face" [src]="face(p)" alt="" loading="lazy" />
-            </td>
-            <td>
-              <span class="species">
-                @if (p.alpha) {<span title="Alpha">👑</span>}
-                @if (p.lucky) {<span title="Lucky">✨</span>}
-                {{ p.species }}
-                @if (p.gender === 'male') {<span class="g g--m">♂</span>}
-                @else if (p.gender === 'female') {<span class="g g--f">♀</span>}
-              </span>
-              @if (p.nickname) {
-                <span class="nick">« {{ p.nickname }} »</span>
+    <section class="rank">
+      <div class="rank__head">
+        <h2 class="lede">Classement des dresseurs</h2>
+        <p class="lede__hint">clique sur un joueur pour ouvrir sa palbox</p>
+      </div>
+      <ol class="roster">
+        @for (g of roster(); track g.key; let i = $index) {
+          <li>
+            <button type="button" class="pcard" [class.pcard--me]="g.key === meUid()" (click)="open(g.key)">
+              <div class="pcard__rank">#{{ i + 1 }}</div>
+              @if (g.best) {
+                <pal-portrait [speciesId]="g.best.species_id" [species]="g.best.species"
+                  imgCls="pcard__av" fbCls="pcard__av pcard__av--fb" />
+              } @else {
+                <div class="pcard__av pcard__av--fb">—</div>
               }
-            </td>
-            <td class="num">{{ p.level }}</td>
-            <td class="num">{{ p.rank > 1 ? '★' + (p.rank - 1) : '—' }}</td>
-            <td [class.base-owner]="p.owner === null">{{ ownerName(p.owner) }}</td>
-            <td class="num mono">
-              {{ p.ivs.hp }} / {{ p.ivs.shot }} / {{ p.ivs.defense }}
-              <span class="iv-sum">Σ {{ ivSum(p) }}</span>
-            </td>
-            <td>
-              @for (pa of p.passives; track $index) {
-                <span
-                  class="pass"
-                  [class.pass--good]="passiveRank(pa) > 0"
-                  [class.pass--bad]="passiveRank(pa) < 0"
-                  >{{ pa }}</span
-                >
+              <div class="pcard__mid">
+                <p class="pcard__name">
+                  {{ g.name }}
+                  @if (g.key === meUid()) {
+                    <span class="pcard__tag">moi</span>
+                  }
+                </p>
+                <p class="pcard__sub">Nv {{ g.level }} · {{ g.uniq }} espèces</p>
+                <div class="share"><i [style.width.%]="g.share"></i></div>
+              </div>
+              <div class="pcard__num">
+                <span class="pcard__pals">{{ fr(g.pals.length) }}</span>
+                <span class="pcard__palslbl">pals</span>
+                @if (g.alphas) {
+                  <p class="pcard__alpha">{{ g.alphas }} α</p>
+                }
+              </div>
+              @if (g.key !== meUid()) {
+                <button type="button" class="mebtn" (click)="setMe($event, g.key)">c'est moi</button>
               }
-            </td>
-          </tr>
+            </button>
+          </li>
         }
-      </tbody>
-    </table>
-  </div>
+      </ol>
 
-  <p class="meta">
-    Données du {{ snap.generated_at | date: 'dd/MM/yyyy à HH:mm' }} ·
-    {{ snap.players.length }} joueurs
-  </p>
-} @else if (snapshot() === null) {
-  <p class="empty">
-    Pas encore de données pour ce serveur — l'admin doit lancer l'agent de synchronisation.
-  </p>
+      <div class="doors">
+        @if (stats(); as s) {
+          @if (s.basePals) {
+            <button type="button" class="door" (click)="open(BASE)">
+              <div class="door__ic">🏠</div>
+              <div>
+                <p class="door__t">Base</p>
+                <p class="door__s">{{ fr(s.basePals) }} pals sans propriétaire</p>
+              </div>
+            </button>
+          }
+          <button type="button" class="door" (click)="open(ALL)">
+            <div class="door__ic">★</div>
+            <div>
+              <p class="door__t">Tous les pals</p>
+              <p class="door__s">{{ fr(s.pals) }} pals · {{ s.players }} joueurs</p>
+            </div>
+          </button>
+          @if (hasBreeding()) {
+            <button type="button" class="door" (click)="openBreeding()">
+              <div class="door__ic">🥚</div>
+              <div>
+                <p class="door__t">Breeding</p>
+                <p class="door__s">qui × qui donne quoi — relié à la boîte</p>
+              </div>
+            </button>
+          }
+        }
+      </div>
+    </section>
+
+    @if (stamp(); as st) {
+      <div class="foot">
+        <p>{{ st.text }}</p>
+        <p>monde {{ st.world }}</p>
+      </div>
+    }
+  </div>
+} @else if (data() === null) {
+  <p class="empty">Pas encore de données pour ce serveur — la synchro n'a pas encore tourné.</p>
 } @else {
   <p class="empty">Chargement…</p>
 }

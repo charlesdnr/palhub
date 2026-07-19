@@ -1,69 +1,68 @@
-<div class="layout">
-  <aside class="sidebar">
-    <div class="mapsel">
-      @for (a of areaLabels; track a.key) {
-        <button
-          type="button"
-          [attr.aria-pressed]="area() === a.key"
-          (click)="setArea(a.key)"
-        >
-          {{ a.label }}
-        </button>
-      }
+<div class="mapwrap">
+  <aside class="side" [class.side-open]="sideOpen()" [class.side--searching]="search().trim() !== ''">
+    <div class="side__head">
+      <input
+        type="search"
+        id="sfind"
+        placeholder="Filtrer les marqueurs…"
+        [ngModel]="search()"
+        (ngModelChange)="search.set($event)"
+        name="sfind"
+        aria-label="Filtrer les marqueurs"
+      />
     </div>
-
-    <input
-      type="text"
-      class="search"
-      placeholder="Rechercher une couche ou un pal…"
-      [ngModel]="search()"
-      (ngModelChange)="search.set($event)"
-    />
-
-    <div class="groups">
+    <div class="side__scroll">
       @for (g of visibleGroups(); track g.key) {
-        <section class="group" [class.group--srv]="g.key === 'serveur'">
-          <button type="button" class="group-head" (click)="toggleGroup(g.key)">
-            <span>{{ g.label }}</span>
-            <span class="count">
-              @if (enabledCount(g); as n) {
-                {{ n }} ·
-              }
-              {{ g.layers.length }}
-            </span>
+        <section class="sgroup" [class.sgroup--closed]="!isOpen(g.key)">
+          <button type="button" class="sgroup__h" (click)="toggleGroup(g.key)">
+            <span class="sgroup__c"></span>
+            <span class="sgroup__t">{{ g.label }}</span>
+            @if (g.key !== 'pals') {
+              <span class="sgroup__all" (click)="toggleAll($event, g)">tout</span>
+            }
           </button>
           @if (isOpen(g.key)) {
-            <ul>
+            <div class="sgroup__body">
               @for (l of g.layers; track l.key) {
-                <li>
-                  <label>
-                    <input
-                      type="checkbox"
-                      [checked]="enabledSig().has(l.key)"
-                      (change)="toggleLayer(l.key)"
+                <button
+                  type="button"
+                  class="srow"
+                  [class.srow--empty]="l.n === 0"
+                  [attr.aria-pressed]="enabledSig().has(l.key)"
+                  (click)="toggleLayer(l.key)"
+                >
+                  @if (l.icon) {
+                    <img
+                      class="srow__ic"
+                      [class.srow__ic--pal]="l.pal"
+                      [src]="l.pal ? l.icon : '/game-assets/map-icons/' + l.icon"
+                      alt=""
+                      loading="lazy"
                     />
-                    @if (l.icon) {
-                      <img
-                        class="licon"
-                        [class.licon--pal]="l.pal"
-                        [src]="l.pal ? l.icon : '/game-assets/map-icons/' + l.icon"
-                        alt=""
-                        loading="lazy"
-                      />
-                    }
-                    <span class="llabel">{{ l.label }}</span>
-                    @if (l.n) {
-                      <span class="ln">{{ l.n }}</span>
-                    }
-                  </label>
-                </li>
+                  }
+                  <span class="srow__t">{{ l.label }}</span>
+                  @if (l.n) {
+                    <span class="srow__n">{{ l.n }}</span>
+                  }
+                </button>
               }
-            </ul>
+            </div>
           }
         </section>
       }
     </div>
   </aside>
 
-  <div id="palhub-map"></div>
+  <div class="maparea">
+    <div id="palhub-map"></div>
+    <div class="mapui mapsel">
+      @for (a of areaLabels; track a.key) {
+        <button type="button" [attr.aria-pressed]="area() === a.key" (click)="setArea(a.key)">
+          {{ a.label }}
+        </button>
+      }
+    </div>
+    <div class="mapui mapui--coords" aria-live="polite">{{ coords() }}</div>
+    <button type="button" class="mapui sidetoggle" (click)="sideOpen.set(!sideOpen())">Filtres</button>
+  </div>
 </div>

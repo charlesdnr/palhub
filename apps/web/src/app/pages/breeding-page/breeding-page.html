@@ -1,0 +1,422 @@
+@if (ready() && data(); as d) {
+  <div class="wrap">
+    <div class="boxhead">
+      <h2>Breeding <span>· table du jeu {{ br.data?.version }}</span></h2>
+      @if (scopeOk()) {
+        <label class="bbox">
+          <select [ngModel]="scope()" (ngModelChange)="setScope($event)" name="bbox" aria-label="Boîte utilisée">
+            @for (o of boxOptions(); track o.value) {
+              <option [value]="o.value">{{ o.label }}</option>
+            }
+          </select>
+        </label>
+      }
+    </div>
+
+    @if (!scopeOk()) {
+      <div class="bpick">
+        <p class="bpick__t">Avec quelle boîte veux-tu élever ?</p>
+        <p class="bpick__s">
+          Parents, couples et plans du solveur ne montreront que les pals de cette boîte.
+          Tu pourras en changer à tout moment.
+        </p>
+        <div class="bpick__grid">
+          @for (e of pickEntries(); track e.key) {
+            <button type="button" class="door" (click)="setScope(e.key)">
+              <div class="door__ic">{{ e.icon }}</div>
+              <div>
+                <p class="door__t">
+                  {{ e.title }}
+                  @if (e.isMe) {<span class="pcard__tag">moi</span>}
+                </p>
+                <p class="door__s">{{ e.sub }}</p>
+              </div>
+            </button>
+          }
+        </div>
+      </div>
+    } @else {
+      <div class="btabs">
+        <button type="button" class="btab" [attr.aria-pressed]="mode() === 'fwd'" (click)="mode.set('fwd')">Parents → enfant</button>
+        <button type="button" class="btab" [attr.aria-pressed]="mode() === 'rev'" (click)="mode.set('rev')">Enfant → parents</button>
+        <button type="button" class="btab" [attr.aria-pressed]="mode() === 'sv'" (click)="mode.set('sv')">Objectif</button>
+      </div>
+
+      <!-- ============ FWD : Parents -> enfant ============ -->
+      @if (mode() === 'fwd') {
+        <div class="breed">
+          @for (k of [0, 1]; track k) {
+            @if (k === 1) {
+              <button type="button" class="breed__op breed__op--swap" (click)="swap()" aria-label="Échanger les parents"></button>
+            }
+            <div class="bparent" [class.bparent--set]="!!sel[k === 0 ? 0 : 1]()">
+              <p class="bparent__t">Parent {{ k === 0 ? 'A' : 'B' }}</p>
+              @if (sel[k === 0 ? 0 : 1](); as s) {
+                <div class="bsel">
+                  <div class="peek__top">
+                    @if (palOf(s); as p) {
+                      <pal-portrait [speciesId]="p.species_id" [species]="p.species" imgCls="peek__img" fbCls="peek__img pcard__av--fb" />
+                      <div class="peek__id">
+                        <h3 class="peek__name">
+                          {{ p.species }}
+                          <span [class.sex--m]="p.gender === 'male'" [class.sex--f]="p.gender === 'female'">{{ p.gender === 'male' ? '♂' : '♀' }}</span>
+                        </h3>
+                        @if (p.nickname) {<p class="peek__nick">« {{ p.nickname }} »</p>}
+                        <p class="peek__meta">Nv {{ p.level }} · IVs {{ ivTotal(p) }} · {{ ownerName(p) }}</p>
+                      </div>
+                    } @else {
+                      <pal-portrait [speciesId]="spOf(selSp(s)).id" [species]="spOf(selSp(s)).fr" imgCls="peek__img" fbCls="peek__img pcard__av--fb" />
+                      <div class="peek__id">
+                        <h3 class="peek__name">{{ spOf(selSp(s)).fr }}</h3>
+                        <p class="peek__meta">espèce, sans pal précis · {{ mPct(spOf(selSp(s)).m) }}% ♂</p>
+                      </div>
+                    }
+                  </div>
+                  @if (palOf(s); as p) {
+                    <div class="plist">
+                      @for (name of p.passives; track name) {
+                        <p class="p" [class.p--neg]="passRank(name) < 0">
+                          <span class="p__n">{{ name }}</span>
+                          <span class="p__r" [style.--ic]="rankIcon(passRank(name))"></span>
+                        </p>
+                      } @empty {
+                        <p class="p p--none">aucune passive</p>
+                      }
+                    </div>
+                  }
+                  <button type="button" class="linkish bsel__change" (click)="clearSel(k === 0 ? 0 : 1)">changer</button>
+                </div>
+              } @else {
+                <div class="bmodes">
+                  <button type="button" class="bmode" [attr.aria-pressed]="ui[k === 0 ? 0 : 1].mode() === 'box'" (click)="ui[k === 0 ? 0 : 1].mode.set('box')">La boîte</button>
+                  <button type="button" class="bmode" [attr.aria-pressed]="ui[k === 0 ? 0 : 1].mode() === 'sp'" (click)="ui[k === 0 ? 0 : 1].mode.set('sp')">Toutes les espèces</button>
+                </div>
+                <input type="search" class="bfind"
+                  [placeholder]="ui[k === 0 ? 0 : 1].mode() === 'box' ? 'Espèce, surnom ou passive…' : 'Nom de l’espèce…'"
+                  [ngModel]="ui[k === 0 ? 0 : 1].q()" (ngModelChange)="ui[k === 0 ? 0 : 1].q.set($event)"
+                  [name]="'bfind' + k" [attr.aria-label]="'Chercher le parent ' + (k === 0 ? 'A' : 'B')" />
+                <div class="brows">
+                  @if (ui[k === 0 ? 0 : 1].mode() === 'box') {
+                    @if (blockedGender(k === 0 ? 0 : 1); as g) {
+                      <p class="brows__hint">le parent {{ k === 0 ? 'B' : 'A' }} est {{ g === 'male' ? '♂ — il faut une ♀' : '♀ — il faut un ♂' }}</p>
+                    }
+                    @for (row of palRows(k === 0 ? 0 : 1); track row.pal.id) {
+                      <button type="button" class="brow" [class.brow--off]="row.off" [disabled]="row.off"
+                        [title]="row.off ? 'même genre que l’autre parent — pas d’œuf possible' : ''"
+                        (click)="pickPal(k === 0 ? 0 : 1, row.pal)">
+                        <pal-portrait [speciesId]="row.pal.species_id" [species]="row.pal.species" imgCls="brow__img" fbCls="brow__img brow__fb" />
+                        <div class="brow__mid">
+                          <p class="brow__n">
+                            {{ row.pal.species }}
+                            <span [class.sex--m]="row.pal.gender === 'male'" [class.sex--f]="row.pal.gender === 'female'">{{ row.pal.gender === 'male' ? '♂' : '♀' }}</span>
+                          </p>
+                          <p class="brow__s">Nv {{ row.pal.level }} · IVs {{ ivTotal(row.pal) }} · {{ ownerName(row.pal) }}</p>
+                          @if (row.pal.passives.length) {
+                            <p class="brow__p">{{ row.pal.passives.join(' · ') }}</p>
+                          }
+                        </div>
+                      </button>
+                    } @empty {
+                      <p class="brows__none">aucun pal ne correspond</p>
+                    }
+                  } @else {
+                    @for (s of spRows(k === 0 ? 0 : 1); track s.id) {
+                      <button type="button" class="brow" (click)="pickSp(k === 0 ? 0 : 1, s.i)">
+                        <pal-portrait [speciesId]="s.id" [species]="s.fr" imgCls="brow__img" fbCls="brow__img brow__fb" />
+                        <div class="brow__mid">
+                          <p class="brow__n">{{ s.fr }}</p>
+                          <p class="brow__s">{{ mPct(s.m) }}% ♂ à la naissance</p>
+                        </div>
+                      </button>
+                    } @empty {
+                      <p class="brows__none">aucune espèce ne correspond</p>
+                    }
+                  }
+                </div>
+              }
+            </div>
+            @if (k === 1) {
+              <div class="breed__op">=</div>
+            }
+          }
+
+          <div class="bchild">
+            <p class="bparent__t">L'œuf</p>
+            @switch (result().state) {
+              @case ('wait') {
+                <div class="bchild__waitbox">
+                  <div class="bchild__egg">🥚</div>
+                  <p class="bchild__wait">{{ $any(result()).msg }}</p>
+                </div>
+              }
+              @case ('err') {
+                <p class="bchild__err">{{ $any(result()).msg }}</p>
+              }
+              @case ('child') {
+                <ng-container *ngTemplateOutlet="kid; context: { info: childInfo($any(result()).child), inRev: false }" />
+                @if (pool(); as pool) {
+                  <div class="bpassives">
+                    <p class="bparent__t">Passives de l'œuf</p>
+                    @if (spOf($any(result()).child).g; as g) {
+                      <p class="bpassives__g">{{ spOf($any(result()).child).fr }} naît toujours avec : {{ g.join(', ') }}</p>
+                    }
+                    @if (!pool.length) {
+                      <p class="bres__hint">Aucune passive chez les parents — l'enfant n'aura que de l'aléatoire.</p>
+                    } @else {
+                      <p class="bres__hint">Le pool des deux parents — coche tes objectifs :</p>
+                      <div class="plist">
+                        @for (name of pool; track name) {
+                          <button type="button" class="p bpass" [class.p--neg]="passRank(name) < 0"
+                            [attr.aria-pressed]="want().has(name)" (click)="toggleWant(name)">
+                            <span class="p__n">{{ name }}</span>
+                            <span class="p__r" [style.--ic]="rankIcon(passRank(name))"></span>
+                          </button>
+                        }
+                      </div>
+                      @if (probLines(); as pr) {
+                        <div class="bres">
+                          @if (pr.hint) {
+                            <p class="bres__hint">{{ pr.hint }}</p>
+                          } @else if (pr.err) {
+                            <p class="bchild__err">{{ pr.err }}</p>
+                          } @else {
+                            <div class="bres__item">
+                              <p class="bres__line"><b>{{ pct(pr.all!) }}</b> toutes les cochées
+                                @if (pr.all! > 0) {<span class="bres__eggs"> — {{ eggsFor(pr.all!) }}</span>}
+                              </p>
+                              <div class="pbar"><i [style.width.%]="barWidth(pr.all!)"></i></div>
+                            </div>
+                            <div class="bres__item">
+                              <p class="bres__line"><b>{{ pct(pr.exact!) }}</b> exactement celles-là, rien d'autre
+                                @if (pr.exact! > 0) {<span class="bres__eggs"> — {{ eggsFor(pr.exact!) }}</span>}
+                              </p>
+                              <div class="pbar"><i [style.width.%]="barWidth(pr.exact!)"></i></div>
+                            </div>
+                          }
+                        </div>
+                      }
+                    }
+                  </div>
+                }
+              }
+              @case ('special') {
+                <p class="bchild__note">Le seul couple du jeu où l'enfant dépend du genre :</p>
+                @for (alt of $any(result()).alts; track alt.femFr) {
+                  <div class="bchild__alt">
+                    <p class="bchild__altlbl">si {{ alt.femFr }} est ♀</p>
+                    <ng-container *ngTemplateOutlet="kid; context: { info: childInfo(alt.child), inRev: true }" />
+                  </div>
+                }
+              }
+            }
+          </div>
+        </div>
+      }
+
+      <!-- ============ REV : Enfant -> parents ============ -->
+      @if (mode() === 'rev') {
+        <div class="rev">
+          <div class="bparent" [class.bparent--set]="rvSel() !== null">
+            <p class="bparent__t">Espèce voulue</p>
+            @if (rvSel() !== null) {
+              <div class="bsel">
+                <ng-container *ngTemplateOutlet="kid; context: { info: childInfo(rvSel()!), inRev: true }" />
+                <button type="button" class="linkish bsel__change" (click)="rvSel.set(null)">changer</button>
+              </div>
+            } @else {
+              <input type="search" class="bfind" placeholder="Nom de l'espèce…"
+                [ngModel]="rvQ()" (ngModelChange)="rvQ.set($event)" name="rvq" aria-label="Chercher l'espèce voulue" />
+              <div class="brows">
+                @for (s of rvTargets(); track s.id) {
+                  <button type="button" class="brow" (click)="rvSel.set(s.i); rvShowAll.set(false)">
+                    <pal-portrait [speciesId]="s.id" [species]="s.fr" imgCls="brow__img" fbCls="brow__img brow__fb" />
+                    <div class="brow__mid"><p class="brow__n">{{ s.fr }}</p></div>
+                  </button>
+                } @empty {
+                  <p class="brows__none">aucune espèce ne correspond</p>
+                }
+              </div>
+            }
+          </div>
+          <div class="rev__out">
+            @if (rvResult(); as rv) {
+              <p class="rev__count">{{ rv.total }} couples donnent {{ rv.targetFr }} — {{ rv.feasible }} faisables avec la boîte</p>
+              @for (row of rv.rows; track $index) {
+                <button type="button" class="prow" (click)="rvUse(row.i, row.j, row.gendered)">
+                  <span class="prow__cell">
+                    <pal-portrait [speciesId]="row.a.id" [species]="row.a.fr" imgCls="prow__img" fbCls="prow__img brow__fb" />
+                    <span class="prow__t">
+                      <span class="prow__n">{{ row.a.fr }} @if (row.a.forced) {<span [class.sex--f]="row.a.forced === 'f'" [class.sex--m]="row.a.forced === 'm'">{{ row.a.forced === 'f' ? '♀' : '♂' }}</span>}</span>
+                      <span class="prow__own">{{ row.a.own }}</span>
+                    </span>
+                  </span>
+                  <span class="prow__x">×</span>
+                  <span class="prow__cell">
+                    <pal-portrait [speciesId]="row.b.id" [species]="row.b.fr" imgCls="prow__img" fbCls="prow__img brow__fb" />
+                    <span class="prow__t">
+                      <span class="prow__n">{{ row.b.fr }} @if (row.b.forced) {<span [class.sex--f]="row.b.forced === 'f'" [class.sex--m]="row.b.forced === 'm'">{{ row.b.forced === 'f' ? '♀' : '♂' }}</span>}</span>
+                      <span class="prow__own">{{ row.b.own }}</span>
+                    </span>
+                  </span>
+                  <span class="st" [class.st--0]="row.cat === 0" [class.st--1]="row.cat === 1" [class.st--2]="row.cat === 2">
+                    {{ row.cat === 0 ? 'faisable' : row.cat === 1 ? 'incomplet' : 'aucun parent' }}
+                  </span>
+                </button>
+              }
+              @if (rv.hiddenCount) {
+                <button type="button" class="more rev__more" (click)="showAllPairs()">
+                  voir les {{ rv.hiddenCount }} couples sans aucun parent dans la boîte
+                </button>
+              }
+            } @else {
+              <p class="bchild__wait">Choisis l'espèce que tu veux faire naître.</p>
+            }
+          </div>
+        </div>
+      }
+
+      <!-- ============ SV : Objectif ============ -->
+      @if (mode() === 'sv') {
+        <div class="rev">
+          <div class="bparent" [class.bparent--set]="svSel() !== null">
+            <p class="bparent__t">Objectif</p>
+            @if (svSel() === null) {
+              <input type="search" class="bfind" placeholder="Espèce voulue…"
+                [ngModel]="svQ()" (ngModelChange)="svQ.set($event)" name="svq" aria-label="Espèce voulue" />
+              <div class="brows">
+                @for (s of svTargets(); track s.id) {
+                  <button type="button" class="brow" (click)="svSel.set(s.i)">
+                    <pal-portrait [speciesId]="s.id" [species]="s.fr" imgCls="brow__img" fbCls="brow__img brow__fb" />
+                    <div class="brow__mid"><p class="brow__n">{{ s.fr }}</p></div>
+                  </button>
+                } @empty {
+                  <p class="brows__none">aucune espèce ne correspond</p>
+                }
+              </div>
+            } @else {
+              <div class="bsel">
+                <div class="peek__top">
+                  <pal-portrait [speciesId]="spOf(svSel()!).id" [species]="spOf(svSel()!).fr" imgCls="peek__img" fbCls="peek__img pcard__av--fb" />
+                  <div class="peek__id">
+                    <h3 class="peek__name">{{ spOf(svSel()!).fr }}</h3>
+                    @if (spOf(svSel()!).g; as g) {
+                      <p class="peek__meta">naît toujours avec : {{ g.join(', ') }}</p>
+                    }
+                  </div>
+                </div>
+                <button type="button" class="linkish bsel__change" (click)="svSel.set(null)">changer</button>
+              </div>
+              <p class="bres__hint">Passives voulues (4 max) — présentes dans la boîte :</p>
+              <input type="search" class="bfind" placeholder="filtrer…"
+                [ngModel]="svPassQ()" (ngModelChange)="svPassQ.set($event)" name="svpq" aria-label="Filtrer les passives" />
+              <div class="pass sv__pass">
+                @for (entry of svPassList(); track entry[0]) {
+                  <button type="button" class="ptag" [attr.aria-pressed]="svWant().has(entry[0])" (click)="toggleSvWant(entry[0])">
+                    {{ entry[0] }} · {{ entry[1] }}
+                  </button>
+                }
+              </div>
+            }
+          </div>
+          <div class="rev__out">
+            @if (svResult(); as sv) {
+              @if (sv.waiting) {
+                <p class="bchild__wait">Coche au moins une passive voulue.</p>
+              } @else {
+                @if (sv.covered.length) {
+                  <p class="bpassives__g">offertes par l'espèce : {{ sv.covered.join(', ') }}</p>
+                }
+                @if (!sv.eff.length) {
+                  <p class="bres__hint">Tout est déjà garanti — n'importe quel couple de l'onglet « Enfant → parents » convient.</p>
+                } @else if (!sv.plans.length) {
+                  <p class="bchild__err">Aucun chemin en 2 étapes ou moins avec la boîte actuelle pour cette combinaison.</p>
+                } @else {
+                  @for (plan of sv.plans; track $index) {
+                    <div class="svplan">
+                      <p class="svplan__head"><b>{{ fmtEggs(plan.eggsTotal) }}</b> · {{ plan.kind === 1 ? '1 étape' : '2 étapes' }}</p>
+                      @if (plan.kind === 1) {
+                        <div class="svstep">
+                          <ng-container *ngTemplateOutlet="svpal; context: { p: plan.m!, hl: sv.hl }" />
+                          <span class="prow__x">×</span>
+                          <ng-container *ngTemplateOutlet="svpal; context: { p: plan.f!, hl: sv.hl }" />
+                          <span class="prow__x">→</span>
+                          <ng-container *ngTemplateOutlet="svsp; context: { i: svSel()!, gender: null, note: pct(plan.P!) + ' par œuf' }" />
+                        </div>
+                        <button type="button" class="linkish svplan__open" (click)="svOpen({ pal: plan.m! }, { pal: plan.f! })">ouvrir dans la calculette</button>
+                      } @else {
+                        <div class="svstep">
+                          <ng-container *ngTemplateOutlet="svpal; context: { p: plan.step1!.m, hl: sv.hl }" />
+                          <span class="prow__x">×</span>
+                          <ng-container *ngTemplateOutlet="svpal; context: { p: plan.step1!.f, hl: sv.hl }" />
+                          <span class="prow__x">→</span>
+                          <ng-container *ngTemplateOutlet="svsp; context: { i: plan.zSp!, gender: plan.zGender!, note: 'doit avoir : ' + svNeedNames(plan, sv.eff) + ' · ' + fmtEggs(plan.comp!.eggs1) }" />
+                        </div>
+                        <div class="svstep">
+                          <ng-container *ngTemplateOutlet="svsp; context: { i: plan.zSp!, gender: plan.zGender!, note: 'l’enfant de l’étape 1' }" />
+                          <span class="prow__x">×</span>
+                          <ng-container *ngTemplateOutlet="svpal; context: { p: plan.w!, hl: sv.hl }" />
+                          <span class="prow__x">→</span>
+                          <ng-container *ngTemplateOutlet="svsp; context: { i: svSel()!, gender: null, note: fmtEggs(plan.comp!.eggs2) }" />
+                        </div>
+                        <button type="button" class="linkish svplan__open" (click)="svOpen({ pal: plan.step1!.m }, { pal: plan.step1!.f })">étape 1 dans la calculette</button>
+                        <button type="button" class="linkish svplan__open" (click)="svOpen({ sp: plan.zSp! }, { pal: plan.w! })">étape 2 (espèce théorique)</button>
+                      }
+                    </div>
+                  }
+                }
+              }
+            } @else {
+              <p class="bchild__wait">Choisis l'espèce que tu veux obtenir.</p>
+            }
+          </div>
+        </div>
+      }
+    }
+  </div>
+
+  <!-- carte enfant réutilisée (œuf, alternatives, cible du rev) -->
+  <ng-template #kid let-info="info" let-inRev="inRev">
+    <div class="bkid">
+      <pal-portrait [speciesId]="info.s.id" [species]="info.s.fr" imgCls="bkid__img" fbCls="bkid__img bkid__fb" />
+      <h3 class="bkid__name">{{ info.s.fr }}</h3>
+      <div class="gbar"><i class="gbar__m" [style.width.%]="info.pm"></i></div>
+      <p class="gbar__lbl">
+        <span class="sex--m">{{ info.pm }}% ♂</span> · <span class="sex--f">{{ 100 - info.pm }}% ♀</span>
+      </p>
+      <p class="bkid__owned">
+        @if (info.owned) {
+          déjà {{ info.owned }} dans la boîte ({{ info.males }} ♂ · {{ info.females }} ♀)
+        } @else {
+          aucun dans la boîte — inédit !
+        }
+      </p>
+      @if (!inRev) {
+        <button type="button" class="linkish bkid__rev" (click)="gotoRev(info.i)">tous les couples qui donnent {{ info.s.fr }}</button>
+      }
+    </div>
+  </ng-template>
+
+  <ng-template #svpal let-p="p" let-hl="hl">
+    <span class="svp">
+      <pal-portrait [speciesId]="p.species_id" [species]="p.species" imgCls="prow__img" fbCls="prow__img brow__fb" />
+      <span class="prow__t">
+        <span class="prow__n">{{ p.species }} <span [class.sex--m]="p.gender === 'male'" [class.sex--f]="p.gender === 'female'">{{ p.gender === 'male' ? '♂' : '♀' }}</span></span>
+        <span class="prow__own">{{ wantedOf(p, hl) }} · {{ ownerName(p) }}</span>
+      </span>
+    </span>
+  </ng-template>
+
+  <ng-template #svsp let-i="i" let-gender="gender" let-note="note">
+    <span class="svp">
+      <pal-portrait [speciesId]="spOf(i).id" [species]="spOf(i).fr" imgCls="prow__img" fbCls="prow__img brow__fb" />
+      <span class="prow__t">
+        <span class="prow__n">{{ spOf(i).fr }} @if (gender) {<span [class.sex--m]="gender === 'male'" [class.sex--f]="gender === 'female'">{{ gender === 'male' ? '♂' : '♀' }}</span>}</span>
+        @if (note) {<span class="prow__own">{{ note }}</span>}
+      </span>
+    </span>
+  </ng-template>
+} @else if (ready() && data() === null) {
+  <p class="empty">Pas encore de données pour ce serveur.</p>
+} @else {
+  <p class="empty">Chargement…</p>
+}

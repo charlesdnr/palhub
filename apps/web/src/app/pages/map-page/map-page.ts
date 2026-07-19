@@ -82,6 +82,8 @@ export class MapPage {
   protected readonly openGroups = signal<Set<string>>(new Set(['serveur', 'lieux']));
   protected readonly enabledSig = signal<Set<string>>(new Set(DEFAULT_LAYERS));
   protected readonly area = signal<AreaKey>('main');
+  protected readonly sideOpen = signal(false);
+  protected readonly coords = signal('—');
   protected readonly areaLabels = Object.entries(AREAS).map(([key, a]) => ({
     key: key as AreaKey,
     label: a.label,
@@ -150,6 +152,10 @@ export class MapPage {
     L.control.zoom({ position: 'bottomright' }).addTo(map);
     map.on('zoomend', () => this.applyEnabled());
     map.on('moveend zoomend', () => this.writeHash());
+    map.on('mousemove', (e: L.LeafletMouseEvent) => {
+      const g = this.latLngToGame(e.latlng);
+      this.coords.set(`${g.x}, ${g.y}`);
+    });
 
     const fromHash = this.parseHash();
     this.area.set(fromHash.area);
@@ -475,6 +481,21 @@ export class MapPage {
   protected enabledCount(group: MapGroupDef): number {
     const enabled = this.enabledSig();
     return group.layers.reduce((n, l) => n + (enabled.has(l.key) ? 1 : 0), 0);
+  }
+
+  /** « tout » : active toutes les couches du groupe, ou les coupe si déjà toutes actives. */
+  protected toggleAll(event: Event, group: MapGroupDef): void {
+    event.stopPropagation();
+    const enabled = new Set(this.enabledSig());
+    const allOn = group.layers.every((l) => enabled.has(l.key));
+    for (const l of group.layers) {
+      if (allOn) {
+        enabled.delete(l.key);
+      } else {
+        enabled.add(l.key);
+      }
+    }
+    this.enabledSig.set(enabled);
   }
 
   private persistLayers(): void {

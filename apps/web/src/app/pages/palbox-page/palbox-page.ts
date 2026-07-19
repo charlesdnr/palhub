@@ -1,122 +1,141 @@
 import { Component, computed, effect, inject, input, signal } from '@angular/core';
-import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import type { Pal, PalboxSnapshot } from '@palhub/shared';
-import { ServersService } from '../../core/servers.service';
+import {
+  ALL,
+  BASE,
+  PalboxDataService,
+  ivTotal,
+} from '../../core/palbox-data.service';
+import { BreedingService } from '../../core/breeding.service';
+import { PalPortrait } from '../../shared/pal-portrait';
 
-const PAL_CDN =
-  'https://cdn.paldb.cc/image/Pal/Texture/PalIcon/Normal/T_{}_icon_normal.webp';
+interface RosterEntry {
+  key: string;
+  name: string;
+  level: number;
+  pals: Pal[];
+  best: Pal | null;
+  uniq: number;
+  alphas: number;
+  share: number;
+}
 
-type SortKey = 'level' | 'species' | 'ivs' | 'rank';
-
+/** Accueil du palbox : le dex du serveur + classement des joueurs + portes. */
 @Component({
   selector: 'app-palbox-page',
-  imports: [FormsModule, DatePipe],
+  imports: [PalPortrait, FormsModule],
   templateUrl: './palbox-page.html',
   styleUrl: './palbox-page.scss',
 })
 export class PalboxPage {
-  private readonly servers = inject(ServersService);
+  private readonly dataSvc = inject(PalboxDataService);
+  private readonly breeding = inject(BreedingService);
+  private readonly router = inject(Router);
 
   readonly slug = input.required<string>();
 
-  protected readonly snapshot = signal<PalboxSnapshot | null | undefined>(undefined);
+  protected readonly data = signal<PalboxSnapshot | null | undefined>(undefined);
+  protected readonly hasBreeding = signal(false);
+  protected readonly meUid = signal('');
+  protected hunt = '';
 
-  // filtres
-  protected readonly q = signal('');
-  protected readonly owner = signal('all');
-  protected readonly passive = signal('all');
-  protected readonly luckyOnly = signal(false);
-  protected readonly alphaOnly = signal(false);
-  protected readonly minIv = signal(0);
-  protected readonly sortBy = signal<SortKey>('level');
-  protected readonly sortDesc = signal(true);
+  protected readonly ALL = ALL;
+  protected readonly BASE = BASE;
 
   constructor() {
     effect(() => {
       const slug = this.slug();
-      this.snapshot.set(undefined);
-      void this.servers.getPalbox(slug).then((s) => this.snapshot.set(s));
+      this.data.set(undefined);
+      this.meUid.set(this.dataSvc.me(slug));
+      void this.dataSvc.load(slug).then((d) => this.data.set(d));
     });
+    void this.breeding.load().then((d) => this.hasBreeding.set(!!d));
   }
 
-  protected readonly owners = computed(() => {
-    const snap = this.snapshot();
-    if (!snap) return [];
-    return snap.players.map((p) => ({ uid: p.uid, name: p.name }));
+  protected readonly stats = computed(() => {
+    const d = this.data();
+    if (!d) return null;
+    return {
+      pals: d.pals.length,
+      species: new Set(d.pals.map((p) => p.species)).size,
+      alphas: d.pals.filter((p) => p.alpha).length,
+      lucky: d.pals.filter((p) => p.lucky).length,
+      basePals: d.pals.filter((p) => p.owner === null).length,
+      players: d.players.length,
+    };
   });
 
-  protected readonly passives = computed(() => {
-    const snap = this.snapshot();
-    if (!snap) return [];
-    return Object.keys(snap.passive_ranks).sort((a, b) => a.localeCompare(b, 'fr'));
-  });
-
-  protected readonly filtered = computed(() => {
-    const snap = this.snapshot();
-    if (!snap) return [];
-    const q = this.q().trim().toLowerCase();
-    const owner = this.owner();
-    const passive = this.passive();
-    const lucky = this.luckyOnly();
-    const alpha = this.alphaOnly();
-    const minIv = this.minIv();
-
-    let pals = snap.pals.filter((p) => {
-      if (q && !p.species.toLowerCase().includes(q) && !(p.nickname ?? '').toLowerCase().includes(q)) return false;
-      if (owner === 'base' && p.owner !== null) return false;
-      if (owner !== 'all' && owner !== 'base' && p.owner !== owner) return false;
-      if (passive !== 'all' && !p.passives.includes(passive)) return false;
-      if (lucky && !p.lucky) return false;
-      if (alpha && !p.alpha) return false;
-      if (minIv > 0 && Math.min(p.ivs.hp, p.ivs.shot, p.ivs.defense) < minIv) return false;
-      return true;
-    });
-
-    const key = this.sortBy();
-    const dir = this.sortDesc() ? -1 : 1;
-    pals = [...pals].sort((a, b) => dir * compare(a, b, key));
-    return pals;
-  });
-
-  protected setSort(key: SortKey): void {
-    if (this.sortBy() === key) {
-      this.sortDesc.update((d) => !d);
-    } else {
-      this.sortBy.set(key);
-      this.sortDesc.set(true);
+  protected readonly roster = computed<RosterEntry[]>(() => {
+    const d = this.data();
+    if (!d) return [];
+    const entries = d.players
+      .map((pl) => {
+        const pals = this.dataSvc.palsOf(d, pl.uid);
+        return {
+          key: pl.uid,
+          name: pl.name,
+          level: pl.level,
+          pals,
+          best:
+            pals
+              .slice()
+              .sort((a, b) => b.level - a.level || ivTotal(b) - ivTotal(a))[0] ?? null,
+          uniq: new Set(pals.map((p) => p.species)).size,
+          alphas: pals.filter((p) => p.alpha).length,
+          share: 0,
+        };
+      })
+      .sort((a, b) => b.pals.length - a.pals.length);
+    const top = entries.length ? entries[0].pals.length : 1;
+    for (const e of entries) {
+      e.share = Math.round((100 * e.pals.length) / Math.max(top, 1));
     }
+    return entries;
+  });
+
+  protected readonly stamp = computed(() => {
+    const d = this.data();
+    if (!d) return null;
+    const date = new Date(d.generated_at);
+    const hours = (Date.now() - date.getTime()) / 36e5;
+    return {
+      text:
+        'données du ' +
+        date.toLocaleString('fr', {
+          day: '2-digit', month: '2-digit', year: 'numeric',
+          hour: '2-digit', minute: '2-digit',
+        }),
+      staleDays: hours > 24 ? Math.floor(hours / 24) : 0,
+      world: d.world_id,
+    };
+  });
+
+  protected fr(n: number): string {
+    return n.toLocaleString('fr');
   }
 
-  protected ownerName(uid: string | null): string {
-    if (uid === null) return 'Base';
-    return this.owners().find((o) => o.uid === uid)?.name ?? uid;
+  protected open(key: string): void {
+    void this.router.navigate(['/s', this.slug(), 'palbox', 'p', key]);
   }
 
-  protected face(p: Pal): string {
-    return PAL_CDN.replace('{}', p.species_id);
+  protected openBreeding(): void {
+    void this.router.navigate(['/s', this.slug(), 'breeding']);
   }
 
-  protected ivSum(p: Pal): number {
-    return p.ivs.hp + p.ivs.shot + p.ivs.defense;
+  protected setMe(event: Event, uid: string): void {
+    event.stopPropagation();
+    this.dataSvc.setMe(this.slug(), uid);
+    this.meUid.set(uid);
   }
 
-  protected passiveRank(name: string): number {
-    return this.snapshot()?.passive_ranks[name] ?? 0;
-  }
-}
-
-function compare(a: Pal, b: Pal, key: SortKey): number {
-  switch (key) {
-    case 'level':
-      return a.level - b.level;
-    case 'rank':
-      return a.rank - b.rank;
-    case 'ivs':
-      return (
-        a.ivs.hp + a.ivs.shot + a.ivs.defense - (b.ivs.hp + b.ivs.shot + b.ivs.defense)
-      );
-    case 'species':
-      return b.species.localeCompare(a.species, 'fr');
+  protected jump(): void {
+    const v = this.hunt.trim();
+    if (!v) return;
+    this.hunt = '';
+    void this.router.navigate(['/s', this.slug(), 'palbox', 'p', ALL], {
+      queryParams: { q: v },
+    });
   }
 }

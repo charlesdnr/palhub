@@ -39,6 +39,18 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./pages/palbox-page/palbox-page').then((m) => m.PalboxPage),
       },
+      {
+        path: 'palbox/p/:key',
+        loadComponent: () =>
+          import('./pages/box-page/box-page').then((m) => m.BoxPage),
+      },
+      {
+        path: 'breeding',
+        loadComponent: () =>
+          import('./pages/breeding-page/breeding-page').then(
+            (m) => m.BreedingPage,
+          ),
+      },
     ],
   },
   { path: '**', redirectTo: '' },
