@@ -167,15 +167,23 @@ export class ServersService {
     );
   }
 
+  // 404 = pas encore de données (null) ; toute autre erreur est propagée pour
+  // que l'UI distingue « rien à afficher » d'une panne réseau.
   getLive(slug: string): Promise<LiveSnapshot | null> {
     return firstValueFrom(
       this.http.get<LiveSnapshot>(`/api/public/s/${slug}/live`),
-    ).catch(() => null);
+    ).catch((e: unknown) => {
+      if ((e as { status?: number }).status === 404) return null;
+      throw e;
+    });
   }
 
   getPalbox(slug: string): Promise<PalboxSnapshot | null> {
     return firstValueFrom(
       this.http.get<PalboxSnapshot>(`/api/public/s/${slug}/palbox`),
-    ).catch(() => null);
+    ).catch((e: unknown) => {
+      if ((e as { status?: number }).status === 404) return null;
+      throw e;
+    });
   }
 }

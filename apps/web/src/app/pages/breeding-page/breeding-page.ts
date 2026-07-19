@@ -72,10 +72,16 @@ export class BreedingPage {
       const slug = this.slug();
       this.data.set(undefined);
       this.scope.set(this.dataSvc.breedBox(slug));
-      void Promise.all([this.dataSvc.load(slug), this.br.load()]).then(([d]) => {
-        this.data.set(d);
-        this.ready.set(true);
-      });
+      void Promise.all([this.dataSvc.load(slug), this.br.load()]).then(
+        ([d]) => {
+          this.data.set(d);
+          this.ready.set(true);
+        },
+        () => {
+          this.data.set(null); // erreur réseau : « pas de données »
+          this.ready.set(true);
+        },
+      );
     });
   }
 

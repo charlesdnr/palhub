@@ -74,16 +74,19 @@ export class BoxPage implements AfterViewInit {
       untracked(() => {
         this.resetFilters();
         this.data.set(undefined);
-        void this.dataSvc.load(slug).then((d) => {
-          this.data.set(d);
-          if (d) {
-            const max = Math.max(70, ...d.pals.map((p) => p.level));
-            this.lvlMax.set(max);
-            if (!this.dataSvc.palsOf(d, key).length && key !== ALL) {
-              void this.router.navigate(['/s', slug, 'palbox']);
+        void this.dataSvc.load(slug).then(
+          (d) => {
+            this.data.set(d);
+            if (d) {
+              const max = Math.max(70, ...d.pals.map((p) => p.level));
+              this.lvlMax.set(max);
+              if (!this.dataSvc.palsOf(d, key).length && key !== ALL) {
+                void this.router.navigate(['/s', slug, 'palbox']);
+              }
             }
-          }
-        });
+          },
+          () => this.data.set(null), // erreur réseau : traité comme « pas de données »
+        );
         // la recherche du hero arrive en ?q=
         const q = this.route.snapshot.queryParamMap.get('q');
         if (q) this.q.set(q);
@@ -248,7 +251,8 @@ export class BoxPage implements AfterViewInit {
   protected ownerLabel(p: Pal): string {
     const d = this.data();
     if (!d) return '';
-    return d.players.find((x) => x.uid === p.owner)?.name ?? (p.owner === null ? 'Base' : p.owner);
+    if (p.owner === null) return 'Base';
+    return this.dataSvc.namesOf(d).get(p.owner) ?? p.owner;
   }
 
   protected passRank(name: string): number {

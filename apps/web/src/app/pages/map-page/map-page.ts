@@ -20,6 +20,7 @@ import {
   MarkerPoint,
 } from '../../core/game-data.service';
 import { ServersService } from '../../core/servers.service';
+import { portraitUrl } from '../../core/palbox-data.service';
 
 /* Trois repères coexistent (voir l'ancien site/map.js) :
  *  - monde Unreal (cm), celui des .sav et de map-objects.json ;
@@ -30,8 +31,6 @@ const NATIVE_ZOOM = 5; // 8192 / 256 = 2^5
 const GAME_TX = 123930;
 const GAME_TY = 157935;
 const GAME_SCALE = 459;
-const PAL_CDN =
-  'https://cdn.paldb.cc/image/Pal/Texture/PalIcon/Normal/T_{}_icon_normal.webp';
 
 /** Échappe le HTML : les pseudos et noms de guilde viennent du save (contrôlés
  *  par les joueurs du serveur de jeu) et sont injectés dans les popups Leaflet. */
@@ -132,7 +131,8 @@ export class MapPage {
   private async init(): Promise<void> {
     const [data, live] = await Promise.all([
       this.gameData.getMapData(),
-      this.servers.getLive(this.slug()),
+      // la carte reste utilisable même si la couche serveur échoue
+      this.servers.getLive(this.slug()).catch(() => null),
     ]);
     this.data = data;
     this.live = live;
@@ -195,7 +195,7 @@ export class MapPage {
         layers: pals.pals.map((p) => ({
           key: 'pal:' + p.key,
           label: p.name,
-          icon: PAL_CDN.replace('{}', p.key),
+          icon: portraitUrl(p.key),
           size: 22,
           pal: true,
           n: p.n,
@@ -359,7 +359,7 @@ export class MapPage {
       const [x, y, label, lv, palKey] = m;
       let icon = baseIcon;
       if (key === 'bosses' && palKey) {
-        icon = iconFor(PAL_CDN.replace('{}', palKey), 'mk--pal');
+        icon = iconFor(portraitUrl(palKey), 'mk--pal');
       }
       const ll = this.worldToLatLng(x, y);
       const mk = icon

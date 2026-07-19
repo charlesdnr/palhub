@@ -3,6 +3,8 @@ import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import { json, type NextFunction, type Request, type Response } from 'express';
 import helmet from 'helmet';
+import { AllExceptionsFilter } from './common/all-exceptions.filter';
+import { LoggingInterceptor } from './common/logging.interceptor';
 
 /** Configuration commune de l'app (partagée entre main.ts et les tests e2e). */
 export function configureApp(app: NestExpressApplication): void {
@@ -68,4 +70,8 @@ export function configureApp(app: NestExpressApplication): void {
     }
     next();
   });
+
+  // Observabilité : log d'accès HTTP + capture/log des 5xx.
+  app.useGlobalInterceptors(new LoggingInterceptor());
+  app.useGlobalFilters(new AllExceptionsFilter());
 }

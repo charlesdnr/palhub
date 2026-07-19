@@ -224,7 +224,16 @@ export class ServerSettingsPage {
   protected async remove(): Promise<void> {
     const s = this.server();
     if (!s) return;
-    if (!confirm(`Supprimer « ${s.name} » et toutes ses données ?`)) return;
+    // Confirmation forte : re-saisie du nom exact (action irréversible).
+    const typed = prompt(
+      `Suppression définitive de « ${s.name} » et de toutes ses données.\n` +
+        `Tape le nom du serveur pour confirmer :`,
+    );
+    if (typed === null) return;
+    if (typed.trim() !== s.name) {
+      alert('Le nom ne correspond pas — suppression annulée.');
+      return;
+    }
     await this.servers.remove(s.id);
     await this.router.navigateByUrl('/me/servers');
   }

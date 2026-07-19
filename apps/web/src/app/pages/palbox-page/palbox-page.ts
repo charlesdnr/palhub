@@ -37,6 +37,7 @@ export class PalboxPage {
   readonly slug = input.required<string>();
 
   protected readonly data = signal<PalboxSnapshot | null | undefined>(undefined);
+  protected readonly loadError = signal(false);
   protected readonly hasBreeding = signal(false);
   protected readonly meUid = signal('');
   protected hunt = '';
@@ -47,11 +48,19 @@ export class PalboxPage {
   constructor() {
     effect(() => {
       const slug = this.slug();
-      this.data.set(undefined);
-      this.meUid.set(this.dataSvc.me(slug));
-      void this.dataSvc.load(slug).then((d) => this.data.set(d));
+      this.reload(slug);
     });
     void this.breeding.load().then((d) => this.hasBreeding.set(!!d));
+  }
+
+  protected reload(slug = this.slug()): void {
+    this.data.set(undefined);
+    this.loadError.set(false);
+    this.meUid.set(this.dataSvc.me(slug));
+    void this.dataSvc.load(slug).then(
+      (d) => this.data.set(d),
+      () => this.loadError.set(true),
+    );
   }
 
   protected readonly stats = computed(() => {
