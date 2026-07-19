@@ -9,8 +9,9 @@ export class PublicService {
 
   async listListed(): Promise<PublicServerDto[]> {
     const servers = await this.prisma.server.findMany({
-      where: { isListed: true },
+      where: { visibility: 'public' },
       orderBy: { lastIngestAt: { sort: 'desc', nulls: 'last' } },
+      take: 100,
     });
     return servers.map((s) => ({
       slug: s.slug,
@@ -22,7 +23,7 @@ export class PublicService {
 
   async getBySlug(slug: string): Promise<PublicServerDto> {
     const s = await this.prisma.server.findUnique({ where: { slug } });
-    if (!s) {
+    if (!s || s.visibility === 'private') {
       throw new NotFoundException('Serveur inconnu');
     }
     return {
@@ -35,7 +36,7 @@ export class PublicService {
 
   async latestPayload(slug: string, kind: SnapshotKind): Promise<unknown> {
     const server = await this.prisma.server.findUnique({ where: { slug } });
-    if (!server) {
+    if (!server || server.visibility === 'private') {
       throw new NotFoundException('Serveur inconnu');
     }
     const snapshot = await this.prisma.snapshot.findFirst({

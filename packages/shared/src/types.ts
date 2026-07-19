@@ -7,12 +7,14 @@ export interface UserDto {
   avatarUrl: string | null;
 }
 
+export type ServerVisibility = 'public' | 'unlisted' | 'private';
+
 export interface ServerDto {
   id: string;
   slug: string;
   name: string;
   description: string | null;
-  isListed: boolean;
+  visibility: ServerVisibility;
   worldId: string | null;
   apiKeyPrefix: string | null;
   lastIngestAt: string | null;

@@ -12,6 +12,8 @@ model User {
   discordId   String         @unique @map("discord_id")
   username    String
   avatarUrl   String?        @map("avatar_url")
+  /// Incrémenté à la déconnexion globale : invalide tous les JWT émis avant.
+  tokenVersion Int           @default(0) @map("token_version")
   createdAt   DateTime       @default(now()) @map("created_at") @db.Timestamptz()
   servers     Server[]
   memberships ServerMember[]
@@ -30,7 +32,9 @@ model Server {
   apiKeyPrefix String?    @unique @map("api_key_prefix")
   /// Verrouillé au premier ingest : refuse ensuite les payloads d'un autre monde
   worldId      String?    @map("world_id")
-  isListed     Boolean    @default(false) @map("is_listed")
+  /// 'public' (annuaire + accessible), 'unlisted' (accessible par lien seul),
+  /// 'private' (carte/palbox refusés à qui n'est pas membre)
+  visibility   String     @default("unlisted")
   lastIngestAt DateTime?  @map("last_ingest_at") @db.Timestamptz()
   createdAt    DateTime       @default(now()) @map("created_at") @db.Timestamptz()
   snapshots    Snapshot[]

@@ -176,8 +176,16 @@ PALHUB_SOURCE=&lt;dossier du save ou sftp://&gt;</pre>
   <div class="card block">
     <h2>Visibilité</h2>
     <label class="check">
-      <input type="checkbox" [checked]="s.isListed" (change)="toggleListed()" />
-      Afficher ce serveur dans l'annuaire public de la page d'accueil
+      <input type="radio" name="visibility" [checked]="s.visibility === 'public'" (change)="setVisibility('public')" />
+      <span><b>Public</b> — listé dans l'annuaire et accessible à tous</span>
+    </label>
+    <label class="check">
+      <input type="radio" name="visibility" [checked]="s.visibility === 'unlisted'" (change)="setVisibility('unlisted')" />
+      <span><b>Non listé</b> — accessible par le lien uniquement, absent de l'annuaire</span>
+    </label>
+    <label class="check">
+      <input type="radio" name="visibility" [checked]="s.visibility === 'private'" (change)="setVisibility('private')" />
+      <span><b>Privé</b> — carte et palbox non accessibles publiquement</span>
     </label>
     <label class="desc">
       Description

@@ -66,7 +66,7 @@ export class AuthController {
     const user = await this.auth.loginWithCode(code);
     res.cookie(
       AUTH_COOKIE,
-      this.auth.signToken(user.id),
+      this.auth.signToken(user.id, user.tokenVersion),
       cookieOptions(7 * 24 * 3600_000),
     );
     const cookies = req.cookies as Record<string, string> | undefined;
@@ -98,6 +98,18 @@ export class AuthController {
 
   @Post('logout')
   logout(@Res() res: Response) {
+    res.clearCookie(AUTH_COOKIE, { path: '/' });
+    res.json({ ok: true });
+  }
+
+  /** Déconnecte toutes les sessions : invalide tous les JWT déjà émis. */
+  @Post('logout-all')
+  @UseGuards(JwtAuthGuard)
+  async logoutAll(@Req() req: AuthenticatedRequest, @Res() res: Response) {
+    await this.prisma.user.update({
+      where: { id: req.userId },
+      data: { tokenVersion: { increment: 1 } },
+    });
     res.clearCookie(AUTH_COOKIE, { path: '/' });
     res.json({ ok: true });
   }

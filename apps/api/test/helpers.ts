@@ -1,27 +1,31 @@
 import { INestApplication } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { Test } from '@nestjs/testing';
-import cookieParser from 'cookie-parser';
-import { json } from 'express';
 import { AppModule } from './../src/app.module';
 import { AUTH_COOKIE } from './../src/auth/jwt-auth.guard';
 import { PrismaService } from './../src/prisma/prisma.service';
 import { hashApiKey } from './../src/servers/servers.service';
+import { configureApp } from './../src/setup';
 
-/** Monte l'app Nest comme main.ts (préfixe api, cookies, body json). */
+/** Origine du site utilisée par les tests (contrôle CSRF). */
+export const TEST_WEB_ORIGIN = 'http://localhost:4200';
+
+/** Monte l'app Nest exactement comme main.ts (helmet, CSRF, préfixe, cookies). */
 export async function bootstrapTestApp(): Promise<{
   app: INestApplication;
   prisma: PrismaService;
   jwt: JwtService;
 }> {
+  process.env.WEB_ORIGIN = TEST_WEB_ORIGIN;
   const moduleFixture = await Test.createTestingModule({
     imports: [AppModule],
   }).compile();
 
-  const app = moduleFixture.createNestApplication({ bodyParser: false });
-  app.setGlobalPrefix('api');
-  app.use(cookieParser());
-  app.use(json({ limit: '8mb' }));
+  const app = moduleFixture.createNestApplication<NestExpressApplication>({
+    bodyParser: false,
+  });
+  configureApp(app);
   await app.init();
 
   return {

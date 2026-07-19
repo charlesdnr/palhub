@@ -130,12 +130,12 @@ export class ServerSettingsPage {
     this.copied.set(true);
   }
 
-  protected async toggleListed(): Promise<void> {
+  protected async setVisibility(
+    visibility: 'public' | 'unlisted' | 'private',
+  ): Promise<void> {
     const s = this.server();
-    if (!s) return;
-    this.server.set(
-      await this.servers.update(s.id, { isListed: !s.isListed }),
-    );
+    if (!s || s.visibility === visibility) return;
+    this.server.set(await this.servers.update(s.id, { visibility }));
   }
 
   protected async saveDescription(): Promise<void> {

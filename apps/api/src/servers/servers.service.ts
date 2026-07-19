@@ -26,7 +26,7 @@ export class ServersService {
       slug: server.slug,
       name: server.name,
       description: server.description,
-      isListed: server.isListed,
+      visibility: server.visibility as ServerDto['visibility'],
       worldId: server.worldId,
       // la clé API est l'affaire du propriétaire
       apiKeyPrefix: role === 'owner' ? server.apiKeyPrefix : null,

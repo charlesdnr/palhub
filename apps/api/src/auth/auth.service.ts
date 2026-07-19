@@ -79,7 +79,7 @@ export class AuthService {
     });
   }
 
-  signToken(userId: string): string {
-    return this.jwt.sign({ sub: userId });
+  signToken(userId: string, tokenVersion: number): string {
+    return this.jwt.sign({ sub: userId, ver: tokenVersion });
   }
 }

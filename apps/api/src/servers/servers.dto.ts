@@ -32,7 +32,7 @@ export const createServerSchema = z.object({
 export const updateServerSchema = z.object({
   name: z.string().trim().min(2).max(60).optional(),
   description: z.string().trim().max(500).nullable().optional(),
-  isListed: z.boolean().optional(),
+  visibility: z.enum(['public', 'unlisted', 'private']).optional(),
 });
 
 export type CreateServerInput = z.infer<typeof createServerSchema>;
