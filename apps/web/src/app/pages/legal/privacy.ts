@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-/** Politique de confidentialité (RGPD). Le responsable de traitement doit être
- *  complété par l'exploitant du site (marqueurs [À COMPLÉTER]). */
+/** Politique de confidentialité (RGPD). */
 @Component({
   selector: 'app-privacy',
   imports: [RouterLink],
@@ -13,8 +12,8 @@ import { RouterLink } from '@angular/router';
 
       <h2>Responsable du traitement</h2>
       <p>
-        PalHub est édité par [À COMPLÉTER : nom / structure], joignable à
-        <a href="mailto:[À COMPLÉTER]">[À COMPLÉTER : e-mail de contact]</a>.
+        PalHub est édité par Charles Denner, à titre individuel, joignable à
+        <a href="mailto:charles.denner@protonmail.com">charles.denner&#64;protonmail.com</a>.
       </p>
 
       <h2>Données traitées</h2>
@@ -61,8 +60,9 @@ import { RouterLink } from '@angular/router';
 
       <h2>Sous-traitants</h2>
       <p>
-        Hébergement et base de données : [À COMPLÉTER : ex. Render, Neon].
-        Exécution de la synchronisation planifiée : GitHub Actions.
+        Hébergement de l'application : Render (Render Services, Inc., États-Unis).
+        Base de données : Neon (Neon Inc., États-Unis). Exécution de la
+        synchronisation planifiée : GitHub Actions (GitHub, Inc., États-Unis).
       </p>
 
       <p><a routerLink="/">← Retour à l'accueil</a></p>

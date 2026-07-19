@@ -84,7 +84,12 @@ describe('Sync interne : claim + report (e2e)', () => {
   });
 
   it('claim pose un verrou : un 2e claim immédiat ne rend rien', async () => {
-    // libère le verrou éventuel pour partir propre
+    // Déterminisme : verrouille toute autre config existante (base de dev) pour
+    // que la config du test soit la seule réclamable, puis libère la sienne.
+    await prisma.syncConfig.updateMany({
+      where: { NOT: { serverId } },
+      data: { claimedAt: new Date() },
+    });
     await prisma.syncConfig.update({
       where: { serverId },
       data: { claimedAt: null, lastRunAt: null },

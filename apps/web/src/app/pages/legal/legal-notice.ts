@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-/** Mentions légales. À compléter par l'exploitant ([À COMPLÉTER]). */
+/** Mentions légales. */
 @Component({
   selector: 'app-legal-notice',
   imports: [RouterLink],
@@ -11,12 +11,20 @@ import { RouterLink } from '@angular/router';
 
       <h2>Éditeur</h2>
       <p>
-        Ce site est édité par [À COMPLÉTER : nom / structure], contact :
-        <a href="mailto:[À COMPLÉTER]">[À COMPLÉTER : e-mail]</a>.
+        Ce site est édité par Charles Denner, à titre individuel (projet
+        non commercial), contact :
+        <a href="mailto:charles.denner@protonmail.com">charles.denner&#64;protonmail.com</a>.
       </p>
 
       <h2>Hébergement</h2>
-      <p>[À COMPLÉTER : hébergeur, raison sociale et adresse].</p>
+      <p>
+        Application hébergée par <b>Render</b> (Render Services, Inc., San
+        Francisco, Californie, États-Unis — <a href="https://render.com" target="_blank" rel="noopener">render.com</a>).
+      </p>
+      <p>
+        Base de données hébergée par <b>Neon</b> (Neon Inc., États-Unis —
+        <a href="https://neon.tech" target="_blank" rel="noopener">neon.tech</a>).
+      </p>
 
       <h2>Propriété intellectuelle</h2>
       <p>

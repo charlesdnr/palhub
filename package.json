@@ -2,6 +2,7 @@
   "name": "palhub",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
   "description": "Plateforme multi-serveurs Palworld : carte interactive + palbox explorer",
   "workspaces": [
     "apps/*",
