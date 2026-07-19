@@ -155,7 +155,10 @@ export class MapPage {
       'Palworld © Pocketpair · données paldb.cc & palworld-save-pal',
     );
     L.control.zoom({ position: 'bottomright' }).addTo(map);
-    map.on('zoomend', () => this.applyEnabled());
+    map.on('zoomend', () => {
+      this.updatePalScale();
+      this.applyEnabled();
+    });
     map.on('moveend zoomend', () => this.writeHash());
     map.on('mousemove', (e: L.LeafletMouseEvent) => {
       const g = this.latLngToGame(e.latlng);
@@ -383,8 +386,12 @@ export class MapPage {
 
   private getGroup(key: string, areaKey: AreaKey): L.LayerGroup {
     const id = `${key}|${areaKey}`;
+    const def = this.layerDefs.get(key)!;
     const cached = this.groupCache.get(id);
-    if (cached && cached._scale !== this.iconScale()) {
+    // Nuages de pals (des centaines de points) : construits une fois, leur taille
+    // est ajustée par setRadius au zoom (voir updatePalScale) — pas de rebuild.
+    // Icônes (peu nombreuses) : reconstruites si l'échelle change.
+    if (cached && !def.pal && cached._scale !== this.iconScale()) {
       if (this.map!.hasLayer(cached)) this.map!.removeLayer(cached);
       this.groupCache.delete(id);
     }
@@ -392,6 +399,17 @@ export class MapPage {
       this.groupCache.set(id, this.buildGroup(key, areaKey));
     }
     return this.groupCache.get(id)!;
+  }
+
+  /** Ajuste le rayon des points de pals au zoom, sans reconstruire les couches. */
+  private updatePalScale(): void {
+    const r = 4.5 * this.iconScale();
+    for (const [id, group] of this.groupCache) {
+      if (!this.layerDefs.get(id.split('|')[0])?.pal) continue;
+      group.eachLayer((l) => {
+        if (l instanceof L.CircleMarker) l.setRadius(r);
+      });
+    }
   }
 
   private applyEnabled(): void {
