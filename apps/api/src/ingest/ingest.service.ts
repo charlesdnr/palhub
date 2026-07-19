@@ -52,21 +52,35 @@ export class IngestService {
     const generatedAt = new Date(payload.generated_at);
 
     if (kind === 'live') {
-      // État instantané : on ne garde qu'un enregistrement par serveur.
-      await this.prisma.$transaction([
-        this.prisma.snapshot.deleteMany({
-          where: { serverId: server.id, kind: 'live' },
-        }),
-        this.prisma.snapshot.create({
-          data: {
-            serverId: server.id,
-            kind,
-            sourceHash,
-            generatedAt,
-            payload: payload as unknown as Prisma.InputJsonValue,
-          },
-        }),
-      ]);
+      // État instantané : un seul enregistrement par serveur, mis à jour en
+      // place (évite le bloat de table/TOAST d'un delete+create à chaque ingest).
+      const data = {
+        sourceHash,
+        generatedAt,
+        payload: payload as unknown as Prisma.InputJsonValue,
+      };
+      const existing = await this.prisma.snapshot.findFirst({
+        where: { serverId: server.id, kind: 'live' },
+        select: { id: true },
+        orderBy: { generatedAt: 'desc' },
+      });
+      if (existing) {
+        await this.prisma.$transaction([
+          // au cas où un doublon historique traînerait, on ne garde que celui-ci
+          this.prisma.snapshot.deleteMany({
+            where: {
+              serverId: server.id,
+              kind: 'live',
+              id: { not: existing.id },
+            },
+          }),
+          this.prisma.snapshot.update({ where: { id: existing.id }, data }),
+        ]);
+      } else {
+        await this.prisma.snapshot.create({
+          data: { serverId: server.id, kind, ...data },
+        });
+      }
     } else {
       try {
         await this.prisma.snapshot.create({

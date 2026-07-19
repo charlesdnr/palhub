@@ -80,6 +80,38 @@ describe('Ingestion (e2e)', () => {
     expect(Array.isArray(res.body.issues)).toBe(true);
   });
 
+  it('live : ne conserve qu’un seul enregistrement (update en place)', async () => {
+    // s appartient à owner : nettoyé en cascade en fin de suite.
+    const s = await createServer(prisma, owner.id);
+    const key = await giveApiKey(prisma, s.id);
+    const live = (hash: string) => ({
+      generated_at: new Date().toISOString(),
+      source_hash: hash,
+      world_id: 'W_LIVE',
+      guilds: [],
+      bases: [],
+      players: [],
+    });
+    await request(app.getHttpServer())
+      .post('/api/ingest/live')
+      .set('Authorization', `Bearer ${key}`)
+      .send(live('live-1'))
+      .expect(201);
+    await request(app.getHttpServer())
+      .post('/api/ingest/live')
+      .set('Authorization', `Bearer ${key}`)
+      .send(live('live-2'))
+      .expect(201);
+    const count = await prisma.snapshot.count({
+      where: { serverId: s.id, kind: 'live' },
+    });
+    expect(count).toBe(1);
+    const only = await prisma.snapshot.findFirst({
+      where: { serverId: s.id, kind: 'live' },
+    });
+    expect(only?.sourceHash).toBe('live-2');
+  });
+
   it('purge : ne conserve que les 30 derniers snapshots palbox', async () => {
     // Le throttle d'ingest (12/min) empêche 30+ POST rapides : on seed
     // directement 31 snapshots, puis un ingest réel déclenche la purge.

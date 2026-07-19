@@ -26,6 +26,10 @@ export class InvitesService {
   /** Crée ou remplace LE lien d'invitation du serveur (l'ancien devient invalide). */
   async rotate(userId: string, serverId: string): Promise<InviteDto> {
     await this.servers.getOwned(userId, serverId);
+    // Ménage opportuniste : purge les invitations expirées de la plateforme.
+    await this.prisma.serverInvite.deleteMany({
+      where: { expiresAt: { lt: new Date() } },
+    });
     const token = randomBytes(16).toString('hex');
     const expiresAt = new Date(Date.now() + INVITE_TTL_MS);
     const invite = await this.prisma.serverInvite.upsert({

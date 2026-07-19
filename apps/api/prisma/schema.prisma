@@ -87,8 +87,8 @@ model SyncConfig {
   /// 'ok' | 'unchanged' | 'error'
   lastStatus    String?   @map("last_status")
   lastError     String?   @map("last_error")
-  lastStatSize  Int?      @map("last_stat_size")
-  lastStatMtime Int?      @map("last_stat_mtime")
+  lastStatSize  BigInt?   @map("last_stat_size")
+  lastStatMtime BigInt?   @map("last_stat_mtime")
   createdAt     DateTime  @default(now()) @map("created_at") @db.Timestamptz()
 
   @@map("sync_configs")

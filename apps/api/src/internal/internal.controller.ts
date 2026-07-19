@@ -38,8 +38,10 @@ export class InternalController {
       authType: c.authType as 'password' | 'key',
       secret: decryptSecret(c.secretEnc),
       remotePath: c.remotePath,
-      lastStatSize: c.lastStatSize,
-      lastStatMtime: c.lastStatMtime,
+      // BigInt -> number pour la sérialisation JSON (tailles/mtime restent
+      // largement dans la plage des entiers JS sûrs).
+      lastStatSize: c.lastStatSize === null ? null : Number(c.lastStatSize),
+      lastStatMtime: c.lastStatMtime === null ? null : Number(c.lastStatMtime),
     }));
   }
 
@@ -56,8 +58,12 @@ export class InternalController {
         lastRunAt: new Date(),
         lastStatus: body.status,
         lastError: body.error ?? null,
-        ...(body.statSize != null ? { lastStatSize: body.statSize } : {}),
-        ...(body.statMtime != null ? { lastStatMtime: body.statMtime } : {}),
+        ...(body.statSize != null
+          ? { lastStatSize: BigInt(body.statSize) }
+          : {}),
+        ...(body.statMtime != null
+          ? { lastStatMtime: BigInt(body.statMtime) }
+          : {}),
       },
     });
     return { ok: res.count > 0 };
