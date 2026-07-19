@@ -34,7 +34,9 @@ def api_request(api: str, secret: str, path: str, payload: dict | None = None):
         },
     )
     with urllib.request.urlopen(req, timeout=120) as res:
-        return json.loads(res.read().decode("utf-8"))
+        # claim renvoie null quand il n'y a plus de job -> corps HTTP vide.
+        raw = res.read().decode("utf-8").strip()
+        return json.loads(raw) if raw else None
 
 
 def report(api, secret, server_id, status, error=None, stat=None, host_key_fp=None):
@@ -117,7 +119,7 @@ def main() -> int:
             report(api, secret, sid, "error", error=str(e)[:1000])
 
     if total == 0:
-        log.info("aucun serveur en sync hébergée")
+        log.info("aucun job à traiter (rien de configuré, ou déjà synchronisé récemment)")
         return 0
 
     log.info("terminé : %d serveur(s), %d en échec", total, failures)
