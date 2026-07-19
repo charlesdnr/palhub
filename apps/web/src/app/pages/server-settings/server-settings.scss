@@ -58,6 +58,70 @@
   margin-bottom: 0.8rem;
 }
 
+.badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ok);
+  border: 1px solid color-mix(in srgb, var(--ok) 55%, var(--border));
+  border-radius: 999px;
+  padding: 0.1rem 0.55rem;
+  vertical-align: middle;
+  margin-left: 0.4rem;
+}
+
+.sync-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  max-width: 560px;
+
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    flex: 1;
+  }
+
+  .row2 {
+    display: flex;
+    gap: 0.7rem;
+
+    .small {
+      flex: 0 0 130px;
+    }
+  }
+
+  textarea {
+    resize: vertical;
+  }
+}
+
+.sync-actions {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.sync-status {
+  margin: 0.8rem 0 0;
+  font-size: 0.9rem;
+
+  .ok {
+    color: var(--ok);
+  }
+
+  .err {
+    color: var(--danger);
+  }
+
+  .dim {
+    color: var(--text-dim);
+  }
+}
+
 .danger-zone {
   border-color: color-mix(in srgb, var(--danger) 45%, var(--border));
 
@@ -68,4 +132,9 @@
 
 .empty {
   color: var(--text-dim);
+}
+
+.error {
+  color: var(--danger);
+  margin: 0;
 }

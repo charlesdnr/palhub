@@ -7,6 +7,7 @@ import { join } from 'node:path';
 import { AppController } from './app.controller';
 import { AuthModule } from './auth/auth.module';
 import { IngestModule } from './ingest/ingest.module';
+import { InternalModule } from './internal/internal.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { PublicModule } from './public/public.module';
 import { ServersModule } from './servers/servers.module';
@@ -30,6 +31,7 @@ import { ServersModule } from './servers/servers.module';
     AuthModule,
     ServersModule,
     IngestModule,
+    InternalModule,
     PublicModule,
   ],
   controllers: [AppController],

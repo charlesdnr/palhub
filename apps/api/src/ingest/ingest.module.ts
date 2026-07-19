@@ -6,5 +6,6 @@ import { IngestService } from './ingest.service';
 @Module({
   controllers: [IngestController],
   providers: [IngestService, ApiKeyGuard],
+  exports: [IngestService],
 })
 export class IngestModule {}

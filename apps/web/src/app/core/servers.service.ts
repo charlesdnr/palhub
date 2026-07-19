@@ -6,6 +6,7 @@ import type {
   PalboxSnapshot,
   PublicServerDto,
   ServerDto,
+  SyncConfigDto,
 } from '@palhub/shared';
 import { firstValueFrom } from 'rxjs';
 
@@ -45,6 +46,35 @@ export class ServersService {
     return firstValueFrom(
       this.http.post<ApiKeyDto>(`/api/servers/${id}/api-key`, {}),
     );
+  }
+
+  // --- synchro hébergée ---
+
+  getSyncConfig(id: string): Promise<SyncConfigDto | null> {
+    return firstValueFrom(
+      this.http.get<SyncConfigDto | null>(`/api/servers/${id}/sync`),
+    );
+  }
+
+  putSyncConfig(
+    id: string,
+    input: {
+      host: string;
+      port: number;
+      username: string;
+      authType: 'password' | 'key';
+      secret?: string;
+      remotePath: string;
+      enabled: boolean;
+    },
+  ): Promise<SyncConfigDto> {
+    return firstValueFrom(
+      this.http.put<SyncConfigDto>(`/api/servers/${id}/sync`, input),
+    );
+  }
+
+  deleteSyncConfig(id: string): Promise<void> {
+    return firstValueFrom(this.http.delete<void>(`/api/servers/${id}/sync`));
   }
 
   // --- lecture publique ---

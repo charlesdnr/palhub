@@ -34,12 +34,92 @@
   </div>
 
   <div class="card block">
-    <h2>Installer l'agent</h2>
+    <h2>Synchro hébergée <span class="badge">recommandé</span></h2>
     <p>
-      L'agent tourne près de ton serveur de jeu, lit le <span class="mono">Level.sav</span>
-      et pousse les données ici toutes les 5 minutes. Voir le
-      <a href="https://github.com/" target="_blank" rel="noopener">README de l'agent</a>
-      (dossier <span class="mono">agent/</span> du projet).
+      Colle ici l'accès SFTP de ton serveur de jeu (fourni par ton hébergeur) :
+      PalHub ira chercher la sauvegarde tout seul, toutes les ~10 minutes.
+      <b>Rien à installer.</b> Les identifiants sont stockés chiffrés.
+    </p>
+    <form (ngSubmit)="saveSync()" class="sync-form">
+      <div class="row2">
+        <label>
+          Hôte SFTP
+          <input type="text" name="shost" [(ngModel)]="sync.host" placeholder="game-node06.monhebergeur.fr" required />
+        </label>
+        <label class="small">
+          Port
+          <input type="number" name="sport" [(ngModel)]="sync.port" min="1" max="65535" />
+        </label>
+      </div>
+      <label>
+        Utilisateur
+        <input type="text" name="suser" [(ngModel)]="sync.username" required />
+      </label>
+      <div class="row2">
+        <label class="small">
+          Authentification
+          <select name="sauth" [(ngModel)]="sync.authType">
+            <option value="password">Mot de passe</option>
+            <option value="key">Clé privée SSH</option>
+          </select>
+        </label>
+        <label>
+          {{ sync.authType === 'password' ? 'Mot de passe' : 'Clé privée (contenu du fichier)' }}
+          @if (sync.authType === 'password') {
+            <input type="password" name="ssecret" [(ngModel)]="sync.secret"
+                   [placeholder]="syncConfig() ? '(inchangé)' : ''" [required]="!syncConfig()" />
+          } @else {
+            <textarea name="ssecret" rows="3" [(ngModel)]="sync.secret" class="mono"
+                      [placeholder]="syncConfig() ? '(inchangée)' : '-----BEGIN OPENSSH PRIVATE KEY-----'"
+                      [required]="!syncConfig()"></textarea>
+          }
+        </label>
+      </div>
+      <label>
+        Dossier du monde sur le serveur
+        <input type="text" name="spath" [(ngModel)]="sync.remotePath"
+               placeholder="/Pal/Saved/SaveGames/0/VOTRE_WORLD_ID" required class="mono" />
+      </label>
+      <label class="check">
+        <input type="checkbox" name="senabled" [(ngModel)]="sync.enabled" />
+        Synchro activée
+      </label>
+      @if (syncError()) {
+        <p class="error">{{ syncError() }}</p>
+      }
+      <div class="sync-actions">
+        <button class="btn" type="submit" [disabled]="syncSaving()">Enregistrer</button>
+        @if (syncConfig()) {
+          <button class="btn btn--ghost" type="button" (click)="removeSync()">Supprimer</button>
+        }
+      </div>
+    </form>
+    @if (syncConfig(); as c) {
+      <p class="sync-status">
+        @if (c.lastStatus === 'ok') {
+          <span class="ok">● Dernière synchro réussie</span>
+        } @else if (c.lastStatus === 'unchanged') {
+          <span class="ok">● À jour (sauvegarde inchangée)</span>
+        } @else if (c.lastStatus === 'error') {
+          <span class="err">● Erreur : {{ c.lastError }}</span>
+        } @else {
+          <span class="dim">● En attente du premier passage (&le; 10 min)…</span>
+        }
+        @if (c.lastRunAt) {
+          <span class="dim"> — {{ c.lastRunAt | date: 'dd/MM HH:mm' }}</span>
+        }
+      </p>
+    }
+  </div>
+
+  <div class="card block">
+    <h2>Alternative : agent local</h2>
+    <p>
+      Si tu préfères ne pas confier tes identifiants SFTP (ou si ton serveur
+      tourne chez toi), un petit agent peut tourner sur ton PC : il lit le
+      <span class="mono">Level.sav</span> et pousse les données ici. Voir le
+      dossier <span class="mono">agent/</span> du
+      <a href="https://github.com/charlesdnr/palhub" target="_blank" rel="noopener">projet</a>.
     </p>
     <pre class="mono snippet">PALHUB_API_URL={{ origin }}
 PALHUB_API_KEY=&lt;ta clé ci-dessus&gt;

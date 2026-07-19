@@ -1,0 +1,35 @@
+name: hosted-sync
+
+on:
+  schedule:
+    - cron: "*/10 * * * *" # toutes les ~10 min (best effort côté GitHub)
+  workflow_dispatch: {}
+
+concurrency:
+  group: hosted-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: agent/pyproject.toml
+
+      - name: Installer l'agent (palooz compilé et mis en cache par pip)
+        run: |
+          pip install ./agent/vendor/palsav/palooz
+          pip install ./agent/vendor/palsav
+          pip install "./agent[sftp]"
+
+      - name: Synchroniser les serveurs
+        env:
+          PALHUB_API_URL: https://palhub-rq03.onrender.com
+          PALHUB_WORKER_SECRET: ${{ secrets.PALHUB_WORKER_SECRET }}
+        run: palhub-hosted-sync

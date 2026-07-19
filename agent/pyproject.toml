@@ -17,6 +17,7 @@ sftp = ["paramiko>=3.4"]
 
 [project.scripts]
 palhub-agent = "palhub_agent.cli:main"
+palhub-hosted-sync = "palhub_agent.hosted:main"
 
 [tool.setuptools.packages.find]
 include = ["palhub_agent*"]

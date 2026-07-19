@@ -23,12 +23,16 @@ class PublishError(RuntimeError):
 
 
 def publish(api_url: str, api_key: str, kind: str, payload: dict) -> dict:
-    """POST /api/ingest/<kind>. Renvoie la réponse JSON de l'API.
+    """POST /api/ingest/<kind> (agent local, clé API du serveur)."""
+    return publish_gzip_json(f"{api_url.rstrip('/')}/api/ingest/{kind}", api_key, kind, payload)
+
+
+def publish_gzip_json(url: str, bearer: str, kind: str, payload: dict) -> dict:
+    """POST un payload JSON gzippé. Renvoie la réponse JSON de l'API.
 
     Un 409 (snapshot déjà connu) est un succès : l'API a déjà ces données.
     Retry uniquement sur 5xx / erreurs réseau.
     """
-    url = f"{api_url.rstrip('/')}/api/ingest/{kind}"
     body = gzip.compress(
         json.dumps(payload, separators=(",", ":"), ensure_ascii=False).encode("utf-8"),
         mtime=0,
@@ -38,7 +42,7 @@ def publish(api_url: str, api_key: str, kind: str, payload: dict) -> dict:
         data=body,
         method="POST",
         headers={
-            "Authorization": f"Bearer {api_key}",
+            "Authorization": f"Bearer {bearer}",
             "Content-Type": "application/json",
             "Content-Encoding": "gzip",
         },

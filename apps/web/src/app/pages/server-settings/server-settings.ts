@@ -1,12 +1,13 @@
 import { Component, inject, input, signal, effect } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import type { ServerDto } from '@palhub/shared';
+import type { ServerDto, SyncConfigDto } from '@palhub/shared';
 import { ServersService } from '../../core/servers.service';
 
 @Component({
   selector: 'app-server-settings',
-  imports: [FormsModule, RouterLink],
+  imports: [FormsModule, RouterLink, DatePipe],
   templateUrl: './server-settings.html',
   styleUrl: './server-settings.scss',
 })
@@ -25,6 +26,20 @@ export class ServerSettingsPage {
 
   protected description = '';
 
+  // --- synchro hébergée ---
+  protected readonly syncConfig = signal<SyncConfigDto | null | undefined>(undefined);
+  protected readonly syncSaving = signal(false);
+  protected readonly syncError = signal('');
+  protected sync = {
+    host: '',
+    port: 22,
+    username: '',
+    authType: 'password' as 'password' | 'key',
+    secret: '',
+    remotePath: '',
+    enabled: true,
+  };
+
   constructor() {
     effect(() => {
       const id = this.id();
@@ -32,7 +47,58 @@ export class ServerSettingsPage {
         this.server.set(s);
         this.description = s.description ?? '';
       });
+      void this.servers.getSyncConfig(id).then((c) => {
+        this.syncConfig.set(c);
+        if (c) {
+          this.sync = {
+            host: c.host,
+            port: c.port,
+            username: c.username,
+            authType: c.authType,
+            secret: '',
+            remotePath: c.remotePath,
+            enabled: c.enabled,
+          };
+        }
+      });
     });
+  }
+
+  protected async saveSync(): Promise<void> {
+    const s = this.server();
+    if (!s) return;
+    this.syncError.set('');
+    this.syncSaving.set(true);
+    try {
+      const saved = await this.servers.putSyncConfig(s.id, {
+        host: this.sync.host.trim(),
+        port: Number(this.sync.port) || 22,
+        username: this.sync.username.trim(),
+        authType: this.sync.authType,
+        secret: this.sync.secret.trim() || undefined,
+        remotePath: this.sync.remotePath.trim(),
+        enabled: this.sync.enabled,
+      });
+      this.syncConfig.set(saved);
+      this.sync.secret = '';
+    } catch (e: unknown) {
+      const err = e as { error?: { message?: string } };
+      this.syncError.set(err.error?.message ?? 'Enregistrement impossible');
+    } finally {
+      this.syncSaving.set(false);
+    }
+  }
+
+  protected async removeSync(): Promise<void> {
+    const s = this.server();
+    if (!s) return;
+    if (!confirm('Supprimer la configuration de synchro hébergée ?')) return;
+    await this.servers.deleteSyncConfig(s.id);
+    this.syncConfig.set(null);
+    this.sync = {
+      host: '', port: 22, username: '', authType: 'password',
+      secret: '', remotePath: '', enabled: true,
+    };
   }
 
   protected async rotateKey(): Promise<void> {

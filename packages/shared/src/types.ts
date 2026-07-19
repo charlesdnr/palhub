@@ -37,3 +37,17 @@ export interface IngestResultDto {
   kind: 'palbox' | 'live';
   sourceHash: string;
 }
+
+/** Config de synchro hébergée d'un serveur (le secret n'est jamais renvoyé). */
+export interface SyncConfigDto {
+  host: string;
+  port: number;
+  username: string;
+  authType: 'password' | 'key';
+  remotePath: string;
+  enabled: boolean;
+  hasSecret: boolean;
+  lastRunAt: string | null;
+  lastStatus: 'ok' | 'unchanged' | 'error' | null;
+  lastError: string | null;
+}

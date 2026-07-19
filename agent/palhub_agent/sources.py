@@ -59,10 +59,15 @@ class LocalSource(SaveSource):
 
 
 class SftpSource(SaveSource):
-    """Pull du Level.sav depuis le serveur de jeu. Auth par clé uniquement."""
+    """Pull du Level.sav depuis le serveur de jeu.
 
-    def __init__(self, host, port, user, key, world_path):
+    Auth par clé (fichier `key` ou contenu `key_data`) ou par mot de passe
+    (`password`) — jamais de repli silencieux d'un mode vers l'autre.
+    """
+
+    def __init__(self, host, port, user, key, world_path, password=None, key_data=None):
         self.host, self.port, self.user, self.key = host, port, user, key
+        self.password, self.key_data = password, key_data
         self.world_path = world_path.rstrip("/")
         self.world_id = self.world_path.rsplit("/", 1)[-1]
 
@@ -70,13 +75,19 @@ class SftpSource(SaveSource):
     def remote(self):
         return f"{self.world_path}/{LEVEL_SAV}"
 
+    def _connect(self):
+        return sftp_connect(
+            self.host, self.port, self.user, self.key,
+            password=self.password, key_data=self.key_data,
+        )
+
     def stat(self):
-        with sftp_connect(self.host, self.port, self.user, self.key) as sftp:
+        with self._connect() as sftp:
             a = sftp.stat(self.remote)
             return a.st_size, int(a.st_mtime)
 
     def fetch(self) -> bytes:
-        with sftp_connect(self.host, self.port, self.user, self.key) as sftp:
+        with self._connect() as sftp:
             log.info("pull sftp : %s@%s:%s", self.user, self.host, self.remote)
             # On ne lit QUE Level.sav : jamais backup/, backup_old/, *_old.sav.
             with sftp.open(self.remote, "rb") as f:
@@ -85,12 +96,23 @@ class SftpSource(SaveSource):
 
 
 @contextlib.contextmanager
-def sftp_connect(host, port, user, key_path):
+def sftp_connect(host, port, user, key_path=None, password=None, key_data=None):
     import paramiko
 
-    key = load_key(key_path)
+    key = None
+    if key_data:
+        key = load_key_data(key_data)
+    elif key_path:
+        key = load_key(key_path)
+    elif not password:
+        raise SystemExit("aucune authentification fournie (clé ou mot de passe)")
+
     client = paramiko.SSHClient()
-    client.set_missing_host_key_policy(paramiko.RejectPolicy())
+    # Sync hébergée : hôte inconnu du runner -> TOFU. Agent local : known_hosts strict.
+    if key_data or password:
+        client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    else:
+        client.set_missing_host_key_policy(paramiko.RejectPolicy())
     known = Path.home() / ".ssh" / "known_hosts"
     if known.exists():
         client.load_host_keys(str(known))
@@ -100,7 +122,7 @@ def sftp_connect(host, port, user, key_path):
             port=int(port),
             username=user,
             pkey=key,
-            # Auth par clé, point. Pas de repli silencieux sur un mot de passe.
+            password=password if not key else None,
             allow_agent=False,
             look_for_keys=False,
             timeout=30,
@@ -132,6 +154,22 @@ def load_key(key_path):
         except paramiko.SSHException:
             continue
     raise SystemExit(f"format de clé non reconnu : {p}")
+
+
+def load_key_data(key_str: str):
+    """Charge une clé privée depuis son contenu (sync hébergée)."""
+    import io
+
+    import paramiko
+
+    for cls in (paramiko.Ed25519Key, paramiko.RSAKey, paramiko.ECDSAKey):
+        try:
+            return cls.from_private_key(io.StringIO(key_str))
+        except paramiko.PasswordRequiredException as e:
+            raise RuntimeError("clé protégée par passphrase — fournis une clé sans passphrase") from e
+        except paramiko.SSHException:
+            continue
+    raise RuntimeError("format de clé privée non reconnu")
 
 
 def env(name, default=None, required=False):

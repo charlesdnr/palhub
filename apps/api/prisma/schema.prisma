@@ -31,10 +31,36 @@ model Server {
   worldId      String?    @map("world_id")
   isListed     Boolean    @default(false) @map("is_listed")
   lastIngestAt DateTime?  @map("last_ingest_at") @db.Timestamptz()
-  createdAt    DateTime   @default(now()) @map("created_at") @db.Timestamptz()
+  createdAt    DateTime    @default(now()) @map("created_at") @db.Timestamptz()
   snapshots    Snapshot[]
+  syncConfig   SyncConfig?
 
   @@map("servers")
+}
+
+/// Synchro hébergée : la plateforme tire le Level.sav en SFTP à la place de l'admin.
+model SyncConfig {
+  serverId      String    @id @map("server_id") @db.Uuid
+  server        Server    @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  host          String
+  port          Int       @default(22)
+  username      String
+  /// 'password' ou 'key'
+  authType      String    @map("auth_type")
+  /// mot de passe ou clé privée, chiffré AES-256-GCM (iv:tag:données, base64)
+  secretEnc     String    @map("secret_enc")
+  /// dossier du monde : /Pal/Saved/SaveGames/0/<WorldID>
+  remotePath    String    @map("remote_path")
+  enabled       Boolean   @default(true)
+  lastRunAt     DateTime? @map("last_run_at") @db.Timestamptz()
+  /// 'ok' | 'unchanged' | 'error'
+  lastStatus    String?   @map("last_status")
+  lastError     String?   @map("last_error")
+  lastStatSize  Int?      @map("last_stat_size")
+  lastStatMtime Int?      @map("last_stat_mtime")
+  createdAt     DateTime  @default(now()) @map("created_at") @db.Timestamptz()
+
+  @@map("sync_configs")
 }
 
 model Snapshot {
