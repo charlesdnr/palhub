@@ -28,7 +28,7 @@ export class ApiKeyGuard implements CanActivate {
     }
     const [, key, prefix] = match;
 
-    const server = await this.prisma.server.findFirst({
+    const server = await this.prisma.server.findUnique({
       where: { apiKeyPrefix: prefix },
     });
     if (!server?.apiKeyHash) {

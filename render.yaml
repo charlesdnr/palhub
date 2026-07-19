@@ -25,3 +25,11 @@ services:
         sync: false # https://<nom>.onrender.com
       - key: DISCORD_CALLBACK_URL
         sync: false # https://<nom>.onrender.com/api/auth/discord/callback
+      # Sync hébergée : secret partagé avec le runner GitHub Actions (≥ 32 car.)
+      - key: WORKER_SECRET
+        generateValue: true
+      # Chiffrement AES-256-GCM des identifiants SFTP : EXACTEMENT 64 caractères
+      # hex. generateValue ne garantit pas ce format -> coller une valeur générée
+      # avec : node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+      - key: SYNC_ENC_KEY
+        sync: false

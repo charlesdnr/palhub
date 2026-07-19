@@ -111,13 +111,29 @@ export class ServersService {
   /** Génère (ou remplace) la clé API. La clé complète n'est renvoyée qu'ici. */
   async rotateApiKey(userId: string, id: string): Promise<ApiKeyDto> {
     await this.getOwned(userId, id);
-    const prefix = randomBytes(4).toString('hex');
-    const secret = randomBytes(16).toString('hex');
-    const apiKey = `pal_${prefix}_${secret}`;
-    await this.prisma.server.update({
-      where: { id },
-      data: { apiKeyPrefix: prefix, apiKeyHash: hashApiKey(apiKey) },
-    });
-    return { apiKey, apiKeyPrefix: prefix };
+    // apiKeyPrefix est @unique : en cas de collision (P2002), on régénère.
+    for (let attempt = 0; attempt < 5; attempt++) {
+      const prefix = randomBytes(4).toString('hex');
+      const secret = randomBytes(16).toString('hex');
+      const apiKey = `pal_${prefix}_${secret}`;
+      try {
+        await this.prisma.server.update({
+          where: { id },
+          data: { apiKeyPrefix: prefix, apiKeyHash: hashApiKey(apiKey) },
+        });
+        return { apiKey, apiKeyPrefix: prefix };
+      } catch (e) {
+        if (
+          e instanceof Prisma.PrismaClientKnownRequestError &&
+          e.code === 'P2002'
+        ) {
+          continue;
+        }
+        throw e;
+      }
+    }
+    throw new ConflictException(
+      'Impossible de générer une clé unique, réessaie',
+    );
   }
 }

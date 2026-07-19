@@ -27,7 +27,7 @@ model Server {
   name         String
   description  String?
   apiKeyHash   String?    @map("api_key_hash")
-  apiKeyPrefix String?    @map("api_key_prefix")
+  apiKeyPrefix String?    @unique @map("api_key_prefix")
   /// Verrouillé au premier ingest : refuse ensuite les payloads d'un autre monde
   worldId      String?    @map("world_id")
   isListed     Boolean    @default(false) @map("is_listed")

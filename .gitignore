@@ -16,6 +16,9 @@ agent/.venv/
 agent/*.egg-info/
 agent/build/
 
+# État local de l'agent (contient le world_id du serveur)
+*.state.json
+
 # Divers
 .DS_Store
 Thumbs.db

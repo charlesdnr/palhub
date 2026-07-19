@@ -47,6 +47,11 @@ cp infra/.env.example infra/.env   # secrets : POSTGRES_PASSWORD, JWT_SECRET, DI
 docker compose -f infra/docker-compose.prod.yml up -d --build
 ```
 
+Pour activer la **synchro hébergée**, renseigner en plus `WORKER_SECRET` (≥ 32
+caractères, partagé avec le runner GitHub Actions) et `SYNC_ENC_KEY` (64 hex,
+chiffrement des identifiants SFTP). Sans eux, la configuration SFTP côté site
+est refusée.
+
 TLS : mettre un Caddy/Traefik devant, ou certbot + un `server 443` dans
 `infra/nginx/nginx.conf`.
 

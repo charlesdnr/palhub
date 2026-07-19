@@ -1,6 +1,7 @@
 # Prod (VPS) : docker compose -f infra/docker-compose.prod.yml up -d --build
 # Secrets dans infra/.env (non commité) : POSTGRES_PASSWORD, JWT_SECRET,
 # DISCORD_CLIENT_ID, DISCORD_CLIENT_SECRET, PUBLIC_ORIGIN (ex: https://palhub.example.com)
+# et, pour la sync hébergée : WORKER_SECRET, SYNC_ENC_KEY
 services:
   db:
     image: postgres:17-alpine
@@ -25,6 +26,10 @@ services:
       DISCORD_CLIENT_SECRET: ${DISCORD_CLIENT_SECRET}
       DISCORD_CALLBACK_URL: ${PUBLIC_ORIGIN}/api/auth/discord/callback
       WEB_ORIGIN: ${PUBLIC_ORIGIN}
+      # Sync hébergée (facultatif) : secret partagé avec le runner + clé de
+      # chiffrement des identifiants SFTP. Sans eux, la config SFTP est refusée.
+      WORKER_SECRET: ${WORKER_SECRET}
+      SYNC_ENC_KEY: ${SYNC_ENC_KEY}
       NODE_ENV: production
     depends_on:
       - db

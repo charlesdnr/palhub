@@ -33,6 +33,11 @@ const GAME_SCALE = 459;
 const PAL_CDN =
   'https://cdn.paldb.cc/image/Pal/Texture/PalIcon/Normal/T_{}_icon_normal.webp';
 
+/** Échappe le HTML : les pseudos et noms de guilde viennent du save (contrôlés
+ *  par les joueurs du serveur de jeu) et sont injectés dans les popups Leaflet. */
+const esc = (s: string): string =>
+  s.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
+
 type AreaKey = 'main' | 'tree';
 
 const AREAS: Record<
@@ -211,7 +216,7 @@ export class MapPage {
     for (const b of this.live?.bases ?? []) {
       const a = this.areaOf(b.x, b.y);
       if (!a) continue;
-      const who = b.guild ? ` — ${b.guild}` : '';
+      const who = b.guild ? ` — ${esc(b.guild)}` : '';
       bases[a].push({ x: b.x, y: b.y, tip: `Base${who}`, pop: `<b>Base</b>${who}` });
     }
     for (const p of this.live?.players ?? []) {
@@ -219,12 +224,13 @@ export class MapPage {
       const a = this.areaOf(p.x, p.y);
       if (!a) continue;
       const status = p.online ? 'en ligne' : 'hors ligne';
+      const name = esc(p.name);
       players[a].push({
         x: p.x,
         y: p.y,
         cls: 'mk--player',
-        tip: `${p.name} <span class="lvl">niv. ${p.level}</span>`,
-        pop: `<b>${p.name}</b> — niv. ${p.level} (${status})`,
+        tip: `${name} <span class="lvl">niv. ${p.level}</span>`,
+        pop: `<b>${name}</b> — niv. ${p.level} (${status})`,
       });
     }
     data.markers['srvBases'] = bases as unknown as MapData['markers'][string];
@@ -360,11 +366,12 @@ export class MapPage {
         ? L.marker(ll, { icon })
         : L.circleMarker(ll, { radius: 5 });
       if (label || lv) {
-        const txt = (label ?? def.label) + (lv ? ` <span class="lvl">niv. ${lv}</span>` : '');
+        const name = esc(label ?? def.label);
+        const txt = name + (lv ? ` <span class="lvl">niv. ${lv}</span>` : '');
         mk.bindTooltip(txt, { direction: 'top' });
         const g = this.latLngToGame(ll);
         mk.bindPopup(
-          `<b>${label ?? def.label}</b>${lv ? ` — niv. ${lv}` : ''}<br><span class="mono">${g.x}, ${g.y}</span>`,
+          `<b>${name}</b>${lv ? ` — niv. ${lv}` : ''}<br><span class="mono">${g.x}, ${g.y}</span>`,
         );
       } else {
         mk.bindTooltip(def.label, { direction: 'top' });
