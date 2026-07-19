@@ -2,7 +2,10 @@ name: hosted-sync
 
 on:
   schedule:
-    - cron: "*/10 * * * *" # toutes les ~10 min (best effort côté GitHub)
+    # Minutes décalées exprès : les minutes rondes (0,10,20…) sont congestionnées
+    # chez GitHub et les déclenchements y sont souvent retardés ou sautés.
+    # Le cron GitHub reste "best effort" : compter 10 à 30 min entre deux runs.
+    - cron: "4,17,29,41,53 * * * *"
   workflow_dispatch: {}
 
 concurrency:
