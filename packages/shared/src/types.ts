@@ -17,6 +17,26 @@ export interface ServerDto {
   apiKeyPrefix: string | null;
   lastIngestAt: string | null;
   createdAt: string;
+  /** 'owner' = propriétaire, 'admin' = co-admin invité */
+  role: 'owner' | 'admin';
+}
+
+export interface InviteDto {
+  token: string;
+  expiresAt: string;
+}
+
+export interface InviteInfoDto {
+  serverName: string;
+  slug: string;
+  expired: boolean;
+}
+
+export interface MemberDto {
+  userId: string;
+  username: string;
+  avatarUrl: string | null;
+  role: 'owner' | 'admin';
 }
 
 /** Renvoyé une seule fois, à la création/rotation de la clé. */

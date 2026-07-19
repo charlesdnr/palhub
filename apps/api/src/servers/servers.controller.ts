@@ -30,7 +30,9 @@ export class ServersController {
   @Get()
   async list(@Req() req: AuthenticatedRequest): Promise<ServerDto[]> {
     const servers = await this.servers.listMine(req.userId);
-    return servers.map((s) => this.servers.toDto(s));
+    return servers.map((s) =>
+      this.servers.toDto(s, this.servers.roleOf(s, req.userId)),
+    );
   }
 
   @Post()
@@ -38,7 +40,10 @@ export class ServersController {
     @Req() req: AuthenticatedRequest,
     @Body(new ZodValidationPipe(createServerSchema)) body: CreateServerInput,
   ): Promise<ServerDto> {
-    return this.servers.toDto(await this.servers.create(req.userId, body));
+    return this.servers.toDto(
+      await this.servers.create(req.userId, body),
+      'owner',
+    );
   }
 
   @Get(':id')
@@ -46,7 +51,8 @@ export class ServersController {
     @Req() req: AuthenticatedRequest,
     @Param('id') id: string,
   ): Promise<ServerDto> {
-    return this.servers.toDto(await this.servers.getMine(req.userId, id));
+    const server = await this.servers.getMine(req.userId, id);
+    return this.servers.toDto(server, this.servers.roleOf(server, req.userId));
   }
 
   @Patch(':id')
@@ -55,7 +61,8 @@ export class ServersController {
     @Param('id') id: string,
     @Body(new ZodValidationPipe(updateServerSchema)) body: UpdateServerInput,
   ): Promise<ServerDto> {
-    return this.servers.toDto(await this.servers.update(req.userId, id, body));
+    const server = await this.servers.update(req.userId, id, body);
+    return this.servers.toDto(server, this.servers.roleOf(server, req.userId));
   }
 
   @Delete(':id')

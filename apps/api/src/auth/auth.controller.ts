@@ -17,6 +17,7 @@ import { AUTH_COOKIE, JwtAuthGuard } from './jwt-auth.guard';
 import type { AuthenticatedRequest } from './jwt-auth.guard';
 
 const STATE_COOKIE = 'ph_state';
+const NEXT_COOKIE = 'ph_next';
 
 function cookieOptions(maxAgeMs: number): CookieOptions {
   return {
@@ -36,9 +37,14 @@ export class AuthController {
   ) {}
 
   @Get('discord')
-  discord(@Res() res: Response) {
+  discord(@Query('next') next: string | undefined, @Res() res: Response) {
     const state = randomBytes(16).toString('hex');
     res.cookie(STATE_COOKIE, state, cookieOptions(10 * 60_000));
+    // retour post-login (ex : page d'invitation). Chemin relatif uniquement,
+    // pour ne pas servir de redirection ouverte.
+    if (next && next.startsWith('/') && !next.startsWith('//')) {
+      res.cookie(NEXT_COOKIE, next, cookieOptions(10 * 60_000));
+    }
     res.redirect(this.auth.authorizeUrl(state));
   }
 
@@ -63,7 +69,14 @@ export class AuthController {
       this.auth.signToken(user.id),
       cookieOptions(7 * 24 * 3600_000),
     );
-    res.redirect(`${process.env.WEB_ORIGIN ?? ''}/me/servers`);
+    const cookies = req.cookies as Record<string, string> | undefined;
+    const next = cookies?.[NEXT_COOKIE];
+    res.clearCookie(NEXT_COOKIE, { path: '/' });
+    const dest =
+      next && next.startsWith('/') && !next.startsWith('//')
+        ? next
+        : '/me/servers';
+    res.redirect(`${process.env.WEB_ORIGIN ?? ''}${dest}`);
   }
 
   @Get('me')

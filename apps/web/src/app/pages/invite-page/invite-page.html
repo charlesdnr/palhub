@@ -1,0 +1,37 @@
+<div class="card invite-card">
+  @if (info(); as i) {
+    <div class="door__ic big">🤝</div>
+    <h1>Rejoindre « {{ i.serverName }} »</h1>
+    @if (i.expired) {
+      <p class="err">Cette invitation a expiré — demande un nouveau lien à l'admin du serveur.</p>
+    } @else {
+      <p class="sub">
+        On t'invite à devenir <b>co-admin</b> de ce serveur sur PalHub :
+        tu pourras gérer sa synchronisation et sa description.
+      </p>
+      @if (auth.user() === undefined) {
+        <p class="sub">Vérification de la session…</p>
+      } @else if (auth.user() === null) {
+        <button type="button" class="btn" (click)="loginThenAccept()">
+          Se connecter avec Discord pour accepter
+        </button>
+      } @else {
+        <button type="button" class="btn" [disabled]="accepting()" (click)="accept()">
+          Accepter l'invitation
+        </button>
+      }
+      @if (error()) {
+        <p class="err">{{ error() }}</p>
+      }
+      <p class="foot-note">
+        La page du serveur reste <a [href]="'/s/' + i.slug">publique ici</a> —
+        accepter n'est utile que pour aider à l'administrer.
+      </p>
+    }
+  } @else if (info() === null) {
+    <h1>Invitation introuvable</h1>
+    <p class="sub">Le lien est invalide ou a été révoqué.</p>
+  } @else {
+    <p class="sub">Chargement…</p>
+  }
+</div>

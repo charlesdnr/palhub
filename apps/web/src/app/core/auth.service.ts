@@ -30,9 +30,10 @@ export class AuthService {
     return this.refresh();
   }
 
-  login(): void {
-    // Redirection plein écran : le flux OAuth revient sur /me/servers.
-    window.location.href = '/api/auth/discord';
+  login(next?: string): void {
+    // Redirection plein écran : le flux OAuth revient sur `next` (ou /me/servers).
+    const q = next ? '?next=' + encodeURIComponent(next) : '';
+    window.location.href = '/api/auth/discord' + q;
   }
 
   async logout(): Promise<void> {

@@ -6,7 +6,12 @@
       @for (s of servers; track s.id) {
         <div class="card row">
           <div>
-            <h3>{{ s.name }}</h3>
+            <h3>
+              {{ s.name }}
+              @if (s.role === 'admin') {
+                <span class="pcard__tag">co-admin</span>
+              }
+            </h3>
             <a class="mono" [routerLink]="['/s', s.slug]">/s/{{ s.slug }}</a>
             @if (s.lastIngestAt) {
               <div class="sync">Dernière synchro : {{ s.lastIngestAt | date: 'dd/MM/yyyy HH:mm' }}</div>

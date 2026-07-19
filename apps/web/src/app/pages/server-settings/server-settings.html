@@ -9,6 +9,52 @@
   </p>
 
   <div class="card block">
+    <h2>Inviter des amis</h2>
+    <p>
+      Partage un lien d'invitation (sur Discord par exemple) : ton ami se
+      connecte avec son compte Discord et devient <b>co-admin</b> — il pourra
+      gérer la synchro et la description, mais pas la clé API ni supprimer le
+      serveur.
+    </p>
+    @if (s.role === 'owner') {
+      @if (invite(); as i) {
+        <div class="key-row">
+          <code class="mono key">{{ inviteUrl() }}</code>
+          <button type="button" class="btn btn--ghost" (click)="copyInvite()">
+            {{ inviteCopied() ? 'Copié ✓' : 'Copier pour Discord' }}
+          </button>
+        </div>
+        <div class="invite-actions">
+          <button type="button" class="btn btn--ghost" (click)="rotateInvite()">Nouveau lien</button>
+          <button type="button" class="btn btn--danger" (click)="revokeInvite()">Révoquer</button>
+        </div>
+      } @else if (invite() === null) {
+        <button type="button" class="btn" (click)="rotateInvite()">Générer un lien d'invitation</button>
+        <p class="hint">Le lien est valable 7 jours et peut être utilisé par plusieurs amis.</p>
+      }
+    }
+    @if (members().length > 1 || s.role === 'admin') {
+      <ul class="member-list">
+        @for (m of members(); track m.userId) {
+          <li>
+            @if (m.avatarUrl) {
+              <img [src]="m.avatarUrl" alt="" class="member-av" />
+            }
+            <span class="member-name">{{ m.username }}</span>
+            <span class="member-role" [class.member-role--owner]="m.role === 'owner'">
+              {{ m.role === 'owner' ? 'propriétaire' : 'co-admin' }}
+            </span>
+            @if (m.role !== 'owner' && s.role === 'owner') {
+              <button type="button" class="linkish member-remove" (click)="removeMember(m)">retirer</button>
+            }
+          </li>
+        }
+      </ul>
+    }
+  </div>
+
+  @if (s.role === 'owner') {
+  <div class="card block">
     <h2>Clé API de l'agent</h2>
     @if (newKey()) {
       <p class="key-warn">
@@ -32,6 +78,7 @@
       {{ s.apiKeyPrefix ? 'Régénérer la clé' : 'Générer la clé' }}
     </button>
   </div>
+  }
 
   <div class="card block">
     <h2>Synchro hébergée <span class="badge">recommandé</span></h2>
@@ -141,11 +188,13 @@ PALHUB_SOURCE=&lt;dossier du save ou sftp://&gt;</pre>
     </button>
   </div>
 
+  @if (s.role === 'owner') {
   <div class="card block danger-zone">
     <h2>Zone dangereuse</h2>
     <p>Supprime le serveur, sa clé et toutes les données synchronisées.</p>
     <button type="button" class="btn btn--danger" (click)="remove()">Supprimer ce serveur</button>
   </div>
+  }
 } @else {
   <p class="empty">Chargement…</p>
 }

@@ -11,6 +11,11 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/login/login').then((m) => m.LoginPage),
   },
   {
+    path: 'invite/:token',
+    loadComponent: () =>
+      import('./pages/invite-page/invite-page').then((m) => m.InvitePage),
+  },
+  {
     path: 'me/servers',
     canActivate: [authGuard],
     loadComponent: () =>

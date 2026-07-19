@@ -2,7 +2,7 @@ import { Component, inject, input, signal, effect } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import type { ServerDto, SyncConfigDto } from '@palhub/shared';
+import type { InviteDto, MemberDto, ServerDto, SyncConfigDto } from '@palhub/shared';
 import { ServersService } from '../../core/servers.service';
 
 @Component({
@@ -40,13 +40,22 @@ export class ServerSettingsPage {
     enabled: true,
   };
 
+  // --- invitations / membres ---
+  protected readonly invite = signal<InviteDto | null | undefined>(undefined);
+  protected readonly members = signal<MemberDto[]>([]);
+  protected readonly inviteCopied = signal(false);
+
   constructor() {
     effect(() => {
       const id = this.id();
       void this.servers.getMine(id).then((s) => {
         this.server.set(s);
         this.description = s.description ?? '';
+        if (s.role === 'owner') {
+          void this.servers.getInvite(id).then((i) => this.invite.set(i));
+        }
       });
+      void this.servers.listMembers(id).then((m) => this.members.set(m));
       void this.servers.getSyncConfig(id).then((c) => {
         this.syncConfig.set(c);
         if (c) {
@@ -142,6 +151,46 @@ export class ServerSettingsPage {
     } finally {
       this.saving.set(false);
     }
+  }
+
+  protected inviteUrl(): string {
+    const i = this.invite();
+    return i ? `${window.location.origin}/invite/${i.token}` : '';
+  }
+
+  protected async rotateInvite(): Promise<void> {
+    const s = this.server();
+    if (!s) return;
+    if (
+      this.invite() &&
+      !confirm("Générer un nouveau lien invalide l'ancien. Continuer ?")
+    ) {
+      return;
+    }
+    this.invite.set(await this.servers.rotateInvite(s.id));
+    this.inviteCopied.set(false);
+  }
+
+  protected async copyInvite(): Promise<void> {
+    await navigator.clipboard.writeText(
+      `Rejoins-moi pour gérer « ${this.server()?.name} » sur PalHub 🐑 ${this.inviteUrl()}`,
+    );
+    this.inviteCopied.set(true);
+  }
+
+  protected async revokeInvite(): Promise<void> {
+    const s = this.server();
+    if (!s) return;
+    await this.servers.revokeInvite(s.id);
+    this.invite.set(null);
+  }
+
+  protected async removeMember(m: MemberDto): Promise<void> {
+    const s = this.server();
+    if (!s) return;
+    if (!confirm(`Retirer ${m.username} des co-admins ?`)) return;
+    await this.servers.removeMember(s.id, m.userId);
+    this.members.set(await this.servers.listMembers(s.id));
   }
 
   protected async remove(): Promise<void> {

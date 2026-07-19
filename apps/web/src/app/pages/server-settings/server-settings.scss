@@ -122,6 +122,71 @@
   }
 }
 
+.invite-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.6rem;
+}
+
+.hint {
+  color: var(--slate);
+  font-size: 0.85rem;
+  margin: 0.5rem 0 0;
+}
+
+.member-list {
+  list-style: none;
+  margin: 0.9rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    background: var(--abyss);
+    border: 1px solid var(--edge);
+    border-radius: 8px;
+    padding: 0.4rem 0.7rem;
+  }
+}
+
+.member-av {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}
+
+.member-name {
+  font-family: var(--display);
+  font-weight: 600;
+}
+
+.member-role {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--slate);
+  border: 1px solid var(--edge);
+  border-radius: 999px;
+  padding: 0.05rem 0.5rem;
+
+  &--owner {
+    color: var(--coast);
+    border-color: rgba(63, 208, 224, 0.4);
+  }
+}
+
+.member-remove {
+  margin-left: auto;
+  font-size: 12px;
+
+  &:hover {
+    color: var(--volcano);
+  }
+}
+
 .danger-zone {
   border-color: color-mix(in srgb, var(--danger) 45%, var(--border));
 

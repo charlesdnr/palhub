@@ -8,12 +8,13 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid()) @db.Uuid
-  discordId String   @unique @map("discord_id")
-  username  String
-  avatarUrl String?  @map("avatar_url")
-  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
-  servers   Server[]
+  id          String         @id @default(uuid()) @db.Uuid
+  discordId   String         @unique @map("discord_id")
+  username    String
+  avatarUrl   String?        @map("avatar_url")
+  createdAt   DateTime       @default(now()) @map("created_at") @db.Timestamptz()
+  servers     Server[]
+  memberships ServerMember[]
 
   @@map("users")
 }
@@ -31,11 +32,37 @@ model Server {
   worldId      String?    @map("world_id")
   isListed     Boolean    @default(false) @map("is_listed")
   lastIngestAt DateTime?  @map("last_ingest_at") @db.Timestamptz()
-  createdAt    DateTime    @default(now()) @map("created_at") @db.Timestamptz()
+  createdAt    DateTime       @default(now()) @map("created_at") @db.Timestamptz()
   snapshots    Snapshot[]
   syncConfig   SyncConfig?
+  members      ServerMember[]
+  invite       ServerInvite?
 
   @@map("servers")
+}
+
+/// Co-admins invités par le propriétaire : gèrent synchro et description,
+/// mais ni la clé API ni la suppression.
+model ServerMember {
+  serverId  String   @map("server_id") @db.Uuid
+  server    Server   @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  userId    String   @map("user_id") @db.Uuid
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+
+  @@id([serverId, userId])
+  @@map("server_members")
+}
+
+/// Un seul lien d'invitation actif par serveur (regénérer = invalider l'ancien).
+model ServerInvite {
+  token     String   @id
+  serverId  String   @unique @map("server_id") @db.Uuid
+  server    Server   @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  expiresAt DateTime @map("expires_at") @db.Timestamptz()
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+
+  @@map("server_invites")
 }
 
 /// Synchro hébergée : la plateforme tire le Level.sav en SFTP à la place de l'admin.

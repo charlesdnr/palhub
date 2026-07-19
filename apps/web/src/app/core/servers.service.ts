@@ -2,7 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import type {
   ApiKeyDto,
+  InviteDto,
+  InviteInfoDto,
   LiveSnapshot,
+  MemberDto,
   PalboxSnapshot,
   PublicServerDto,
   ServerDto,
@@ -45,6 +48,48 @@ export class ServersService {
   rotateApiKey(id: string): Promise<ApiKeyDto> {
     return firstValueFrom(
       this.http.post<ApiKeyDto>(`/api/servers/${id}/api-key`, {}),
+    );
+  }
+
+  // --- invitations & membres ---
+
+  getInvite(id: string): Promise<InviteDto | null> {
+    return firstValueFrom(
+      this.http.get<InviteDto | null>(`/api/servers/${id}/invite`),
+    );
+  }
+
+  rotateInvite(id: string): Promise<InviteDto> {
+    return firstValueFrom(
+      this.http.post<InviteDto>(`/api/servers/${id}/invite`, {}),
+    );
+  }
+
+  revokeInvite(id: string): Promise<void> {
+    return firstValueFrom(this.http.delete<void>(`/api/servers/${id}/invite`));
+  }
+
+  listMembers(id: string): Promise<MemberDto[]> {
+    return firstValueFrom(
+      this.http.get<MemberDto[]>(`/api/servers/${id}/members`),
+    );
+  }
+
+  removeMember(id: string, userId: string): Promise<void> {
+    return firstValueFrom(
+      this.http.delete<void>(`/api/servers/${id}/members/${userId}`),
+    );
+  }
+
+  getInviteInfo(token: string): Promise<InviteInfoDto> {
+    return firstValueFrom(
+      this.http.get<InviteInfoDto>(`/api/public/invites/${token}`),
+    );
+  }
+
+  acceptInvite(token: string): Promise<ServerDto> {
+    return firstValueFrom(
+      this.http.post<ServerDto>(`/api/invites/${token}/accept`, {}),
     );
   }
 
