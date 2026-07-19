@@ -21,6 +21,9 @@ CHARACTER_RAWDATA = ".worldSaveData.CharacterSaveParameterMap.Value.RawData"
 BASECAMP_RAWDATA = ".worldSaveData.BaseCampSaveData.Value.RawData"
 GROUP_MAP = ".worldSaveData.GroupSaveDataMap"
 
+# Version du contrat de payload (côté API : champ optionnel schema_version).
+SCHEMA_VERSION = 1
+
 # au-delà de 5 min sans « dernière connexion » rafraîchie, un joueur est hors ligne
 ONLINE_WINDOW_TICKS = 300 * 10_000_000  # FDateTime : 100 ns par tick
 
@@ -88,6 +91,7 @@ def extract(gvas, names, passive_names, world_id, source_hash):
     payload = {
         "generated_at": now_iso(),
         "source_hash": f"sha256:{source_hash}",
+        "schema_version": SCHEMA_VERSION,
         "world_id": world_id,
         "passive_ranks": ranks,
         "players": players,
@@ -140,6 +144,7 @@ def extract_live(gvas, live_players, world_id, source_hash):
     return {
         "generated_at": now_iso(),
         "source_hash": f"sha256:{source_hash}",
+        "schema_version": SCHEMA_VERSION,
         "world_id": world_id,
         "guilds": guilds,
         "bases": bases,

@@ -99,7 +99,17 @@ export class ServersService {
     id: string,
     input: UpdateServerInput,
   ): Promise<Server> {
-    await this.getMine(userId, id);
+    const server = await this.getMine(userId, id);
+    // Les co-admins ne gèrent que la description ; nom et visibilité sont
+    // réservés au propriétaire.
+    if (
+      server.ownerId !== userId &&
+      (input.name !== undefined || input.visibility !== undefined)
+    ) {
+      throw new ForbiddenException(
+        'Seul le propriétaire modifie le nom et la visibilité',
+      );
+    }
     return this.prisma.server.update({ where: { id }, data: input });
   }
 

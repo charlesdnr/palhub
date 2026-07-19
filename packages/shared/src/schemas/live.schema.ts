@@ -31,6 +31,9 @@ export const livePlayerSchema = z.looseObject({
 export const liveSnapshotSchema = z.looseObject({
   generated_at: z.iso.datetime(),
   world_id: z.string().min(1),
+  // Version du contrat de payload (transition future sans casser les agents
+  // déployés). Absent des anciens agents.
+  schema_version: z.number().int().optional(),
   // Absent des anciens payloads : l'API calcule alors un hash du corps reçu.
   source_hash: z.string().optional(),
   guilds: z.array(liveGuildSchema),

@@ -34,7 +34,10 @@ export class PublicService {
     };
   }
 
-  async latestPayload(slug: string, kind: SnapshotKind): Promise<unknown> {
+  async latestPayload(
+    slug: string,
+    kind: SnapshotKind,
+  ): Promise<{ payload: unknown; sourceHash: string }> {
     const server = await this.prisma.server.findUnique({ where: { slug } });
     if (!server || server.visibility === 'private') {
       throw new NotFoundException('Serveur inconnu');
@@ -46,6 +49,6 @@ export class PublicService {
     if (!snapshot) {
       throw new NotFoundException(`Aucune donnée ${kind} pour ce serveur`);
     }
-    return snapshot.payload;
+    return { payload: snapshot.payload, sourceHash: snapshot.sourceHash };
   }
 }

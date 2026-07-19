@@ -4,6 +4,7 @@ import request from 'supertest';
 import { PrismaService } from './../src/prisma/prisma.service';
 import {
   SeededUser,
+  TEST_WEB_ORIGIN,
   bootstrapTestApp,
   cleanupUsers,
   createServer,
@@ -85,6 +86,29 @@ describe('Autorisation serveurs (e2e)', () => {
       .post(`/api/servers/${server.id}/invite`)
       .set('Cookie', coAdmin.cookie)
       .expect(403));
+
+  it('co-admin peut modifier la description → 200', () =>
+    http()
+      .patch(`/api/servers/${server.id}`)
+      .set('Cookie', coAdmin.cookie)
+      .set('Origin', TEST_WEB_ORIGIN)
+      .send({ description: 'maj co-admin' })
+      .expect(200));
+
+  it('co-admin ne peut PAS changer le nom ni la visibilité → 403', async () => {
+    await http()
+      .patch(`/api/servers/${server.id}`)
+      .set('Cookie', coAdmin.cookie)
+      .set('Origin', TEST_WEB_ORIGIN)
+      .send({ name: 'Renommé' })
+      .expect(403);
+    await http()
+      .patch(`/api/servers/${server.id}`)
+      .set('Cookie', coAdmin.cookie)
+      .set('Origin', TEST_WEB_ORIGIN)
+      .send({ visibility: 'public' })
+      .expect(403);
+  });
 
   it('propriétaire peut générer une clé → 201 et clé renvoyée une fois', async () => {
     const res = await http()

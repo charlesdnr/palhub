@@ -11,6 +11,7 @@ import {
   type IngestResultDto,
 } from '@palhub/shared';
 import { createHash } from 'node:crypto';
+import { formatZodIssues } from '../common/zod-error';
 import { PrismaService } from '../prisma/prisma.service';
 
 /** Nombre de snapshots palbox conservés par serveur (les plus récents). */
@@ -33,9 +34,7 @@ export class IngestService {
     if (!parsed.success) {
       throw new BadRequestException({
         message: `Payload ${kind} invalide`,
-        issues: parsed.error.issues
-          .slice(0, 10)
-          .map((i) => ({ path: i.path.join('.'), message: i.message })),
+        issues: formatZodIssues(parsed.error, 10),
       });
     }
     const payload = parsed.data;

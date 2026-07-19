@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable, PipeTransform } from '@nestjs/common';
 import type { ZodType } from 'zod';
+import { formatZodIssues } from './zod-error';
 
 /** Valide le body avec un schéma zod ; renvoie 400 avec le détail des erreurs. */
 @Injectable()
@@ -11,10 +12,7 @@ export class ZodValidationPipe<T> implements PipeTransform<unknown, T> {
     if (!result.success) {
       throw new BadRequestException({
         message: 'Payload invalide',
-        issues: result.error.issues.map((i) => ({
-          path: i.path.join('.'),
-          message: i.message,
-        })),
+        issues: formatZodIssues(result.error),
       });
     }
     return result.data;

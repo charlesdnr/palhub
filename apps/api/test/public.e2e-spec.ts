@@ -59,4 +59,28 @@ describe('Visibilité publique (e2e)', () => {
     await http().get(`/api/public/s/${s.slug}/palbox`).expect(404);
     await http().get(`/api/public/s/${s.slug}/live`).expect(404);
   });
+
+  it('payload : ETag posé, If-None-Match → 304', async () => {
+    const s = await serverWith('public');
+    await prisma.snapshot.create({
+      data: {
+        serverId: s.id,
+        kind: 'palbox',
+        sourceHash: 'etag-hash-1',
+        generatedAt: new Date(Date.UTC(2026, 0, 1)),
+        payload: { hello: 'world' },
+      },
+    });
+    const first = await http()
+      .get(`/api/public/s/${s.slug}/palbox`)
+      .expect(200);
+    const etag = first.headers.etag;
+    expect(etag).toBe('"etag-hash-1"');
+    expect(first.body).toEqual({ hello: 'world' });
+
+    await http()
+      .get(`/api/public/s/${s.slug}/palbox`)
+      .set('If-None-Match', etag)
+      .expect(304);
+  });
 });

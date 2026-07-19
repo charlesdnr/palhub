@@ -48,7 +48,9 @@ export class InternalController {
     @Param('serverId') serverId: string,
     @Body(new ZodValidationPipe(reportSchema)) body: ReportInput,
   ): Promise<{ ok: boolean }> {
-    await this.prisma.syncConfig.update({
+    // updateMany : si l'admin a supprimé sa config entre-temps, 0 ligne mise à
+    // jour plutôt qu'un 500 (P2025).
+    const res = await this.prisma.syncConfig.updateMany({
       where: { serverId },
       data: {
         lastRunAt: new Date(),
@@ -58,7 +60,7 @@ export class InternalController {
         ...(body.statMtime != null ? { lastStatMtime: body.statMtime } : {}),
       },
     });
-    return { ok: true };
+    return { ok: res.count > 0 };
   }
 
   @Post('ingest/:serverId/:kind')

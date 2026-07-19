@@ -38,6 +38,9 @@ export const palboxPlayerSchema = z.looseObject({
 export const palboxSnapshotSchema = z.looseObject({
   generated_at: z.iso.datetime(),
   source_hash: z.string().min(1),
+  // Version du contrat de payload (permet une future transition sans casser
+  // les agents déjà déployés). Absent des anciens agents.
+  schema_version: z.number().int().optional(),
   world_id: z.string().min(1),
   passive_ranks: z.record(z.string(), z.number().int()),
   players: z.array(palboxPlayerSchema),
